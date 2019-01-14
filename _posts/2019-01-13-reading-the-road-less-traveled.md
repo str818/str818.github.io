@@ -3,10 +3,8 @@ layout: article
 title: 《少有人走的路》
 tags: 读书
 article_header:
-  type: overlay
-  theme: dark
-  background_color: '#203028'
-  background_image:
+  type:  cover
+  image:
     src: /img/TheRoadLessTraveled.jpg
 
 lang: zh-Hans
