@@ -6,7 +6,7 @@ tags: Java
 
 lang: zh-Hans
 key: Java_Detailed_expression_of_regular_expression
-pageview: false
+pageview: true
 comment: true
 toc: true
 sharing: true
