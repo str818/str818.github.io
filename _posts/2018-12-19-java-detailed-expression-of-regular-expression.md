@@ -16,7 +16,7 @@ sharing: true
 
 [正则表达式在线工具](https://regexr.com/)
 
-# 一、基本语法
+## 一、基本语法
 
 |                 语法                 |                           语法解释                           |
 | :----------------------------------: | :----------------------------------------------------------: |
@@ -69,7 +69,7 @@ sharing: true
 
 日期匹配 `xxxx-xx-xx` ：`^\d{4}-(0[1-9]|1[0-2])-([0-2][1-9]|3[0-1])` 
 
-# 二、String 正则处理方法
+## 二、String 正则处理方法
 
 在 Java 中有四个内置的运行正则表达式的方法，分别是 `matches()`、`split()`、`replaceFirst()`、`replaceALL()` 。注意 `replace()` 方法不支持正则表达式。
 
@@ -80,7 +80,7 @@ sharing: true
 | `s.replaceFirst("regex", "replacement")` |       替换首次匹配的字符串片段        |
 |  `s.replaceAll("regex", "replacement")`  |          替换所有匹配的字符           |
 
-# 三、Java 正则匹配
+## 三、Java 正则匹配
 
 Java 中使用正则表达式需要用到两个类，分别为 `java.util.regex.Pattern` 和 `java.util.regex.Matcher` 。
 
@@ -121,7 +121,7 @@ Start index: 0 End index: 5 Hello
 Start index: 6 End index: 11 Regex
 Hello    Regex!
 ```
-# 参考
+## 参考
 
 * Bruce Eckel. Java 编程思想[M]. 机械工业出版社, 2007.
 * 吴亚峰. JavaSE 6.0 编程指南[M]. 人民邮电出版社, 2007.
