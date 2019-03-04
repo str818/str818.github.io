@@ -22,7 +22,10 @@ algorithm:
     children:
       - title:  排序
         url:    /notes/algorithm/sort
-        
+  - title:      算法练习
+    children:
+      - title:  数学
+        url:    /notes/algorithm/code-math
 java:
   - title:      Java基础
     children:
