@@ -28,6 +28,8 @@ algorithm:
         url:    /notes/algorithm/code-math
       - title:  二分查找
         url:    /notes/algorithm/code-binarySearch
+      - title:  回溯
+        url:    /notes/algorithm/code-backtrack
 java:
   - title:      Java基础
     children:
