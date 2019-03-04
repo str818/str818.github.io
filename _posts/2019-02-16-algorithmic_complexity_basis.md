@@ -47,29 +47,29 @@ int N = 8;
 循环次数 * 一次迭代次数，时间复杂度：$O(N)$
 ```java
 for(int i = 0; i < N; i++){
-	int a = 16 / 4;
-	int b = a * 3;
+  int a = 16 / 4;
+  int b = a * 3;
 }
 ```
 #### 3. 多重嵌套结构
 各个循环次数相乘，时间复杂度：O($N^2$)
 ```java
 for(int i = 0; i < N; i++)
-	for(int j = 0; j < N; j++){
-		int a = 16 / 4;
-		int b = a * 3;
-	}
+  for(int j = 0; j < N; j++){
+    int a = 16 / 4;
+    int b = a * 3;
+  }
 ```
 #### 4. 顺序结构
 各部分相加，时间复杂度：O($N^2$)
 ```java
 for(int i = 0; i < N; i++){
-	int a = 16 / 4;
-	int b = a * 3;
+  int a = 16 / 4;
+  int b = a * 3;
 }
 for(int i = 0; i < N; i++){
-	int a = 16 / 4;
-	int b = a * 3;
+  int a = 16 / 4;
+  int b = a * 3;
 }
 ```
 
