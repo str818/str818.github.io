@@ -1,4 +1,10 @@
 header:
+  - title:      Java 技术栈
+    url:        /notes/java/basics/basic
+  
+  - title:      算法
+    url:        /notes/algorithm/sort
+    
   - titles:
       en      : &EN       Archive
       zh-Hans : &ZH_HANS  归档
@@ -9,4 +15,16 @@ header:
       en      : &EN       About
       zh-Hans : &ZH_HANS  关于
       zh-Hant : &ZH_HANT  關於
-    url: /about.html
+    url: /about.html   
+
+algorithm:
+  - title:      经典算法
+    children:
+      - title:  排序
+        url:    /notes/algorithm/sort
+        
+java:
+  - title:      Java基础
+    children:
+      - title:  基础
+        url:    /notes/java/basics/basic
