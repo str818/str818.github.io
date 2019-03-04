@@ -26,9 +26,8 @@ algorithm:
     children:
       - title:  数学
         url:    /notes/algorithm/code-math
-    children:
       - title:  二分查找
-        url:    /notes/algorithm/code-math
+        url:    /notes/algorithm/code-binarySearch
 java:
   - title:      Java基础
     children:
