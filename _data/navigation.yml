@@ -24,12 +24,10 @@ algorithm:
         url:    /notes/algorithm/sort
   - title:      算法练习
     children:
-      - title:  数学
-        url:    /notes/algorithm/code-math
-      - title:  二分查找
-        url:    /notes/algorithm/code-binarySearch
-      - title:  回溯
-        url:    /notes/algorithm/code-backtrack
+      - title:  算法思想
+        url:    /notes/algorithm/code-thought
+      - title:  数据结构相关
+        url:    /notes/algorithm/code-data-structure
 java:
   - title:      Java基础
     children:
