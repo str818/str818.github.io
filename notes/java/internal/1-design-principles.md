@@ -278,7 +278,7 @@ public interface ICourseManager {
 
 来看一下类图：
 
-<div align="center">  <img src="/img/internal_design_principles_3.png" width="60%"/> </div><br>
+<div align="center">  <img src="/img/internal_design_principles_3.png" width="70%"/> </div><br>
 
 下面我们来看一下方法层面的单一职责设计。有时候，我们为了偷懒，通常会把一个方法写成下面这样：
 
@@ -397,7 +397,7 @@ public class Dog implements ISwimAnimal,IEatAnimal {
 来看下两种类图的对比，还是非常清晰明了的：
 
 
-<div align="center">  <img src="/img/internal_design_principles_4.png" width="60%"/> </div><br>
+<div align="center">  <img src="/img/internal_design_principles_4.png" width="80%"/> </div><br>
 
 
 ## 迪米特法则
@@ -446,7 +446,7 @@ public static void main(String[] args) {
 
 写到这里，其实功能已经都已经实现，代码看上去也没什么问题。根据迪米特原则，Boss 只想要结果，不需要跟 Course 产生直接的交流。而 TeamLeader 统计需要引用 Course 对象。Boss 和 Course 并不是朋友，从下面的类图就可以看出来：
 
-<div align="center">  <img src="/img/internal_design_principles_5.png" width="60%"/> </div><br>
+<div align="center">  <img src="/img/internal_design_principles_5.png" width="70%"/> </div><br>
 
 下面对代码进行改造：
 
@@ -474,7 +474,7 @@ public class Boss {
 
 再来看下面的类图，Course 和 Boss 已经没有关联了。
 
-<div align="center">  <img src="/img/internal_design_principles_6.png" width="60%"/> </div><br>
+<div align="center">  <img src="/img/internal_design_principles_6.png" width="70%"/> </div><br>
 
 学习软件设计原则，千万不能形成强迫症。碰到业务复杂的场景，我们需要随机应变。
 
@@ -507,6 +507,156 @@ public class JavaDiscountCourse extends JavaCourse {
 1. 约束继承泛滥，开闭原则的一种体现。
 2. 加强程序的健壮性，同时变更时也可以做到非常好的兼容性，提高程序的维护性、扩展性。降低需求变更时引入的风险。
 
+现在来描述一个经典的业务场景，用正方形、矩形和四边形的关系说明里氏替换原则，我们都知道正方形是一个特殊的长方形，那么就可以创建一个长方形父类 Rectangle 类：
+```java
+public class Rectangle {
+  private long height;
+  private long width;
+  @Override
+  public long getWidth() {
+    return width;
+  } 
+  @Override
+  public long getLength() {
+    return length;
+  } 
+  public void setLength(long length) {
+    this.length = length;
+  }
+  public void setWidth(long width) {
+    this.width = width;
+  }
+}
+```
+
+创建正方形 Square 类继承长方形：
+```java
+public class Square extends Rectangle {
+  private long length;
+  public long getLength() {
+    return length;
+  }
+  public void setLength(long length) {
+    this.length = length;
+  } 
+  @Override
+  public long getWidth() {
+    return getLength();
+  }
+  @Override
+  public long getHeight() {
+    return getLength();
+  }
+  @Override
+  public void setHeight(long height) {
+    setLength(height);
+  }
+  @Override
+  public void setWidth(long width) {
+    setLength(width);
+  }
+}
+```
+
+在测试类中创建 resize() 方法，根据逻辑长方形的宽应该大于等于高，我们让高一直自增，知道高等于宽变成正方形：
+```java
+public static void resize(Rectangle rectangle){
+  while (rectangle.getWidth() >= rectangle.getHeight()){
+    rectangle.setHeight(rectangle.getHeight() + 1);
+    System.out.println("width:"+rectangle.getWidth() + ",height:"+rectangle.getHeight());
+  }
+  System.out.println("resize 方法结束" + "\nwidth:"+rectangle.getWidth() + ",height:"+rectangle.getHeight());
+}
+```
+
+测试代码：
+```java
+public static void main(String[] args){
+  Rectangle rectangle = new Rectangle();
+  rectangle.setWidth(20);
+  rectangle.setHeight(10);
+  resize(rectangle);
+}
+```
+
+运行结果：
+```
+width:20,height:11
+width:20,height:12
+width:20,height:13
+width:20,height:14
+width:20,height:15
+width:20,height:16
+width:20,height:17
+width:20,height:18
+width:20,height:19
+width:20,height:20
+width:20,height:21
+resize方法结束
+width:20,height:21
+```
+
+发现高比宽还大了，在长方形中是一种非常正常的情况。现在我们再来看下面的代码，把长方形 Rectangle 替换成它的子类正方形 Square，修改测试代码：
+```java
+public static void main(String[] args) {
+  Square square = new Square();
+  square.setLength(10);
+  resize(square);
+}
+```
+
+这时候我们运行的时候就出现了死循环，违背了里氏替换原则，将父类替换为子类后，程序运行结果没有达到预期。因此，我们的代码设计是存在一定风险的。里氏替换原则只存在父类与子类之间，约束继承泛滥。我们再来创建一个基于长方形与正方形共同的抽象四边形 Quadrangle 接口：
+```java
+public interface Quadrangle {
+  long getWidth();
+  long getHeight();
+}
+```
+
+修改长方形 Rectangle 类：
+```java
+public class Rectangle implements Quadrangle {
+  private long height;
+  private long width;
+  @Override
+  public long getWidth() {
+    return width;
+  }
+  public long getHeight() {
+    return height;
+  }
+  public void setHeight(long height) {
+    this.height = height;
+  }
+  public void setWidth(long width) {
+    this.width = width;
+  }
+}
+```
+
+修改正方形类 Square 类：
+```java
+public class Square implements Quadrangle {
+  private long length;
+  public long getLength() {
+    return length;
+  }
+  public void setLength(long length) {
+    this.length = length;
+  }
+  @Override
+  public long getWidth() {
+    return length;
+  }
+  @Override
+  public long getHeight() {
+    return length;
+  }
+}
+```
+
+此时，如果把 resize() 方法的参数换成四边形 Quadrangle 类，方法内部就会报错。因为正方形 Square 已经没有了 setWidth() 和 setHeight() 方法了。因此，为了约束继承泛滥，resize() 方法参数只能用 Rectangle 长方形。
+
 
 ## 合成复用原则
 
@@ -514,7 +664,59 @@ public class JavaDiscountCourse extends JavaCourse {
 
 继承叫做白箱调用，相当于吧所有的实现细节暴露给子类。组合/聚合也称之为黑箱复用，对类以外的对象时无法获取到实现细节的。要根据具体的业务场景来做代码设计，其实也都要遵循 OOP 模型。
 
+以数据库操作为例，先来创建 DBConnection 类：
+```java
+public class DBConnection {
+  public String getConnection(){
+    return "MySQL 数据库连接";
+  }
+}
+```
 
+创建 ProductDao 类：
+```java
+public class ProductDao{
+  private DBConnection dbConnection;
+  public void setDbConnection(DBConnection dbConnection) {
+    this.dbConnection = dbConnection;
+  }
+  public void addProduct(){
+    String conn = dbConnection.getConnection();
+    System.out.println("使用"+conn+"增加产品");
+  }
+}
+```
+
+这就是一种非常典型的合成复用原则应用场景。但是，目前的设计来说，DBConnection 还不是一种抽象，不便于系统扩展。目前的系统支持 MySQL 数据库连接，假设业务发生变化，数据库操作层要支持 Oracle 数据库。当然，我们可以在 DBConnection 中增加对 Oracle 数据库支持的方法。但是违背了开闭原则。其实，我们可以不必修改 Dao 的代码，将 DBConnection 修改为 abstract，来看代码：
+```java
+public abstract class DBConnection {
+  public abstract String getConnection();
+}
+```
+
+然后，将 MySQL 的逻辑抽离：
+```java
+public class MySQLConnection extends DBConnection {
+  @Override
+  public String getConnection() {
+    return "MySQL 数据库连接";
+  }
+}
+```
+
+再创建 Oracle 支持的逻辑：
+```java
+public class OracleConnection extends DBConnection {
+  @Override
+  public String getConnection() {
+    return "Oracle 数据库连接";
+  }
+}
+```
+
+具体选择交给应用层，来看一下类图：
+
+<div align="center">  <img src="/img/internal_design_principles_7.png" width="60%"/> </div><br>
 
 ## 总结
 
