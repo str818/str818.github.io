@@ -181,7 +181,7 @@ public static void main(String[] args) {
 }
 ```
 
-<div align="center">  <img src="/img/internal_design_principles_2.png" width="40%"/> </div><br>
+<div align="center">  <img src="/img/internal_design_principles_2.png" width="60%"/> </div><br>
 
 切记：以抽象为基准比以细节为基准搭建起来的架构要稳定得多，因此在拿到需求之后，要面向接口编程，先顶层再细节来设计代码结构。
 
@@ -278,7 +278,7 @@ public interface ICourseManager {
 
 来看一下类图：
 
-<div align="center">  <img src="/img/internal_design_principles_3.png" width="40%"/> </div><br>
+<div align="center">  <img src="/img/internal_design_principles_3.png" width="60%"/> </div><br>
 
 下面我们来看一下方法层面的单一职责设计。有时候，我们为了偷懒，通常会把一个方法写成下面这样：
 
@@ -397,5 +397,125 @@ public class Dog implements ISwimAnimal,IEatAnimal {
 来看下两种类图的对比，还是非常清晰明了的：
 
 
+<div align="center">  <img src="/img/internal_design_principles_4.png" width="60%"/> </div><br>
 
 
+## 迪米特法则
+
+迪米特法则（Law of Demeter LoD）是指一个对象应该对其他对象保持最少的了解，又叫最少知道原则（Least Knowledge Principle，LKP），尽量降低类与类之间的耦合。迪米特原则主要强调只和朋友交流，不和陌生人说话。出现在成员变量、方法的输入、输出参数中的类都可以称之为成员朋友类，而出现在方法内部的类不属于朋友类。
+
+现在来设计一个权限系统，Boss 需要查看目前发布到线上的课程数量。这时候，Boss 要找到 TeamLeader 去进行统计，TeamLeader 再把统计结果告诉 Boss。
+
+Course 类：
+```java
+public class Course{
+}
+```
+
+TeamLeader 类：
+```java
+public class TeamLeader {
+  public void checkNumberOfCourses(List<Course> courseList){
+    System.out.println("目前已发布的课程数量是： "+courseList.size());
+  }
+}
+```
+
+Boss 类：
+```java
+public class Boss {
+  public void commandCheckNumber(TeamLeader teamLeader){
+    //模拟 Boss 一页一页往下翻页， TeamLeader 实时统计
+    List<Course> courseList = new ArrayList<Course>();
+    for (int i= 0; i < 20 ;i ++){
+      courseList.add(new Course());
+    }
+    teamLeader.checkNumberOfCourses(courseList);
+  }
+}
+```
+
+测试代码：
+```java
+public static void main(String[] args) {
+  Boss boss = new Boss();
+  TeamLeader teamLeader = new TeamLeader();
+  boss.commandCheckNumber(teamLeader);
+}
+```
+
+写到这里，其实功能已经都已经实现，代码看上去也没什么问题。根据迪米特原则，Boss 只想要结果，不需要跟 Course 产生直接的交流。而 TeamLeader 统计需要引用 Course 对象。Boss 和 Course 并不是朋友，从下面的类图就可以看出来：
+
+<div align="center">  <img src="/img/internal_design_principles_5.png" width="60%"/> </div><br>
+
+下面对代码进行改造：
+
+TeamLeader 类：
+```java
+public class TeamLeader {
+  public void checkNumberOfCourses(){
+    List<Course> courseList = new ArrayList<Course>();
+    for(int i = 0 ;i < 20;i++){
+      courseList.add(new Course());
+    }
+    System.out.println("目前已发布的课程数量是： "+courseList.size());
+  }
+}
+```
+
+Boss 类：
+```java
+public class Boss {
+  public void commandCheckNumber(TeamLeader teamLeader){
+    teamLeader.checkNumberOfCourses();
+  }
+}
+```
+
+再来看下面的类图，Course 和 Boss 已经没有关联了。
+
+<div align="center">  <img src="/img/internal_design_principles_6.png" width="60%"/> </div><br>
+
+学习软件设计原则，千万不能形成强迫症。碰到业务复杂的场景，我们需要随机应变。
+
+## 里氏替换原则
+
+里氏替换原则（Liskov Substitution Principle，LSP）是指如果对每一个类型为 T1 的对象 o1，都有类型为 T2 的对象 o2，使得以 T1 定义的所有程序 P 在所有的对象 o1 都替换成 o2 时，程序 P 的行为没有发生变化，那么类型 T2 是类型 T1 的子类型。
+
+定义看上去还是比较抽象，我们重新理解一下，可以理解为一个软件实体如果适用一个父类的话，那一定是适用于其子类，所有引用父类的地方必须能透明地使用其子类的对象，子类对象能够替换父类对象，而程序逻辑不变。根据这个理解，我们总结一下：
+
+引申含义：子类可以扩展父类的功能，但不能改变父类原有的功能。
+
+1. 子类可以实现父类的抽象方法，但不能覆盖父类的非抽象方法。
+2. 子类中可以增加自己特有的方法。
+3. 当子类的方法重载父类的方法时，方法的前置条件（即方法的输入/入参）要比父类方法的输入参数更宽松。
+4. 当子类的方法实现父类的方法时（重写/重载或实现抽象方法），方法的后置条件（即方法的输出/返回值）要比父类更严格或相等。
+
+在前面的开闭原则埋下了一个伏笔，在获取打折后价格时重写覆盖了父类的 getPrice() 方法，增加了一个获取原价格的方法 getOriginPrice()，显然就违背了里氏替换原则。修改一下代码，不应该覆盖 getPrice() 方法，同时增加 getDiscountPrice() 方法：
+```java
+public class JavaDiscountCourse extends JavaCourse {
+  public JavaDiscountCourse(Integer id, String name, Double price) {
+    super(id, name, price);
+  } 
+  public Double getDiscountPrice(){
+    return super.getPrice() * 0.61;
+  }
+}
+```
+
+使用里氏替换原则有以下优点：
+1. 约束继承泛滥，开闭原则的一种体现。
+2. 加强程序的健壮性，同时变更时也可以做到非常好的兼容性，提高程序的维护性、扩展性。降低需求变更时引入的风险。
+
+
+## 合成复用原则
+
+合成复用原则（Composite/Aggregate Reuse Principle，CARP）是指尽量使用对象组合(has-a)/聚合(contanis-a)，而不是集成关系达到软件复用的目的。可以使系统更加灵活，降低类与类之间的耦合度，一个类的变化对其他类造成的影响相对较少。
+
+继承叫做白箱调用，相当于吧所有的实现细节暴露给子类。组合/聚合也称之为黑箱复用，对类以外的对象时无法获取到实现细节的。要根据具体的业务场景来做代码设计，其实也都要遵循 OOP 模型。
+
+
+
+## 总结
+
+设计原则是设计模式的基础。在实际开发过程中，并不是一定要求所有代码都遵循设计原则，我们要考虑人力、时间、成本、质量，不是可以追求完美，要在适当的场景遵循设计原则，体现的是一种平衡取舍，帮助我们设计出更加优雅的代码结构。
