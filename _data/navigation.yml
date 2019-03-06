@@ -33,3 +33,7 @@ java:
     children:
       - title:  基础
         url:    /notes/java/basics/basic
+  - title:      内功心法
+    children:
+      - title:  设计模式
+        url:    /notes/java/internal/design-pattern
