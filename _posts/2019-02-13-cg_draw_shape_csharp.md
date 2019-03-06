@@ -18,7 +18,7 @@ sharing: true
 [源码地址](https://github.com/str818/DarwGraphElementThroughPixel)
 ## 二、实现效果
 
-<div align="center">  <img src="./pic/CG_Draw_Shape_Csharp_1.png" width="60%"/> </div><br>
+<div align="center">  <img src="/img/CG_Draw_Shape_Csharp_1.png" width="60%"/> </div><br>
 
 ## 三、算法实现
 
@@ -52,7 +52,7 @@ public void DrawLineDDA(int xStart, int yStart, int xEnd, int yEnd, int lineWidt
 
 ### 2. 绘制圆弧
 根据圆心和半径可直接计算每个顶点的坐标，设内接正多边形的一个顶点为 Pi(xi,yi)，角度为 θi，则可得出：
-<div align="center">  <img src="./pic/CG_Draw_Shape_Csharp_2.png" width="20%"/> </div><br>
+<div align="center">  <img src="/img/CG_Draw_Shape_Csharp_2.png" width="20%"/> </div><br>
 具体实现代码如下：
 
 ```csharp
@@ -73,7 +73,7 @@ public void DrawArc(int centerX, int centerY, int startAngle, int sweepAngle, in
 ```
 ### 3. 绘制椭圆弧
 绘制椭圆弧的思想与圆弧类似，利用了椭圆的参数方程：
-<div align="center">  <img src="./pic/CG_Draw_Shape_Csharp_3.png" width="30%"/> </div><br>
+<div align="center">  <img src="/img/CG_Draw_Shape_Csharp_3.png" width="30%"/> </div><br>
 具体实现代码如下：
 
 ```csharp
