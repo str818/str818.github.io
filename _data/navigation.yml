@@ -28,6 +28,8 @@ algorithm:
         url:    /notes/algorithm/code-thought
       - title:  数据结构相关
         url:    /notes/algorithm/code-data-structure
+      - title:  经典综合问题
+        url:    /notes/algorithm/code-classical-synthesis
 java:
   - title:      Java基础
     children:
