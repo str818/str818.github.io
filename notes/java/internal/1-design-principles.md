@@ -4,15 +4,17 @@ permalink: /notes/java/internal/design-principles
 key: internal-design-principles
 ---
 
+
+
 ## 开闭原则
 
-开闭原则（Open-Closed Principle，OCP）是指一个软件实体如类、模块和函数应该对扩展开放，对修改关闭。所谓的开闭，也正是对扩展和修改两个行为的一个原则。强调的是用抽象构建框架，用实现扩展细节。可以提高软件系统的可复用性及可维护性。开闭原则，是面向对象设计中最基础的设计原则。它指导我们如何建立稳定灵活的系统，例如：我们版本更新，我尽可能不修改源代码，但是可以增加新功能。
+开闭原则（Open-Closed Principle, OCP）是指一个软件实体如类、模块和函数应该对扩展开放，对修改关闭。所谓的开闭，也正是对扩展和修改两个行为的一个原则。强调的是用抽象构建框架，用实现扩展细节。可以提高软件系统的可复用性及可维护性。开闭原则，是面向对象设计中最基础的设计原则。它指导我们如何建立稳定灵活的系统，例如：我们版本更新，我尽可能不修改源代码，但是可以增加新功能。
 
 在现实生活中对于开闭原则也有体现。比如，很多互联网公司都实行弹性制作息时间，规定每天工作 8 小时。意思就是说，对于每天工作 8 小时这个规定是关闭的，但是你什么时候来，什么时候走是开放的。早来早走，晚来晚走。
 
 实现开闭原则的核心思想就是面向抽象编程，接下来我们来看一段代码：
 
-以网络课程的课程体系为例，首先创建一个课程接口 ICourse：
+以咕泡学院的课程体系为例，首先创建一个课程接口 ICourse：
 
 ```java
 public interface ICourse {
@@ -45,7 +47,7 @@ public class JavaCourse implements ICourse{
 }
 ```
 
-现在我们要给 Java 架构课程做活动，价格优惠。如果修改 JavaCourse 中的 getPrice() 方法，则会存在一定的风险，可能影响其他地方的调用结果。我们如何在不修改原有代码前提前下，实现价格优惠这个功能呢？现在，我们再写一个处理优惠逻辑的类，JavaDiscountCourse 类（思考一下为什么要叫 JavaDiscountCourse，而不叫 DiscountCourse）：
+现在我们要给 Java 架构课程做活动，价格优惠。如果修改 JavaCourse 中的 getPrice() 方法，则会存在一定的风险，可能影响其他地方的调用结果。我们如何在不修改原有代码前提前下，实现价格优惠这个功能呢？现在，我们再写一个处理优惠逻辑的类，JavaDiscountCourse 类：
 
 ```java
 public class JavaDiscountCourse extends JavaCourse {
@@ -62,7 +64,7 @@ public class JavaDiscountCourse extends JavaCourse {
 ```
 简要的类图为：
 
-<div align="center">  <img src="/img/internal_design_principles_1.png" width="40%"/> </div><br>
+<div align="center">  <img src="/img/internal_design_principles_1.png" width="30%"/> </div><br>
 
 ## 依赖倒置原则
 
