@@ -14,7 +14,7 @@ key: internal-design-principles
 
 实现开闭原则的核心思想就是面向抽象编程，接下来我们来看一段代码：
 
-以咕泡学院的课程体系为例，首先创建一个课程接口 ICourse：
+以网络课程的课程体系为例，首先创建一个课程接口 ICourse：
 
 ```java
 public interface ICourse {
@@ -64,7 +64,7 @@ public class JavaDiscountCourse extends JavaCourse {
 ```
 简要的类图为：
 
-<div align="center">  <img src="/img/internal_design_principles_1.png" width="30%"/> </div><br>
+<div align="center">  <img src="/img/internal_design_principles_1.png" width="40%"/> </div><br>
 
 ## 依赖倒置原则
 
@@ -164,7 +164,7 @@ public static void main(String[] args) {
 public class Tom {
   private ICourse course;
   public void setCourse(ICourse course) {
-  this.course = course;
+    this.course = course;
   }
   public void study(){
     course.study();
