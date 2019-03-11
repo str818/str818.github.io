@@ -183,140 +183,35 @@ public static void main(String[] args) {
 }
 ```
 
-<div align="center">  <img src="/img/internal_design_principles_2.png" width="60%"/> </div><br>
+<div align="center">  <img src="/img/internal_design_principles_2.png" width="70%"/> </div><br>
 
 切记：以抽象为基准比以细节为基准搭建起来的架构要稳定得多，因此在拿到需求之后，要面向接口编程，先顶层再细节来设计代码结构。
 
 ## 单一职能原则
 
-单一职责（Simple Responsibility Pinciple，SRP）是指不要存在多于一个导致类变更的原因。假设我们有一个 Class 负责两个职责，一旦发生需求变更，修改其中一个职责的逻辑代码，有可能会导致另一个职责的功能发生故障。这样一来，这个 Class 存在两个导致类变更的原因。如何解决这个问题呢？我们就要给两个职责分别用两个Class 来实现，进行解耦。后期需求变更维护互不影响。这样的设计，可以降低类的复杂度，提高类的可读性，提高系统的可维护性，降低变更引起的风险。总体来说就是一个 Class/Interface/Method 只负责一项职责。
+单一职责（Simple Responsibility Pinciple，SRP）是指不要存在多于一个导致类变更的原因。
 
-接下来，我们来看代码实例，还是用课程举例，我们的课程有直播课和录播课。直播课不能快进和快退，录播可以可以任意的反复观看，功能职责不一样。还是先创建一个 Course 类：
+假设我们有一个 Class 负责两个职责，一旦发生需求变更，修改其中一个职责的逻辑代码，有可能会导致另一个职责的功能发生故障。这样一来，这个 Class 存在两个导致类变更的原因。如何解决这个问题呢？我们就要给两个职责分别用两个Class 来实现，进行解耦。后期需求变更维护互不影响。这样的设计，可以降低类的复杂度，提高类的可读性，提高系统的可维护性，降低变更引起的风险。总体来说就是一个 Class/Interface/Method 只负责一项职责。
+
+以打电话的过程为例，电话通话的时候有 4 个过程发生：拨号、通话、回应、挂机，那我们写一个接口。
+
+<div align="center">  <img src="/img/internal_design_principles_SRP_1.png" width="40%"/> </div><br>
 
 ```java
-public class Course {
-  public void study(String courseName){
-    if("直播课".equals(courseName)){
-      System.out.println(courseName + "不能快进");
-    }else{
-      System.out.println(courseName + "可以反复回看");
-    }
-  }
+public interface IPhone{
+  // 拨通电话
+  public void dial(String phoneNumber);
+  // 通话
+  public void chat(Object o);
+  // 通话完毕，挂电话
+  public void hangup();
 }
 ```
 
-看代码调用：
-```java
-public static void main(String[] args) {
-  Course course = new Course();
-  course.study("直播课");
-  course.study("录播课");
-}
-```
+单一职责原则要求一个接口或类只有一个原因引起变化，也就是一个接口或类只有一个职责，它就负责一件事情。显然，IPhone 接口并不是只负责一件事。IPhone 接口包含了两个职责：协议管理与数据传输，`dial()` 和 `hangup()` 两个方法实现的是协议管理，分别负责拨号接通和挂机；`chat()` 实现的是数据的传送。这两个职责都会引起类的变化，但它们不会互相影响，这时可以考虑拆分成两个接口。
 
-从上面代码来看，Course 类承担了两种处理逻辑。假如，现在要对课程进行加密，那么直播课和录播课的加密逻辑都不一样，必须要修改代码。而修改代码逻辑势必会相互影响容易造成不可控的风险。我们对职责进行分离解耦，来看代码，分别创建两个类ReplayCourse 和 LiveCourse：
 
-LiveCourse 类：
-```java
-public class LiveCourse{
-  public void study(String courseName){
-    System.out.println(courseName + "可以反复回看");
-  }
-}
-```
 
-ReplayCourse 类：
-```java
-public class ReplayCourse {
-  public void study(String courseName){
-    System.out.println(courseName + "不能快进");
-  }
-}
-```
-
-调用代码：
-```java
-public static void main(String[] args) {
-  LiveCourse liveCourse = new LiveCourse();
-  liveCourse.study("直播课");
-  
-  ReplayCourse replayCourse = new ReplayCourse();
-  replayCourse.study("录播课");
-}
-```
-
-业务继续发展，课程要做权限。没有付费的学员可以获取课程基本信息，已经付费的学员可以获得视频流，即学习权限。那么对于控制课程层面上至少有两个职责。我们可以把展示职责和管理职责分离开来，都实现同一个抽象依赖。设计一个顶层接口,创建ICourse 接口：
-
-```java
-public interface ICourse {
-  //获得基本信息
-  String getCourseName();
-  //获得视频流
-  byte[] getCourseVideo();
-  //学习课程
-  void studyCourse();
-  //退款
-  void refundCourse();
-}
-```
-
-可以把这个接口拆成两个接口，创建一个接口 ICourseInfo 和 ICourseManager：
-
-ICourseInfo 接口：
-```java
-public interface ICourseInfo {
-  String getCourseName();
-  byte[] getCourseVideo();
-}
-```
-
-ICourseManager 接口：
-```java
-public interface ICourseManager {
-  void studyCourse();
-  void refundCourse();
-}
-```
-
-来看一下类图：
-
-<div align="center">  <img src="/img/internal_design_principles_3.png" width="70%"/> </div><br>
-
-下面我们来看一下方法层面的单一职责设计。有时候，我们为了偷懒，通常会把一个方法写成下面这样：
-
-```java
-private void modifyUserInfo(String userName,String address){
-  userName = "Tom";
-  address = "Changsha";
-}
-```
-
-还可能写成这样：
-```java
-private void modifyUserInfo(String userName,String... fileds){
-  userName = "Tom";
-  //address = "Changsha";
-}
-private void modifyUserInfo(String userName,String address,boolean bool){
-  if(bool){
-
-  }else{
-
-  }
-  userName = "Tom";
-  address = "Changsha";
-}
-```
-
-显然，上面的 modifyUserInfo()方法中都承担了多个职责，既可以修改 userName,也可以修改 address，甚至更多，明显不符合单一职责。那么我们做如下修改，把这个方法拆成两个：
-```java
-private void modifyUserName(String userName){
-  userName = "Tom";
-}
-private void modifyAddress(String address){
-  address = "Changsha";
-}
-```
 
 这修改之后，开发起来简单，维护起来也容易。但是，我们在实际开发中会项目依赖，组合，聚合这些关系，还有还有项目的规模，周期，技术人员的水平，对进度的把控，很多类都不符合单一职责。但是，我们在编写代码的过程，尽可能地让接口和方法保持单一职责，对我们项目后期的维护是有很大帮助的。
 
