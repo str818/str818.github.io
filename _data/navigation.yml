@@ -37,6 +37,8 @@ java:
         url:    /notes/java/basics/basic
   - title:      内功心法
     children:
+      - title:  UML类图
+        url:    /notes/java/internal/class-diagram
       - title:  设计原则
         url:    /notes/java/internal/design-principles
       - title:  设计模式
