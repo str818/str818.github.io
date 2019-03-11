@@ -8,7 +8,7 @@ key: internal-class-diagram
 
 类图是面向对象系统中最常用和最重要的图，在类图中类使用包含类名、属性和方法且带有分割线的矩形来表示，比如下图表示一个 Employee 类，它包含 name、age 和 email 这 3 个属性，以及 modifyInfo() 方法。
 
-<div align="center">  <img src="/img/internal_design_class_diagram_1.png" width="30%"/> </div><br>
+<div align="center">  <img src="/img/internal_design_class_diagram_1.png" width="27%"/> </div><br>
 
 属性/方法名称前的符号：`+` 表示 public，`-` 表示 private，`#` 表示 protected。
 
