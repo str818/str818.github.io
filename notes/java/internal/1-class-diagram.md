@@ -10,13 +10,8 @@ key: internal-class-diagram
 
 <div align="center">  <img src="/img/internal_design_class_diagram_1.png" width="30%"/> </div><br>
 
-属性/方法名称前的符号：
+属性/方法名称前的符号：`+` 表示 public，`-` 表示 private，`#` 表示 protected。
 
-| 符号 |   含义    |
-| :--: | :-------: |
-|  +   |  public   |
-|  -   |  private  |
-|  #   | protected |
 
 ## 二、类与类之间的关系
 
