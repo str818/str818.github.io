@@ -6,7 +6,7 @@ key: internal-design-principles
 
 
 
-## 开闭原则
+## 一、开闭原则
 
 开闭原则（Open-Closed Principle, OCP）是指一个软件实体如类、模块和函数应该对扩展开放，对修改关闭。
 
@@ -68,7 +68,7 @@ public class JavaDiscountCourse extends JavaCourse {
 
 <div align="center">  <img src="/img/internal_design_principles_1.png" width="30%"/> </div><br>
 
-## 依赖倒置原则
+## 二、依赖倒置原则
 
 依赖倒置原则（Dependence Inversion Principle, DIP）是指设计代码结构时，高层模块不应该依赖底层模块，二者都应该依赖其抽象。抽象不应该依赖细节；细节应该依赖抽象。
 
@@ -191,7 +191,7 @@ public static void main(String[] args) {
 
 切记：以抽象为基准比以细节为基准搭建起来的架构要稳定得多，因此在拿到需求之后，要面向接口编程，先顶层再细节来设计代码结构。
 
-## 单一职能原则
+## 三、单一职能原则
 
 单一职责（Simple Responsibility Pinciple，SRP）是指不要存在多于一个导致类变更的原因。
 
@@ -218,7 +218,7 @@ public interface IPhone{
 
 这修改之后，开发起来简单，维护起来也容易。但是，我们在实际开发中会项目依赖，组合，聚合这些关系，还有还有项目的规模，周期，技术人员的水平，对进度的把控，很多类都不符合单一职责。但是，我们在编写代码的过程，尽可能地让接口和方法保持单一职责，对我们项目后期的维护是有很大帮助的。
 
-## 接口隔离原则
+## 四、接口隔离原则
 
 接口隔离原则（Interface Segregation Principle, ISP）是指用多个专门的接口，而不使用单一的总接口，客户端不应该依赖它不需要的接口。
 
@@ -302,7 +302,7 @@ public class Dog implements ISwimAnimal,IEatAnimal {
 <div align="center">  <img src="/img/internal_design_principles_ISP_1.png" width="80%"/> </div><br>
 
 
-## 迪米特法则
+## 五、迪米特法则
 
 迪米特法则（Law of Demeter LoD）是指一个对象应该对其他对象保持最少的了解，又叫最少知道原则（Least Knowledge Principle，LKP），尽量降低类与类之间的耦合。迪米特原则主要强调只和朋友交流，不和陌生人说话。出现在成员变量、方法的输入、输出参数中的类都可以称之为成员朋友类，而出现在方法内部的类不属于朋友类。
 
@@ -380,7 +380,7 @@ public class Boss {
 
 学习软件设计原则，千万不能形成强迫症。碰到业务复杂的场景，我们需要随机应变。
 
-## 里氏替换原则
+## 六、里氏替换原则
 
 里氏替换原则（Liskov Substitution Principle，LSP）是指如果对每一个类型为 T1 的对象 o1，都有类型为 T2 的对象 o2，使得以 T1 定义的所有程序 P 在所有的对象 o1 都替换成 o2 时，程序 P 的行为没有发生变化，那么类型 T2 是类型 T1 的子类型。
 
@@ -560,7 +560,7 @@ public class Square implements Quadrangle {
 此时，如果把 resize() 方法的参数换成四边形 Quadrangle 类，方法内部就会报错。因为正方形 Square 已经没有了 setWidth() 和 setHeight() 方法了。因此，为了约束继承泛滥，resize() 方法参数只能用 Rectangle 长方形。
 
 
-## 合成复用原则
+## 七、合成复用原则
 
 合成复用原则（Composite/Aggregate Reuse Principle，CARP）是指尽量使用对象组合(has-a)/聚合(contanis-a)，而不是集成关系达到软件复用的目的。可以使系统更加灵活，降低类与类之间的耦合度，一个类的变化对其他类造成的影响相对较少。
 
