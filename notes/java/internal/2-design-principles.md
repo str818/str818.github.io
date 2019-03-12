@@ -8,7 +8,9 @@ key: internal-design-principles
 
 ## 开闭原则
 
-开闭原则（Open-Closed Principle, OCP）是指一个软件实体如类、模块和函数应该对扩展开放，对修改关闭。所谓的开闭，也正是对扩展和修改两个行为的一个原则。强调的是用抽象构建框架，用实现扩展细节。可以提高软件系统的可复用性及可维护性。开闭原则，是面向对象设计中最基础的设计原则。它指导我们如何建立稳定灵活的系统，例如：我们版本更新，我尽可能不修改源代码，但是可以增加新功能。
+开闭原则（Open-Closed Principle, OCP）是指一个软件实体如类、模块和函数应该对扩展开放，对修改关闭。
+
+所谓的开闭，也正是对扩展和修改两个行为的一个原则。强调的是用抽象构建框架，用实现扩展细节。可以提高软件系统的可复用性及可维护性。开闭原则，是面向对象设计中最基础的设计原则。它指导我们如何建立稳定灵活的系统，例如：我们版本更新，我尽可能不修改源代码，但是可以增加新功能。
 
 在现实生活中对于开闭原则也有体现。比如，很多互联网公司都实行弹性制作息时间，规定每天工作 8 小时。意思就是说，对于每天工作 8 小时这个规定是关闭的，但是你什么时候来，什么时候走是开放的。早来早走，晚来晚走。
 
@@ -64,11 +66,13 @@ public class JavaDiscountCourse extends JavaCourse {
 ```
 简要的类图为：
 
-<div align="center">  <img src="/img/internal_design_principles_1.png" width="40%"/> </div><br>
+<div align="center">  <img src="/img/internal_design_principles_1.png" width="30%"/> </div><br>
 
 ## 依赖倒置原则
 
-依赖倒置原则（Dependence Inversion Principle, DIP）是指设计代码结构时，高层模块不应该依赖底层模块，二者都应该依赖其抽象。抽象不应该依赖细节；细节应该依赖抽象。通过依赖倒置，可以减少类与类之间的耦合性，提高系统的稳定性，提高代码的可读性和可维护性，并能够降低修改程序所造成的风险。接下来看一个案例，还是以课程为例，先来创建一个类 Tom：
+依赖倒置原则（Dependence Inversion Principle, DIP）是指设计代码结构时，高层模块不应该依赖底层模块，二者都应该依赖其抽象。抽象不应该依赖细节；细节应该依赖抽象。
+
+通过依赖倒置，可以减少类与类之间的耦合性，提高系统的稳定性，提高代码的可读性和可维护性，并能够降低修改程序所造成的风险。接下来看一个案例，还是以课程为例，先来创建一个类 Tom：
 
 ```java
 public class Tom {
@@ -210,14 +214,15 @@ public interface IPhone{
 
 单一职责原则要求一个接口或类只有一个原因引起变化，也就是一个接口或类只有一个职责，它就负责一件事情。显然，IPhone 接口并不是只负责一件事。IPhone 接口包含了两个职责：协议管理与数据传输，`dial()` 和 `hangup()` 两个方法实现的是协议管理，分别负责拨号接通和挂机；`chat()` 实现的是数据的传送。这两个职责都会引起类的变化，但它们不会互相影响，这时可以考虑拆分成两个接口。
 
-
-
+<div align="center">  <img src="/img/internal_design_principles_SRP_2.png" width="70%"/> </div><br>
 
 这修改之后，开发起来简单，维护起来也容易。但是，我们在实际开发中会项目依赖，组合，聚合这些关系，还有还有项目的规模，周期，技术人员的水平，对进度的把控，很多类都不符合单一职责。但是，我们在编写代码的过程，尽可能地让接口和方法保持单一职责，对我们项目后期的维护是有很大帮助的。
 
 ## 接口隔离原则
 
-接口隔离原则（Interface Segregation Principle, ISP）是指用多个专门的接口，而不使用单一的总接口，客户端不应该依赖它不需要的接口。这个原则指导我们在设计接口时应当注意一下几点：
+接口隔离原则（Interface Segregation Principle, ISP）是指用多个专门的接口，而不使用单一的总接口，客户端不应该依赖它不需要的接口。
+
+这个原则指导我们在设计接口时应当注意一下几点：
 
 1. 一个类对一类的依赖应该建立在最小的接口之上。
 2. 建立单一接口，不要建立庞大臃肿的接口。
@@ -294,7 +299,7 @@ public class Dog implements ISwimAnimal,IEatAnimal {
 来看下两种类图的对比，还是非常清晰明了的：
 
 
-<div align="center">  <img src="/img/internal_design_principles_4.png" width="80%"/> </div><br>
+<div align="center">  <img src="/img/internal_design_principles_ISP_1.png" width="80%"/> </div><br>
 
 
 ## 迪米特法则
