@@ -209,6 +209,8 @@ public enum EnumSingleton {
 
 原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。
 
+> 跟 MM 用 QQ 聊天，一定要说些深情的话语了，我搜集了好多肉麻的情话，需要时只要 copy 出来放到 QQ 里面就行了，这就是我的情话 prototype 了。
+
 适用场景：
 
 1. 类初始化消耗资源较多。
@@ -223,6 +225,8 @@ public enum EnumSingleton {
 #### Ⅱ. 深克隆
 
 除了浅克隆要克隆的值外，还负责克隆引用类型的数据。那些引用其他对象的变量将指向被复制过的新对象，而不再是原有的那些被引用的对象。
+
+如果克隆的目标是单例对象，那么深克隆就会破坏单例。想要防止克隆破坏单例就要禁止深克隆，要么单例类不实现 Cloneable 接口；要么重写 clone() 方法，在 clone 方法中返回单例对象。
 
 #### Ⅲ. 示例
 
@@ -295,15 +299,13 @@ public class DeepCloneTest {
         QiTianDaSheng qiTianDaSheng = new QiTianDaSheng();
         try {
             QiTianDaSheng clone = (QiTianDaSheng)qiTianDaSheng.clone();
-            // false
-            System.out.println("深克隆： " + (qiTianDaSheng.jinGuBang == clone.jinGuBang));
+            System.out.println("深克隆： " + (qiTianDaSheng.jinGuBang == clone.jinGuBang));// false
         } catch (Exception e) {
             e.printStackTrace();
         }
         QiTianDaSheng q = new QiTianDaSheng();
         QiTianDaSheng n = q.shallowClone(q);
-        // true
-        System.out.println("浅克隆： " + (q.jinGuBang == n.jinGuBang));
+        System.out.println("浅克隆： " + (q.jinGuBang == n.jinGuBang));// true
     }
 }
 ```
