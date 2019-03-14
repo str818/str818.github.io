@@ -45,7 +45,14 @@ Java 的参数是以值传递的形式传入方法中，而不是引用传递。
 
 有继承、有方法重写、有父类引用指向子类对象。
 
-### 继承
+### 访问控制权限
+
+|     修饰词     | 本类 | 同一个包的类 | 子类 | 任何地方 |
+| :------------: | :--: | :----------: | :--: | :------: |
+|    private     |  √   |      ×       |  ×   |    ×     |
+| default (默认) |  √   |      √       |  ×   |    ×     |
+|   protected    |  √   |      √       |  √   |    ×     |
+|     public     |  √   |      √       |  √   |    √     |
 
 ### 重写
 
@@ -85,6 +92,15 @@ Java 的参数是以值传递的形式传入方法中，而不是引用传递。
 
 接口的字段默认都是 static 和 final 的。
 
+### 内部类
+
+内部类可以直接访问外部类的成员，包括 private 修饰的变量和方法。
+
+- 静态内部类
+- 匿名内部类
+- 成员内部类
+- 局部内部类
+
 ### Object
 
 #### 1. toString()
@@ -101,6 +117,86 @@ public boolean equals(Object obj){
 }
 ```
 
+##### 重写规则
+
+Ⅰ 自反性
+
+```java
+x.equals(x); // true
+```
+
+Ⅱ 对称性
+
+```java
+x.equals(y) == y.equals(x); // true
+```
+
+Ⅲ 传递性
+
+```java
+if (x.equals(y) && y.equals(z))
+    x.equals(z); // true;
+```
+
+Ⅳ 一致性
+
+多次调用 equals() 方法结果不变
+
+```java
+x.equals(y) == x.equals(y); // true
+```
+
+Ⅴ 与 null 的比较
+
+对任何不是 null 的对象 x 调用 x.equals(null) 结果都为 false
+
+```java
+x.equals(null); // false;
+```
+
+##### 实现
+
+- 检查是否为同一个对象的引用，如果是直接返回 true
+- 检查是否是同一个类型，如果不是，直接返回 false
+- 将 Object 对象进行转型
+- 判断每个关键域是否相等
+
+```java
+public class EqualExample {
+
+    private int x;
+    private int y;
+    private int z;
+
+    public EqualExample(int x, int y, int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EqualExample that = (EqualExample) o;
+
+        if (x != that.x) return false;
+        if (y != that.y) return false;
+        return z == that.z;
+    }
+}
+```
+
+#### 3. hashCode()
+
+hashCode() 返回散列值，而 equals() 是用来判断两个对象是否等价。等价的两个对象散列值一定相同，但是散列值相同的两个对象不一定等价。
+
+在覆盖 equals() 方法时应当总是覆盖 hashCode() 方法，保证等价的两个对象散列值也相等。
+
+#### 4. finalize()
+
+垃圾回收之前，自动调用此方法。
 
 ## 关键字
 
