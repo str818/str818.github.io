@@ -7,16 +7,15 @@ lang: zh-Hans
 key: Leetcode_Double_Pointer
 pageview: true
 toc: true
-sharing: true
 ---
 
 ## 两个链表的交集
 
-[Leetcode - 160 Intersection of Two Linked Lists (Easy)](https://leetcode.com/problems/intersection-of-two-linked-lists/)
-
 |   一刷   | 二刷 | 三刷 | 四刷 |
 | :------: | :--: | :--: | :--: |
 | 19.03.20 |      |      |      |
+
+[Leetcode - 160 Intersection of Two Linked Lists (Easy)](https://leetcode.com/problems/intersection-of-two-linked-lists/)
 
 题目描述：给定两个链表，求出两个链表相交的结点。
 
@@ -25,7 +24,7 @@ Input: intersectVal = 8, listA = [4,1,8,4,5], listB = [5,0,1,8,4,5], skipA = 2, 
 Output: Reference of the node with value = 8
 ```
 
-<div align="center">  <img src="/img/leetcode-160.png" width="70%"/> </div><br>
+<div align="center">  <img src="/img/leetcode-160.png" width="50%"/> </div><br>
 
 解题思路：两个指针分别在两个链表上向前移动，当其中一个指针移动到了链表的末尾，将该指针指向另一个链表的头结点，另一个指针同理，当两个指针指向同一个结点时，该结点即为链表的相交结点。
 
