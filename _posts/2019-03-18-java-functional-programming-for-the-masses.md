@@ -6,7 +6,6 @@ tags: Java
 lang: zh-Hans
 key: Java_Functional_programming_for_the_masses
 pageview: true
-comment: false
 toc: true
 sharing: true
 ---
