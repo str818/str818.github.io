@@ -18,7 +18,7 @@ show_subscribe: false
 
 ## 二、图解过程
 
-<div align="center">  <img src="/img/shell.png" width="80%"/> </div><br>
+<div align="center">  <img src="/img/algorithmic_shell_sort.png" width="80%"/> </div><br>
 
 间隔 D 有很多中选择，此处使用的是希尔增量 D = n/2, n/4 ,..., 1。
 
