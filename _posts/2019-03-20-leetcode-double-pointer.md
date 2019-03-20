@@ -12,10 +12,6 @@ show_subscribe: false
 
 ## 两个链表的交集
 
-|   一刷   | 二刷 | 三刷 | 四刷 |
-| :------: | :--: | :--: | :--: |
-| 19.03.20 |      |      |      |
-
 [Leetcode - 160 Intersection of Two Linked Lists (Easy)](https://leetcode.com/problems/intersection-of-two-linked-lists/)
 
 题目描述：给定两个链表，求出两个链表相交的结点。

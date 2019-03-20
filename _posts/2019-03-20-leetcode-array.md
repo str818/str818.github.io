@@ -12,10 +12,6 @@ show_subscribe: false
 
 ## 多数元素
 
-|   一刷   | 二刷 | 三刷 | 四刷 |
-| :------: | :--: | :--: | :--: |
-| 19.03.20 |      |      |      |
-
 [Leetcode - 169 Majority Element (Easy)](https://leetcode.com/problems/majority-element/)
 
 题目描述：找出数组中出现次数超过 `⌊ n/2 ⌋` 次的元素，假设这个元素一定存在。
