@@ -22,7 +22,7 @@ show_subscribe: false
 
 冒泡排序升序排列的整个过程如下图，数组共包含 6 个元素，第一轮将 6 个元素中最大的元素「11」交换至数组的最后；第二轮将剩下 5 个元素中的最大元素「8」交换至「11」的前面。依次执行，直到所有的元素比较完成。总的来说，冒泡排序升序排列就是不断将最大的元素移动到后面的过程。
 
-<div align="center">  <img src="/img/algorithmic_bubble_sort_1.gif" width="80%"/> </div><br>
+<div align="center">  <img src="/img/algorithmic_bubble_sort_1.gif" width="60%"/> </div><br>
 
 ## 三、核心代码
 
@@ -33,10 +33,7 @@ public static void bubbleSort(int[] arr){
     for(int i = 0; i < e; i++){
       if(arr[i] > arr[i + 1]){
         swap(arr, i, i + 1);
-      }
-    }
-  }
-}
+}}}}
 ```
 从上面的动图可以看出，当将最大的两个元素交换到正确位置时，前面的4个元素已经排序完成，为了减少不必要的比较，可以增加一个标志位，判断排序的结果，只要有一个轮次没有发生交换，表示数组已经排序完成，不再执行下面的轮次。
 
