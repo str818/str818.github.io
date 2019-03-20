@@ -1,7 +1,7 @@
 ---
 layout: article
-title: 【Leetcode】双指针系列题解
-tags: Java
+title: 「双指针」系列题解
+tags: Leetcode
 
 lang: zh-Hans
 key: Leetcode_Double_Pointer

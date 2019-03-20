@@ -1,7 +1,7 @@
 ---
 layout: article
-title: 【Leetcode】树系列题解
-tags: Java
+title: 「树」系列题解
+tags: Leetcode
 
 lang: zh-Hans
 key: Leetcode_Tree

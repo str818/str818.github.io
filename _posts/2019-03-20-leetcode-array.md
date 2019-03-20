@@ -1,7 +1,7 @@
 ---
 layout: article
-title: 【Leetcode】数组系列题解
-tags: Java
+title: 「数组」系列题解
+tags: Leetcode
 
 lang: zh-Hans
 key: Leetcode_Array
