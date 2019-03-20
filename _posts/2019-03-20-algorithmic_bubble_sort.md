@@ -12,7 +12,7 @@ show_subscribe: false
 
 ## 一、思想
 
-每轮冒泡（循环）把最小/大的数放在最后。
+**每轮冒泡（循环）把最小/大的数放在最后。**
 
 对相邻的元素进行两两比较，顺序相反则进行交换，这样，每一趟都会将最小或最大的元素交换的顶端，最终达到完全有序，例如，升序排列，就是最大的元素移动后面的过程。
 
@@ -29,12 +29,12 @@ show_subscribe: false
 ```java
 public static void bubbleSort(int[] arr){
   
-  if(arr == null || arr.length < 2) return;
+    if(arr == null || arr.length < 2) return;
   
-  for(int e = arr.length - 1; e > 0; e--){
-    for(int i = 0; i < e; i++){
-      if(arr[i] > arr[i + 1]){
-        swap(arr, i, i + 1);
+    for(int e = arr.length - 1; e > 0; e--){
+        for(int i = 0; i < e; i++){
+            if(arr[i] > arr[i + 1]){
+                swap(arr, i, i + 1);
 }}}}
 ```
 
