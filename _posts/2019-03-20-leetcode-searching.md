@@ -1,6 +1,6 @@
 ---
 layout: article
-title: 「搜索」系列题解
+title: Leetcode——「搜索」系列题解
 tags: Leetcode
 
 lang: zh-Hans
