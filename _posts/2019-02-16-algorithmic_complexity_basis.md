@@ -7,7 +7,7 @@ lang: zh-Hans
 key: Algorithmic_Complexity_Basis
 pageview: true
 toc: true
-sharing: true
+show_subscribe: false
 ---
 
 ## 一、什么是算法复杂度？
