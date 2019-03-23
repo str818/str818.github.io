@@ -26,9 +26,9 @@ show_subscribe: false
 public static void quickSort(int[] arr, int l, int r){
     if(l < r){
         swap(arr, l + (int)(Math.random() * (r - l + 1))， r);  //随机选取一个基准数
-        int[] p = partition(arr, l, r); //小于区域[0,p[0]] 大于区域[p[1],r]
+        int[] p = partition(arr, l, r);                         //小于区域[0,p[0]] 大于区域[p[1],r]
         quickSort(arr, l, p[0] - 1);
-		    quickSort(arr, p[1] + 1, r);
+        quickSort(arr, p[1] + 1, r);
     }
 }
 // 以基准数为界，大的在右边，小的在左边   基准数放置在数组的最后一位
