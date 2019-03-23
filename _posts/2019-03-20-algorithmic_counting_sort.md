@@ -1,6 +1,6 @@
 ---
 layout: article
-title: 算法 - 计数排序
+title: 算法 —「排序」计数排序
 tags: 算法
 
 lang: zh-Hans

@@ -1,6 +1,6 @@
 ---
 layout: article
-title: 算法 - 选择排序
+title: 算法 —「排序」选择排序
 tags: 算法
 
 lang: zh-Hans

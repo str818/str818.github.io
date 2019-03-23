@@ -1,6 +1,6 @@
 ---
 layout: article
-title: 算法 - 复杂度基础
+title: 算法 — 复杂度基础
 tags: 算法
 
 lang: zh-Hans
