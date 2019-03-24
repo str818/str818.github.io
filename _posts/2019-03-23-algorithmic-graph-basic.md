@@ -253,3 +253,139 @@ public static List<Node> sortedTopology(Graph graph) {
     return result;
 }
 ```
+
+## 六、最小生成树
+
+加权图是一种为每条边关联一个权值或者成本的图模型。这种图能够自然地表示许多应用，在一幅航空图中，边表示航线，权值则可以表示距离或是费用。类似这些的场景中，最令人感兴趣的自然是将成本最小化。
+
+图的生成树是它的一棵含有其所有顶点的无环连通子图。一幅加权无向图的最小生成树是它的一棵权值(树中所有边的权值之和)最小的生成树。
+
+### 1. Prim 算法
+
+该算法每一步都会为一棵生长中的树添加一条边。一开始这棵树只有一个顶点，然后会向它添加 V-1 条边，每次总是将下一条连接树中的顶点与不在树中的顶点且权重最小的边加入树中。
+
+```java
+// 升序比较器
+public static class EdgeComparator implements Comparator<Edge> {
+    @Override
+    public int compare(Edge o1, Edge o2) {
+        return o1.weight - o2.weight;
+    }
+}
+
+public static Set<Edge> primMST(Graph graph) {
+
+    // 边权值升序的优先级队列，存储与当前生成树关联的边
+    PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(new EdgeComparator());
+    // 生成树中的结点
+    HashSet<Node> set = new HashSet<>();
+    // 生成树中的边
+    Set<Edge> result = new HashSet<>();
+    // 遍历图中所有结点
+    for (Node node : graph.nodes.values()) {
+        // 若结点不在生成树中，则将结点加入树，并结点关联的边加入优先级队列
+        if (!set.contains(node)) {
+            set.add(node);
+            for (Edge edge : node.edges) {
+                priorityQueue.add(edge);
+            }
+            while (!priorityQueue.isEmpty()) {
+                Edge edge = priorityQueue.poll();
+                Node toNode = edge.to;
+                if (!set.contains(toNode)) {
+                  set.add(toNode);
+                  result.add(edge);
+                  for (Edge nextEdge : toNode.edges) {
+                    priorityQueue.add(nextEdge);
+                  }
+                }
+            }
+        }
+    }
+    return result;
+}
+```
+
+### 2. Kruskal 算法
+
+依次将图中权重最小的边加入最小生成树中，加入的边不会与已经加入的边构成环，直到树中含有 V-1 条边为止。
+
+```java
+    // Union-Find Set
+    public static class UnionFind {
+      private HashMap<Node, Node> fatherMap;
+      private HashMap<Node, Integer> rankMap;
+
+      public UnionFind() {
+        fatherMap = new HashMap<Node, Node>();
+        rankMap = new HashMap<Node, Integer>();
+      }
+
+      private Node findFather(Node n) {
+        Node father = fatherMap.get(n);
+        if (father != n) {
+          father = findFather(father);
+        }
+        fatherMap.put(n, father);
+        return father;
+      }
+
+      public void makeSets(Collection<Node> nodes) {
+        fatherMap.clear();
+        rankMap.clear();
+        for (Node node : nodes) {
+          fatherMap.put(node, node);
+          rankMap.put(node, 1);
+        }
+      }
+
+      public boolean isSameSet(Node a, Node b) {
+        return findFather(a) == findFather(b);
+      }
+
+      public void union(Node a, Node b) {
+        if (a == null || b == null) {
+          return;
+        }
+        Node aFather = findFather(a);
+        Node bFather = findFather(b);
+        if (aFather != bFather) {
+          int aFrank = rankMap.get(aFather);
+          int bFrank = rankMap.get(bFather);
+          if (aFrank <= bFrank) {
+            fatherMap.put(aFather, bFather);
+            rankMap.put(bFather, aFrank + bFrank);
+          } else {
+            fatherMap.put(bFather, aFather);
+            rankMap.put(aFather, aFrank + bFrank);
+          }
+        }
+      }
+    }
+    // 升序比较器
+    public static class EdgeComparator implements Comparator<Edge> {
+      @Override
+      public int compare(Edge o1, Edge o2) {
+        return o1.weight - o2.weight;
+      }
+    }
+
+    public static Set<Edge> kruskalMST(Graph graph) {
+      UnionFind unionFind = new UnionFind();
+      unionFind.makeSets(graph.nodes.values());
+      PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(new EdgeComparator());
+      for (Edge edge : graph.edges) {
+        priorityQueue.add(edge);
+      }
+      Set<Edge> result = new HashSet<>();
+      while (!priorityQueue.isEmpty()) {
+        Edge edge = priorityQueue.poll();
+        if (!unionFind.isSameSet(edge.from, edge.to)) {
+          result.add(edge);
+          unionFind.union(edge.from, edge.to);
+        }
+      }
+      return result;
+    }
+```
+
