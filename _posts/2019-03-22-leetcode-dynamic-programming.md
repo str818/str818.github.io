@@ -47,3 +47,66 @@ public int numTrees(int n) {
     return G[n];
 }
 ```
+
+## 最大正方形
+
+[Leetcode - 221 Maximal Square (Medium)](https://leetcode.com/problems/maximal-square/)
+
+题目描述：找出矩阵中用 1 表示的最大正方形的面积。
+
+```
+Input: 
+
+1 0 1 0 0
+1 0 1 1 1
+1 1 1 1 1
+1 0 0 1 0
+
+Output: 4
+```
+
+解题思路：d(i, j) 表示在索引为 i 和 j 时，最大正方形的边长，可以从图中看出，如果当前位置是 1， 最大边长就是左上方、上方与左方的最小值加 1，
+
+$dp(i, j) = min(dp(i - 1, j), dp(i - 1, j - 1), dp(i, j - 1)) + 1$
+
+<div align="center">  <img src="/img/leetcode-221.png" width="100%"/> </div><br>
+
+```java
+public int maximalSquare(char[][] matrix) {
+    int rows = matrix.length, cols = rows > 0 ? matrix[0].length : 0;
+    int[][] dp = new int[rows + 1][cols + 1];
+    int maxsqlen = 0;
+    for (int i = 1; i <= rows; i++) {
+        for (int j = 1; j <= cols; j++) {
+            if (matrix[i-1][j-1] == '1'){
+                dp[i][j] = Math.min(Math.min(dp[i][j - 1], dp[i - 1][j]), dp[i - 1][j - 1]) + 1;
+                maxsqlen = Math.max(maxsqlen, dp[i][j]);
+            }
+        }
+    }
+    return maxsqlen * maxsqlen;
+}
+```
+
+可以看出每次计算的 dp(i, j) 只与左上方、上方和左方的数值有关，所有可以用一维数组记录数据。
+
+```java
+public int maximalSquare(char[][] matrix) {
+    int rows = matrix.length, cols = rows > 0 ? matrix[0].length : 0;
+    int[] dp = new int[cols + 1];
+    int maxsqlen = 0, prev = 0;
+    for (int i = 1; i <= rows; i++) {
+        for (int j = 1; j <= cols; j++) {
+            int temp = dp[j];
+            if (matrix[i - 1][j - 1] == '1') {
+                dp[j] = Math.min(Math.min(dp[j - 1], prev), dp[j]) + 1;
+                maxsqlen = Math.max(maxsqlen, dp[j]);
+            } else {
+                dp[j] = 0;
+            }
+            prev = temp;
+        }
+    }
+    return maxsqlen * maxsqlen;
+}
+```
