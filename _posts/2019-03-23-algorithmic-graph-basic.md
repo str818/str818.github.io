@@ -104,6 +104,57 @@ show_subscribe: false
 
 <div align="center">  <img src="/img/Algorithmic_Graph_Basic_3.png" width="80%"/> </div><br>
 
+### 3. 代码实现
+
+#### Ⅰ. 结点
+
+```java
+public class Node {
+    public int value;
+    public int in;
+    public int out;
+    public ArrayList<Node> nexts;
+    public ArrayList<Edge> edges;
+
+    public Node(int value) {
+        this.value = value;
+        in = 0;
+        out = 0;
+        nexts = new ArrayList<>();
+        edges = new ArrayList<>();
+    }
+}
+```
+#### Ⅱ. 边
+
+```java
+public class Edge {
+    public int weight;
+    public Node from;
+    public Node to;
+
+    public Edge(int weight, Node from, Node to) {
+        this.weight = weight;
+        this.from = from;
+        this.to = to;
+    }
+}
+```
+
+#### Ⅲ. 图
+
+```java
+public class Graph {
+    public HashMap<Integer,Node> nodes;
+    public HashSet<Edge> edges;
+
+    public Graph() {
+        nodes = new HashMap<>();
+        edges = new HashSet<>();
+    }
+}
+```
+
 
 ## 四、图的遍历
 
@@ -111,9 +162,55 @@ show_subscribe: false
 
 假设初始状态是图中所有顶点未曾被访问，则深度优先搜索可以从图中某个顶点 v 出发，访问此顶点，然后依次从 v 的未被访问的邻接点出发深度优先遍历该图，直至图中所有和 v 有路径的顶点都被访问到；若此时图中尚有顶点未被访问，则另选图中一个未曾被访问的顶点作起始点，重复上述过程，直至图中所有顶点都被访问到为止。
 
+```java
+public static void dfs(Node node) {
+    if (node == null) return;
+
+    Stack<Node> stack = new Stack<>();
+    HashSet<Node> set = new HashSet<>();
+    stack.add(node);
+    set.add(node);
+    System.out.println(node.value);
+
+    while (!stack.isEmpty()) {
+        Node cur = stack.pop();
+        for (Node next : cur.nexts) {
+            if (!set.contains(next)) {
+                stack.push(cur);
+                stack.push(next);
+                set.add(next);
+                System.out.println(next.value);
+                break;
+            }
+        }
+    }
+}
+```
+
 
 ### 2. 广度优先搜索
 
 假设从图中某顶点 v 出发，在访问了 v 之后，依次访问 v 的各个未曾访问过的顶点，然后按照访问的顺序，再分别从这些邻接点出发依次访问他们的邻接点，并使「先被访问的顶点的邻接点」先于「后被访问的顶点的邻接点」被访问，直至图中所有已被访问的顶点的邻接点都被访问到。若此时图中尚有顶点未被访问，则另选图中一个未被访问的顶点作起始点。重复上述过程，直至图中所有顶点都被访问到为止。
 
+```java
+public static void bfs(Node node) {
+    if (node == null) return;
+
+    Queue<Node> queue = new LinkedList<>();
+    HashSet<Node> map = new HashSet<>();
+    queue.add(node);
+    map.add(node);
+
+    while (!queue.isEmpty()) {
+        Node cur = queue.poll();
+        System.out.println(cur.value);
+        for (Node next : cur.nexts) {
+            if (!map.contains(next)) {
+                map.add(next);
+                queue.add(next);
+            }
+        }
+    }
+}
+```
 
