@@ -244,10 +244,10 @@ public static List<Node> sortedTopology(Graph graph) {
         Node cur = zeroInQueue.poll();
         result.add(cur);
         for (Node next : cur.nexts) {
-          inMap.put(next, inMap.get(next) - 1);
-          if (inMap.get(next) == 0) {
-              zeroInQueue.add(next);
-          }
+            inMap.put(next, inMap.get(next) - 1);
+            if (inMap.get(next) == 0) {
+                zeroInQueue.add(next);
+            }
         }
     }
     return result;
