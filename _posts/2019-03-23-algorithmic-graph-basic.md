@@ -214,3 +214,42 @@ public static void bfs(Node node) {
 }
 ```
 
+## 五、拓扑排序
+
+**有向无环图** (Directed Acycline Graph, DAG 图)正如字面意思一样，是一个无环的有向图。
+
+**AOV 网** (Activity on Vertex Network)，若以图中的顶点来表示活动，有向边表示活动之间的优先关系，则这样活动在顶点上的有向图成为 AOV 网。
+
+拓扑排序是指给定一幅有向图，将所有的顶点排序，使得所有的有向边均从排在前面的元素指向排在后面的元素。当且仅当一幅有向图是无环图图时才能进行拓扑排序。
+
+算法步骤：
+1. 从图中选择一个没有前驱的顶点(该顶点的入度为 0)，将其输出到拓扑序列中。
+2. 从图中删除该顶点，并且删除从该顶点出发的全部有向边。
+3. 重复上述两步，直到剩余的图中不再存在没有前驱的顶点为止。
+
+这样操作的结果有两种：一种是图中全部顶点都被输出，这说明网中不存在有向回路；另一种就是图中顶点未被全部输出，剩余的顶点均存在前驱顶点，这说明图中存在有向回路。
+
+```java
+public static List<Node> sortedTopology(Graph graph) {
+    HashMap<Node, Integer> inMap = new HashMap<>();
+    Queue<Node> zeroInQueue = new LinkedList<>();
+    for (Node node : graph.nodes.values()) {
+        inMap.put(node, node.in);
+        if (node.in == 0) {
+            zeroInQueue.add(node);
+        }
+    }
+    List<Node> result = new ArrayList<>();
+    while (!zeroInQueue.isEmpty()) {
+        Node cur = zeroInQueue.poll();
+        result.add(cur);
+        for (Node next : cur.nexts) {
+          inMap.put(next, inMap.get(next) - 1);
+          if (inMap.get(next) == 0) {
+              zeroInQueue.add(next);
+          }
+        }
+    }
+    return result;
+}
+```
