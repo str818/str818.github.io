@@ -309,7 +309,7 @@ public static int[] partition(int[] arr, int l, int r){
 
 ### 4. 算法分析
 
-### Ⅰ. 时间复杂度
+#### Ⅰ. 时间复杂度
 
 最好时间复杂度：$O(logN)$。每次选的基准数正好等分当前数列
 
@@ -317,11 +317,11 @@ public static int[] partition(int[] arr, int l, int r){
 
 平均时间复杂度：$O(NlogN)$。
 
-### Ⅱ. 额外空间复杂度
+#### Ⅱ. 额外空间复杂度
 
 未借助其它辅助空间，$O(1)$。
 
-### Ⅲ. 稳定性
+#### Ⅲ. 稳定性
 
 从前到后扫描，将第一个大数置于后方的大端，如果后面紧邻相等的大数，则被置于该数前面。
 
@@ -362,7 +362,7 @@ public static int[] partition(int[] arr, int l, int r){
 
 <div align="center">  <img src="/img/algorithmic_heap_sort_3.png" width="85%"/> </div><br>
 
-#### 3. 核心代码
+### 3. 核心代码
 
 ```java
 public static void heapSort(int[] arr){
