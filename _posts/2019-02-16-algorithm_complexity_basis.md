@@ -4,7 +4,7 @@ title: 算法 — 复杂度基础
 tags: 算法
 
 lang: zh-Hans
-key: Algorithmic_Complexity_Basis
+key: Algorithm_Complexity_Basis
 pageview: true
 toc: true
 show_subscribe: false
