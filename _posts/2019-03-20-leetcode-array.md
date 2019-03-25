@@ -39,3 +39,30 @@ public int majorityElement(int[] nums) {
     return major;
 }
 ```
+
+## 除本身外的数组乘积
+
+[Leetcode - 238 Product of Array Except Self (Medium)](https://leetcode.com/problems/product-of-array-except-self/)
+
+题目描述：不能用分治并且时间复杂度为 O(n)。
+
+```
+Input:  [1,2,3,4]
+Output: [24,12,8,6]
+```
+
+```java
+public int[] productExceptSelf(int[] nums) {
+    int[] result = new int[nums.length];
+    result[0] = 1;
+    for(int i = 1; i < nums.length; i++){
+        result[i] = result[i - 1] * nums[i - 1];
+    }
+    int right = 1;
+    for(int i = nums.length - 1; i >= 0; i--){
+        result[i] *= right;
+        right *= nums[i];
+    }
+    return result;
+}
+```
