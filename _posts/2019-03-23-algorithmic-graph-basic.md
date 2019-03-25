@@ -311,81 +311,81 @@ public static Set<Edge> primMST(Graph graph) {
 依次将图中权重最小的边加入最小生成树中，加入的边不会与已经加入的边构成环，直到树中含有 V-1 条边为止。
 
 ```java
-    // Union-Find Set
-    public static class UnionFind {
-      private HashMap<Node, Node> fatherMap;
-      private HashMap<Node, Integer> rankMap;
+    
+public static class UnionFind {
+    private HashMap<Node, Node> fatherMap;
+    private HashMap<Node, Integer> rankMap;
 
-      public UnionFind() {
+    public UnionFind() {
         fatherMap = new HashMap<Node, Node>();
         rankMap = new HashMap<Node, Integer>();
-      }
+    }
 
-      private Node findFather(Node n) {
+    private Node findFather(Node n) {
         Node father = fatherMap.get(n);
         if (father != n) {
-          father = findFather(father);
+            father = findFather(father);
         }
         fatherMap.put(n, father);
         return father;
-      }
+    }
 
-      public void makeSets(Collection<Node> nodes) {
+    public void makeSets(Collection<Node> nodes) {
         fatherMap.clear();
         rankMap.clear();
         for (Node node : nodes) {
-          fatherMap.put(node, node);
-          rankMap.put(node, 1);
+            fatherMap.put(node, node);
+            rankMap.put(node, 1);
         }
-      }
+    }
 
-      public boolean isSameSet(Node a, Node b) {
+    public boolean isSameSet(Node a, Node b) {
         return findFather(a) == findFather(b);
-      }
+    }
 
-      public void union(Node a, Node b) {
+    public void union(Node a, Node b) {
         if (a == null || b == null) {
-          return;
+            return;
         }
         Node aFather = findFather(a);
         Node bFather = findFather(b);
         if (aFather != bFather) {
-          int aFrank = rankMap.get(aFather);
-          int bFrank = rankMap.get(bFather);
-          if (aFrank <= bFrank) {
-            fatherMap.put(aFather, bFather);
-            rankMap.put(bFather, aFrank + bFrank);
-          } else {
-            fatherMap.put(bFather, aFather);
-            rankMap.put(aFather, aFrank + bFrank);
-          }
+            int aFrank = rankMap.get(aFather);
+            int bFrank = rankMap.get(bFather);
+            if (aFrank <= bFrank) {
+                fatherMap.put(aFather, bFather);
+                rankMap.put(bFather, aFrank + bFrank);
+            } else {
+                fatherMap.put(bFather, aFather);
+                rankMap.put(aFather, aFrank + bFrank);
+            }
         }
-      }
     }
-    // 升序比较器
-    public static class EdgeComparator implements Comparator<Edge> {
-      @Override
-      public int compare(Edge o1, Edge o2) {
+}
+// 升序比较器
+public static class EdgeComparator implements Comparator<Edge> {
+    @Override
+    public int compare(Edge o1, Edge o2) {
         return o1.weight - o2.weight;
-      }
     }
+}
 
-    public static Set<Edge> kruskalMST(Graph graph) {
-      UnionFind unionFind = new UnionFind();
-      unionFind.makeSets(graph.nodes.values());
-      PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(new EdgeComparator());
-      for (Edge edge : graph.edges) {
+public static Set<Edge> kruskalMST(Graph graph) {
+    UnionFind unionFind = new UnionFind();
+    unionFind.makeSets(graph.nodes.values());
+    PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(new EdgeComparator());
+    for (Edge edge : graph.edges) {
         priorityQueue.add(edge);
-      }
-      Set<Edge> result = new HashSet<>();
-      while (!priorityQueue.isEmpty()) {
+    }
+    Set<Edge> result = new HashSet<>();
+    while (!priorityQueue.isEmpty()) {
         Edge edge = priorityQueue.poll();
         if (!unionFind.isSameSet(edge.from, edge.to)) {
-          result.add(edge);
-          unionFind.union(edge.from, edge.to);
+            result.add(edge);
+            unionFind.union(edge.from, edge.to);
         }
-      }
-      return result;
     }
+    return result;
+}
 ```
 
