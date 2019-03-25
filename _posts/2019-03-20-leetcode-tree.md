@@ -50,6 +50,67 @@ public void backtrack(List<Integer> ans, TreeNode root){
     backtrack(ans, root.right);
 }
 ```
+
+### 二叉树的层次遍历
+
+[Leetcode - 102 Binary Tree Level Order Traversal (Medium)](https://leetcode.com/problems/binary-tree-level-order-traversal/)
+
+```
+Input: [3,9,20,null,null,15,7]
+    3
+   / \
+  9  20
+    /  \
+   15   7
+Output:
+[
+  [3],
+  [9,20],
+  [15,7]
+]
+```
+
+解法一：递归。
+
+```java
+public List<List<Integer>> levelOrder(TreeNode root) {
+    List<List<Integer>> ans = new ArrayList<>();
+    backtrack(ans, root, 0);
+    return ans;
+}
+public void backtrack(List<List<Integer>> ans, TreeNode curNode, int level){ 
+    if(curNode == null) return;
+    if(ans.size() - 1 < level){
+        ans.add(new ArrayList<Integer>());
+    }
+    ans.get(level).add(curNode.val);
+    backtrack(ans, curNode.left, level + 1);
+    backtrack(ans, curNode.right, level + 1);
+}
+```
+
+解法二：队列。
+
+```java
+public List<List<Integer>> levelOrder(TreeNode root) {
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    List<List<Integer>> wrapList = new LinkedList<List<Integer>>();
+    if(root == null) return wrapList;
+    queue.offer(root);
+    while(!queue.isEmpty()){
+        int levelNum = queue.size();
+        List<Integer> subList = new LinkedList<Integer>();
+        for(int i=0; i<levelNum; i++) {
+            if(queue.peek().left != null) queue.offer(queue.peek().left);
+            if(queue.peek().right != null) queue.offer(queue.peek().right);
+            subList.add(queue.poll().val);
+        }
+        wrapList.add(subList);
+    }
+    return wrapList;
+}
+```
+
 ### 验证二叉搜索树
 
 [Leetcode - 98 Validate Binary Search Tree (Medium)](https://leetcode.com/problems/validate-binary-search-tree/)
