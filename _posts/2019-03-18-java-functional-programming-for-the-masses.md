@@ -207,4 +207,5 @@ assertEquals(10, result);
 ## 参考
 
 [JDK 8 函数式编程入门](https://www.cnblogs.com/snowInPluto/p/5981400.html)
+
 [Java8新特性之lambda表达式](http://www.monkey1024.com/javase/706)
