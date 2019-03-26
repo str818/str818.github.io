@@ -66,3 +66,42 @@ public int[] productExceptSelf(int[] nums) {
     return result;
 }
 ```
+
+## 有序二维数组查找
+
+[Leetcode - 240. Search a 2D Matrix II (Medium)](https://leetcode.com/problems/search-a-2d-matrix-ii/)
+
+题目描述：给定二维数组每行从左到右升序，每列从上到下降序，判断 target 是否在二维数组中。
+
+```
+[
+  [1,   4,  7, 11, 15],
+  [2,   5,  8, 12, 19],
+  [3,   6,  9, 16, 22],
+  [10, 13, 14, 17, 24],
+  [18, 21, 23, 26, 30]
+]
+Given target = 5, return true.
+
+Given target = 20, return false.
+```
+
+解题思路：从右上方开始二分，注意数组为空的判断。
+
+```java
+public boolean searchMatrix(int[][] matrix, int target) {
+    if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return false;
+    int i = 0, j = matrix[0].length - 1;
+    while(i < matrix.length && j >= 0){
+        int num = matrix[i][j];
+        if(num == target){
+            return true;
+        }else if(num > target){
+            j--;
+        }else{
+            i++;
+        }
+    }
+    return false;
+}
+```
