@@ -40,9 +40,99 @@ show_subscribe: false
 
 - 资源消耗增多。栈内存是不共享的，如果启用多个线程的话会占用更多的内存。
 
+### 4. 使用场景
 
-## 二、线程声明周期
+- 通过并行计算提高程序执行性能
 
+- 需要等待网络、I/O 响应导致耗费大量的执行时间，可以采用异步线程的方式来减少阻塞
+
+
+## 二、使用线程
+
+### 1. 继承 Tread 类
+
+Thread 类本质上是实现了 Runnable 接口的一个实例，代表一个线程实例。启动线程的唯一方法就是通过 Thread 类的 start() 实例方法，start() 方法是一个 native 方法，它会启动一个新线程，并执行 run() 方法。
+
+```java
+public class MyThread extends Thread{
+    @Override
+    public void run(){
+        //...
+    }
+}
+
+MyThread myThread1 = new MyThread();
+MyThread myThread2 = new MyThread();
+myThread1.start();
+myThread2.start();
+```
+
+### 2. 实现 Runnable 接口
+
+如果自己的类已经继承的其它的类，就无法直接继承 Thread，此时可以实现 Runnable 接口。
+
+```java
+public class MyThread implements Runnable{
+    @Override
+    public void run(){
+        //...
+    }
+}
+
+MyThread myThread1 = new MyThread();
+MyThread myThread2 = new MyThread();
+myThread1.start();
+myThread2.start();
+```
+
+### 3. 实现 Callable 接口
+
+该接口位于 `java.util.concurrent` 包下面，使用 Callable 接口创建的线程能够获得返回值并且可以声明异常。
+
+```java
+public class CallableDemo implements Callable<String>{
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        // 创建 ExecutorService 线程池
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
+
+        CallableDemo callableDemo = new CallableDemo();
+        Future<String> future = executorService.submit(callableDemo);
+        System.out.println(future.get());
+
+        // 关闭线程池，不再接收新的线程，未执行完的线程不会被关闭
+        executorService.shutdown();
+    }
+    @Override
+    public String call() throws Exception {
+        int a=1;
+        int b=2;
+        System.out.println(a+b);
+        return "执行结果:"+(a+b);
+    }
+}
+```
+
+## 三、线程状态
+
+Java 线程在运行的声明周期中可能有 6 种不同的状态。
+
+#### 1. 初始状态 (NEW)
+
+线程被创建，但是还没有调用 start 方法。
+
+#### 2. 运行状态 (RUNNABLE)
+
+Java 线程将操作系统中的就绪和运行两种状态统一称为「运行中」。
+
+#### 3. 阻塞状态 (BLOCKED)
+
+表示线程进入等待状态，线程因为某种原因放弃了 CPU 的使用权。
+
+- 等待阻塞：运行的线程执行 wait 方法，JVM 会把当前线程放入到等待队列。
+
+- 同步阻塞：运行的线程在获取对象的同步锁时，若该同步锁被其它线程锁占用，那么 JVM 会把当前的线程放入到锁池中。
+
+- 其它阻塞：
 
 
 
