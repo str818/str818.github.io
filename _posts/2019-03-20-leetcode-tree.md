@@ -351,3 +351,63 @@ public TreeNode backtrack(int[] preorder, int[] inorder, int preStart, int inSta
     return root;
 }
 ```
+
+### 将二叉树展开成链表
+
+[Leetcode - 114 Flatten Binary Tree to Linked List (Medium)](https://leetcode.com/problems/flatten-binary-tree-to-linked-list/)
+
+
+```
+Input:
+    1
+   / \
+  2   5
+ / \   \
+3   4   6
+Output:
+1
+ \
+  2
+   \
+    3
+     \
+      4
+       \
+        5
+         \
+          6
+```
+
+解法一：递归。
+
+```java
+public void flatten(TreeNode root) {
+    if(root == null) return;
+    flatten(root.left);
+    flatten(root.right);
+    TreeNode temp = root.right;
+    root.right = root.left;
+    root.left = null;
+    while(root.right != null) root = root.right;
+    root.right = temp;
+}
+```
+
+解法二：遍历。
+
+```java
+public void flatten(TreeNode root) {
+    while(root != null){
+        if(root.left != null){
+            TreeNode prev = root.left;
+            while(prev.right != null){
+                prev = prev.right;
+            }
+            prev.right = root.right;
+            root.right = root.left;
+            root.left = null;
+        }
+        root = root.right;
+    }
+}
+```
