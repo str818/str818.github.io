@@ -105,3 +105,29 @@ public boolean searchMatrix(int[][] matrix, int target) {
     return false;
 }
 ```
+
+## 移动零
+
+[Leetcode - 283 Move Zeroes (Easy)](https://leetcode.com/problems/move-zeroes/)
+
+题目描述：将数组中的零元素全部移到后面，并且保证非零元素顺序不变。
+
+```
+Input: [0,1,0,3,12]
+Output: [1,3,12,0,0]
+```
+
+```java
+public void moveZeroes(int[] nums) {
+    if(nums == null || nums.length == 0) return;
+    int index = 0;
+    for(int i = 0; i < nums.length; i++){
+        if(nums[i] != 0){
+            nums[index++] = nums[i];
+        }
+    }
+    while(index < nums.length){
+        nums[index++] = 0;
+    }
+}
+```
