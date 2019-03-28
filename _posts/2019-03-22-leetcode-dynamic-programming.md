@@ -201,3 +201,33 @@ public int lengthOfLIS(int[] nums) {
     return maxAns;
 }
 ```
+
+## 拆分词句
+
+[Leetcode - 139 Word Break (Medium)](https://leetcode.com/problems/word-break/)
+
+题目描述：判断给定的字符串是否是有词库里的单词拼接而成的，词库中的单词都能够多次使用。
+
+```
+Input: s = "leetcode", wordDict = ["leet", "code"]
+Output: true
+Explanation: Return true because "leetcode" can be segmented as "leet code".
+```
+
+解题思路：dp[i] 表示前 i 个字符能否被拆分成词库中的单词，dp[n] 就是本题需要求解的结果。
+
+```java
+public boolean wordBreak(String s, List<String> wordDict) {
+    boolean[] dp = new boolean[s.length() + 1];
+    dp[0] = true;
+    for(int i = 1; i <= s.length(); i++){
+        for(int j = 0; j < i; j++){
+            if(dp[j] && wordDict.contains(s.substring(j, i))){
+                dp[i] = true;
+                break;
+            }
+        }
+    }
+    return dp[s.length()];
+}
+```
