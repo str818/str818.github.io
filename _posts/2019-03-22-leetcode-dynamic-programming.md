@@ -165,3 +165,39 @@ public int numSquares(int n) {
     return dp[n];
 }
 ```
+
+## 最长上升子序列
+
+[Leetcode - 300 Longest Increasing Subsequence (Medium)](https://leetcode.com/problems/longest-increasing-subsequence/)
+
+```
+Input: [10,9,2,5,3,7,101,18]
+Output: 4 
+Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4. 
+```
+
+解题思路：动态规划经典问题，dp[i] 表示前 i 个数以 A[i] 结尾的最长上升子序列长度。
+
+$dp[i] = max(dp[j]) + 1, 0 <= j < i$
+
+$LIS_{length} = max(dp[i]), 0 <= i < n$
+
+```java
+public int lengthOfLIS(int[] nums) {
+    if(nums.length == 0) return 0;
+    int[] dp = new int[nums.length];
+    dp[0] = 1;
+    int maxAns = 1;
+    for(int i = 1; i < dp.length; i++){
+        int maxVal = 0;
+        for(int j = 0; j < i; j++){
+            if(nums[i] > nums[j]){
+                maxVal = Math.max(maxVal, dp[j]);
+            }
+        }
+        dp[i] = maxVal + 1;
+        maxAns = Math.max(maxAns, dp[i]);
+    }
+    return maxAns;
+}
+```
