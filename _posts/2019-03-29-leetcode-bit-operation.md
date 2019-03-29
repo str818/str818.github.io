@@ -32,3 +32,43 @@ public int singleNumber(int[] nums) {
     return result;
 }
 ```
+
+
+## 汉明距离
+
+[Leetcode - 461 Hamming Distance (Easy)](https://leetcode.com/problems/hamming-distance/)
+
+题目描述：汉明距离是指两个数字二进制数对应位不同的个数，计算两个数字的汉明距离。
+
+```
+Input: x = 1, y = 4
+
+Output: 2
+
+Explanation:
+1   (0 0 0 1)
+4   (0 1 0 0)
+       ↑   ↑
+
+The above arrows point to positions where the corresponding bits are different.
+```
+
+解法一：
+
+```java
+public int hammingDistance(int x, int y) {
+    int xor = x ^ y, count = 0;
+    for(int i = 0; i < 32; i++){
+        count += (xor >> i) & 1; 
+    }
+    return count;
+}
+```
+
+解法二：
+
+```java
+public int hammingDistance(int x, int y) {
+    return Integer.bitCount(x ^ y);
+}
+```
