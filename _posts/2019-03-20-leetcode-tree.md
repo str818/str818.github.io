@@ -411,3 +411,41 @@ public void flatten(TreeNode root) {
     }
 }
 ```
+
+### 二叉树路径和 Ⅲ
+
+[Leetcode - 437 Path Sum III (Easy)](https://leetcode.com/problems/path-sum-iii/)
+
+题目描述：找出二叉树中路径和为 sum 的数量，开始结点不需要一定是根节点或叶子节点，但是必须是向下遍历。
+
+```
+root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8
+
+      10
+     /  \
+    5   -3
+   / \    \
+  3   2   11
+ / \   \
+3  -2   1
+
+Return 3. The paths that sum to 8 are:
+
+1.  5 -> 3
+2.  5 -> 2 -> 1
+3. -3 -> 11
+```
+
+```java
+public int pathSum(TreeNode root, int sum) {
+    if(root == null) return 0;
+    return pathSumFrom(root, sum) + pathSum(root.left, sum)
+        + pathSum(root.right, sum);
+}
+
+public int pathSumFrom(TreeNode root, int sum){
+    if(root == null) return 0;
+    return (root.val == sum ? 1 : 0) + pathSumFrom(root.left, sum - root.val) 
+        + pathSumFrom(root.right, sum - root.val);
+}
+```
