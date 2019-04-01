@@ -112,6 +112,21 @@ public ListNode oddEvenList(ListNode head) {
 }
 ```
 
+## 反转链表 II
+
+[Leetcode - 92 Reverse Linked List II (Medium)](https://leetcode.com/problems/reverse-linked-list-ii/)
+
+题目描述：反转 m 到 n。
+
+```
+Input: 1->2->3->4->5->NULL, m = 2, n = 4
+Output: 1->4->3->2->5->NULL
+```
+
+```java
+//TODO
+```
+
 ## 回文链表
 
 [Leetcode - 234 Palindrome Linked List (Easy)](https://leetcode.com/problems/palindrome-linked-list/)
