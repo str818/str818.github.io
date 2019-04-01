@@ -65,6 +65,27 @@ public boolean hasCycle(ListNode head) {
 }
 ```
 
+## 成对交换结点
+
+[Leetcode - 24 Swap Nodes in Pair (Medium)](https://leetcode.com/problems/swap-nodes-in-pairs/)
+
+题目描述：不能更改链表本身的值。
+
+```
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+```
+
+```java
+public ListNode swapPairs(ListNode head) {
+    if ((head == null) || (head.next == null))
+        return head;
+    ListNode n = head.next;
+    head.next = swapPairs(head.next.next);
+    n.next = head;
+    return n;
+}
+```
+
 ## 回文链表
 
 [Leetcode - 234 Palindrome Linked List (Easy)](https://leetcode.com/problems/palindrome-linked-list/)
@@ -112,23 +133,3 @@ public ListNode reverse(ListNode head){
 }
 ```
 
-## 成对交换结点
-
-[Leetcode - 24 Swap Nodes in Pair (Medium)](https://leetcode.com/problems/swap-nodes-in-pairs/)
-
-题目描述：不能更改链表本身的值。
-
-```
-Given 1->2->3->4, you should return the list as 2->1->4->3.
-```
-
-```java
-public ListNode swapPairs(ListNode head) {
-    if ((head == null)||(head.next == null))
-        return head;
-    ListNode n = head.next;
-    head.next = swapPairs(head.next.next);
-    n.next = head;
-    return n;
-}
-```
