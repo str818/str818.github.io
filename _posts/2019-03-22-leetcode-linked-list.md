@@ -86,6 +86,32 @@ public ListNode swapPairs(ListNode head) {
 }
 ```
 
+## 奇偶链表
+
+[Leetcode - 328 Odd Even Linked List (Medium)](https://leetcode.com/problems/odd-even-linked-list/)
+
+题目描述：将所有的奇数序号节点都放到偶数序号节点前面。
+
+```
+Input: 2->1->3->5->6->4->7->NULL
+Output: 2->3->6->7->1->5->4->NULL
+```
+
+```java
+public ListNode oddEvenList(ListNode head) {
+    if(head == null) return null;
+    ListNode odd = head, even = head.next, evenHead = even;
+    while(even != null && even.next != null){
+        odd.next = odd.next.next;
+        even.next = even.next.next;
+        odd = odd.next;
+        even = even.next;
+    }
+    odd.next = evenHead;
+    return head;
+}
+```
+
 ## 回文链表
 
 [Leetcode - 234 Palindrome Linked List (Easy)](https://leetcode.com/problems/palindrome-linked-list/)
