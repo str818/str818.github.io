@@ -47,6 +47,24 @@ public ListNode reverseList(ListNode head) {
 }
 ```
 
+## 判断单链表是否有环
+
+[Leetcode - 141 Linked List Cycle (Medium)](https://leetcode.com/problems/linked-list-cycle/)
+
+```java
+public boolean hasCycle(ListNode head) {
+    ListNode slow = head, fast = head;
+    while(fast != null && fast.next != null){
+        slow = slow.next;
+        fast = fast.next.next;
+        if(slow == fast){
+            return true;
+        }
+    }
+    return false;
+}
+```
+
 ## 回文链表
 
 [Leetcode - 234 Palindrome Linked List (Easy)](https://leetcode.com/problems/palindrome-linked-list/)

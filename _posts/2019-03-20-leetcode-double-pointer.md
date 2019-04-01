@@ -71,24 +71,6 @@ public int findDuplicate(int[] nums) {
 }
 ```
 
-## 判断单链表是否有环
-
-[Leetcode - 141 Linked List Cycle (Medium)](https://leetcode.com/problems/linked-list-cycle/)
-
-```java
-public boolean hasCycle(ListNode head) {
-    if(head==null) return false;
-    ListNode slow = head;
-    ListNode fast = head;
-    while(fast.next!=null && fast.next.next!=null) {
-        slow = slow.next;
-        fast = fast.next.next;
-        if(slow==fast) return true;
-    }
-    return false;
-}
-```
-
 ## 找到链表环的第一个节点
 
 [Leetcode - 142 Linked List Cycle II (Medium)](https://leetcode.com/problems/linked-list-cycle-ii/) 
