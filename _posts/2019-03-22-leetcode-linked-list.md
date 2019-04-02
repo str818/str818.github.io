@@ -213,6 +213,35 @@ public ListNode deleteDuplicates(ListNode head) {
 }
 ```
 
+## 删除链表中的元素
+
+[Leetcode - 203 Remove Linked List Elements (Easy)](https://leetcode.com/problems/remove-linked-list-elements/)
+
+题目描述：删除链表中值为 val 的节点。
+
+```
+Input:  1->2->6->3->4->5->6, val = 6
+Output: 1->2->3->4->5
+```
+
+```java
+public ListNode removeElements(ListNode head, int val) {
+    ListNode dummyHead = new ListNode(0);
+    dummyHead.next = head;
+    ListNode cur = head, prev = dummyHead;
+    while(cur != null){
+        if(cur.val == val){
+            prev.next = cur.next;
+        }else{
+            prev = prev.next;
+        }
+        cur = cur.next;
+    }
+    return dummyHead.next;
+}
+```
+
+
 ## 回文链表
 
 [Leetcode - 234 Palindrome Linked List (Easy)](https://leetcode.com/problems/palindrome-linked-list/)
