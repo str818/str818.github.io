@@ -130,7 +130,7 @@ public ListNode reverseBetween(ListNode head, int m, int n) {
     dummy.next = head;
     ListNode pre = dummy;
     for(int i = 0; i<m-1; i++) pre = pre.next;
-    
+
     ListNode start = pre.next; 
     ListNode then = start.next;
     for(int i=0; i<n-m; i++){
@@ -140,6 +140,25 @@ public ListNode reverseBetween(ListNode head, int m, int n) {
         then = start.next;
     }
     return dummy.next;
+}
+```
+
+## 删除链表的节点
+
+[Leetcode - 237 Delete Node in a Linked List (Easy)](https://leetcode.com/problems/delete-node-in-a-linked-list/)
+
+题目描述：只给出需要删除的节点引用。
+
+```
+Input: head = [4,5,1,9], node = 5
+Output: [4,1,9]
+Explanation: You are given the second node with value 5, the linked list should become 4 -> 1 -> 9 after calling your function.
+```
+
+```java
+public void deleteNode(ListNode node) {
+    node.val = node.next.val;
+    node.next = node.next.next;
 }
 ```
 
