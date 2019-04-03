@@ -65,7 +65,7 @@ public boolean hasCycle(ListNode head) {
 }
 ```
 
-## 成对交换结点
+## 成对交换节点
 
 [Leetcode - 24 Swap Nodes in Pair (Medium)](https://leetcode.com/problems/swap-nodes-in-pairs/)
 
@@ -300,14 +300,14 @@ public ListNode deleteDuplicates(ListNode head) {
 
 [Leetcode - 2 Add Two Numbers (Medium)](https://leetcode.com/problems/add-two-numbers/)
 
-题目描述：给定两个链表，每个链表表示一个整数，链表的每个结点表示一位数，将两个链表表示的整数相加得到新的链表。
+题目描述：给定两个链表，每个链表表示一个整数，链表的每个节点表示一位数，将两个链表表示的整数相加得到新的链表。
 
 ```
 Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
 Output: 7 -> 0 -> 8
 Explanation: 342 + 465 = 807.
 ```
-解题思路：同时遍历两个链表，将相同位置的结点相加，注意加法的进位。
+解题思路：同时遍历两个链表，将相同位置的节点相加，注意加法的进位。
 
 ```java
 public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
@@ -328,6 +328,35 @@ public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         cur.next = new ListNode(carry);
     }
     return dummyHead.next;
+}
+```
+
+## 两个链表的交点
+
+[Leetcode - 160 Intersection of Two Linked Lists (Easy)](https://leetcode.com/problems/intersection-of-two-linked-lists/)
+
+题目描述：给定两个链表，求出两个链表相交的节点。
+
+```
+Input: intersectVal = 8, listA = [4,1,8,4,5], listB = [5,0,1,8,4,5], skipA = 2, skipB = 3
+Output: Reference of the node with value = 8
+```
+
+<div align="center">  <img src="/img/leetcode-160.png" width="50%"/> </div><br>
+
+解题思路：两个指针分别在两个链表上向前移动，当其中一个指针移动到了链表的末尾，将该指针指向另一个链表的头节点，另一个指针同理，当两个指针指向同一个节点时，该节点即为链表的相交节点。
+
+我在这里绕了一会，其实很简单，交换指针指向的链表就是为了计算出两个链表私有链的长度，比如上图中，当指针 a 从 链表 A 的头节点移动到了最后，将其指向链表 B 的头节点，此时指针 b 指向链表 B 的节点 5，再向前走一步，a 指针就指向了链表 B 的 节点 0，b 指针指向了链表 A 的头节点 4，最后两个指针同时向后移动，就能同时到达相交节点 8。
+
+```java
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    ListNode a = headA;
+    ListNode b = headB;
+    while(a != b){
+        a = a == null? headB : a.next;
+        b = b == null? headA : b.next;
+    }
+    return a;
 }
 ```
 
