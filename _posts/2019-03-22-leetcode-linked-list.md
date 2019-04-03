@@ -458,3 +458,47 @@ public ListNode reverse(ListNode head){
 }
 ```
 
+## 重排序链表
+
+[Leetcode - 143 Reorder List (Medium)](https://leetcode.com/problems/reorder-list/)
+
+题目描述：将链表 `L0 -> L1 -> ... -> Ln-1 -> Ln` 重排序成 `L0 -> Ln -> L1 -> Ln-1 -> L2 -> Ln-2 -> ...`。
+
+```
+Given 1->2->3->4, reorder it to 1->4->2->3.
+```
+
+```java
+public void reorderList(ListNode head) {
+    if(head == null || head.next == null) return;
+    
+    // 找到链表的中间节点
+    ListNode p1 = head;
+    ListNode p2 = head;
+    while(p2.next != null && p2.next.next != null){
+        p1 = p1.next;
+        p2 = p2.next.next;
+    }
+    
+    // 反转后半部分链表
+    ListNode preMiddle = p1;
+    ListNode preCurrent = p1.next;
+    while(preCurrent.next != null){
+        ListNode cur = preCurrent.next;
+        preCurrent.next = cur.next;
+        cur.next = preMiddle.next;
+        preMiddle.next = cur;
+    }
+    
+    // 重排序
+    p1=head;
+    p2=preMiddle.next;
+    while(p1!=preMiddle){
+        preMiddle.next=p2.next;
+        p2.next=p1.next;
+        p1.next=p2;
+        p1=p2.next;
+        p2=preMiddle.next;
+    }
+    }
+```
