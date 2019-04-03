@@ -194,6 +194,8 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
 
 [Leetcode - 83 Remove Duplicates from Sorted List (Easy)](https://leetcode.com/problems/remove-duplicates-from-sorted-list/)
 
+题目描述：保留一个重复的节点。
+
 ```
 Input: 1->1->2->3->3
 Output: 1->2->3
@@ -241,6 +243,58 @@ public ListNode removeElements(ListNode head, int val) {
 }
 ```
 
+## 删除有序链表的重复节点 II
+
+[Leetcode - 82 Remove Duplicates from Sorted List II (Medium)](https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/)
+
+题目描述：删除所有的重复节点。
+
+```
+Input: 1->2->3->3->4->4->5
+Output: 1->2->5
+```
+
+解法一：递归
+
+```java
+public ListNode deleteDuplicates(ListNode head) {
+    if (head == null) return null;
+
+    if (head.next != null && head.val == head.next.val) {
+        while (head.next != null && head.val == head.next.val) {
+            head = head.next;
+        }
+        return deleteDuplicates(head.next);
+    } else {
+        head.next = deleteDuplicates(head.next);
+    }
+    return head;
+}
+```
+
+解题二：迭代
+
+```java
+public ListNode deleteDuplicates(ListNode head) {
+    ListNode dummyHead = new ListNode(0);
+    dummyHead.next = head;
+    ListNode cur = head, prev = dummyHead;
+    while(cur != null){
+        ListNode next = cur.next;
+        while(next != null && next.val == cur.val){
+            cur = cur.next;
+            next = next.next;
+        }
+        if(prev.next != cur){
+            prev.next = next;
+        }else{
+            prev = cur;
+        }
+        cur = next;
+    }
+    return dummyHead.next;
+}
+```
 
 ## 回文链表
 
