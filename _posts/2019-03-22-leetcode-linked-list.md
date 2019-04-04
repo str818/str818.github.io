@@ -579,3 +579,42 @@ public ListNode merge(ListNode l1, ListNode l2){
     return head.next;
 }
 ```
+
+## 每 K 个一组反转链表
+
+[Leetcode - 25 Reverse Nodes in k-Group (Hard)](https://leetcode.com/problems/reverse-nodes-in-k-group/)
+
+```
+Given this linked list: 1->2->3->4->5
+
+For k = 2, you should return: 2->1->4->3->5
+
+For k = 3, you should return: 3->2->1->4->5
+```
+
+```java
+public ListNode reverseKGroup(ListNode head, int k) {
+    if(head == null || head.next == null) return head;
+    ListNode dummyHead = new ListNode(0);
+    dummyHead.next = head;
+    ListNode pre = dummyHead, cur = head;
+    while(cur != null){
+        ListNode temp = pre;
+        for(int i = 0; i < k; i++){
+            if(temp.next == null){
+                return dummyHead.next;
+            }
+            temp = temp.next;
+        }
+        for(int i = 0; i < k - 1; i++){
+            temp = pre.next;
+            pre.next = cur.next;
+            cur.next = pre.next.next;
+            pre.next.next = temp;
+        }
+        pre = cur;
+        cur = cur.next;
+    }
+    return dummyHead.next;
+}
+```
