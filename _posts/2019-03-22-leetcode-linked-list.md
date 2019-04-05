@@ -654,3 +654,37 @@ public ListNode rotateRight(ListNode head, int n) {
     return dummy.next;
 }
 ```
+
+## 划分链表
+
+[Leetcode - 86 Partition List (Medium)](https://leetcode.com/problems/partition-list/)
+
+题目描述：将链表中小于给定值的节点都移动到前面，大于等于该值的节点顺序不变。
+
+```
+Input: head = 1->4->3->2->5->2, x = 3
+Output: 1->2->2->4->3->5
+```
+
+解题思路：将小于给定值的节点组成一个新的链表，大于等于给定值的节点也组成一个新的链表，之后将两个链表拼接。
+
+```java
+public ListNode partition(ListNode head, int x) {
+    ListNode dummyHead1 = new ListNode(0);
+    ListNode dummyHead2 = new ListNode(0);
+    ListNode cur1 = dummyHead1, cur2 = dummyHead2;
+    while(head != null){
+        if(head.val < x){
+            cur1.next = head;
+            cur1 = cur1.next;
+        }else{
+            cur2.next = head;
+            cur2 = cur2.next;
+        }
+        head = head.next;
+    }
+    cur2.next = null; // 不能省略，否则可能会形成环
+    cur1.next = dummyHead2.next;
+    return dummyHead1.next;
+}
+```
