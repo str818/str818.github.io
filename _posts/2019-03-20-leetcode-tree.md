@@ -10,9 +10,48 @@ toc: true
 show_subscribe: false
 ---
 
-## 遍历
+## 二叉树的遍历
 
-### 二叉树的中序遍历
+### 先序遍历
+
+[Leetcode - 144 Binary Tree Preorder Traversal (Medium)](https://leetcode.com/problems/binary-tree-preorder-traversal/)
+
+解法一：递归
+```java
+public List<Integer> preorderTraversal(TreeNode root) {
+    List<Integer> ansList = new ArrayList<Integer>();
+    backtrack(ansList, root);
+    return ansList;
+}
+
+public void backtrack(List<Integer> ansList, TreeNode root){
+    if(root == null) return;
+    ansList.add(root.val);
+    backtrack(ansList, root.left);
+    backtrack(ansList, root.right);
+}
+```
+
+解法二：遍历
+```java
+public List<Integer> preorderTraversal(TreeNode node) {
+    List<Integer> list = new LinkedList<Integer>();
+    Stack<TreeNode> rights = new Stack<TreeNode>();
+    while(node != null) {
+        list.add(node.val);
+        if (node.right != null) {
+            rights.push(node.right);
+        }
+        node = node.left;
+        if (node == null && !rights.isEmpty()) {
+            node = rights.pop();
+        }
+    }
+    return list;
+}
+```
+
+### 中序遍历
 
 [Leetcode - 94 Binary Tree Inorder Traversal (Medium)](https://leetcode.com/problems/binary-tree-inorder-traversal/)
 
