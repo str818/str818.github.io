@@ -786,21 +786,21 @@ Output: -1->0->3->4->5
 
 ```java
 public ListNode insertionSortList(ListNode head) {
-		if( head == null ) return null;
-		ListNode dummyHead = new ListNode(0);
-		ListNode cur = head;
-		ListNode pre = dummyHead;
-		ListNode next = null;
-		while( cur != null ){
-			next = cur.next;
-			while( pre.next != null && pre.next.val < cur.val ){
-				pre = pre.next;
-			}
-			cur.next = pre.next;
-			pre.next = cur;
-			pre = dummyHead;
-			cur = next;
-		}
-		return dummyHead.next;
-	}
+    if( head == null ) return null;
+    ListNode dummyHead = new ListNode(0);
+    ListNode cur = head;
+    ListNode pre = dummyHead;
+    ListNode next = null;
+    while( cur != null ){
+        next = cur.next;
+        while( pre.next != null && pre.next.val < cur.val ){
+            pre = pre.next;
+        }
+        cur.next = pre.next;
+        pre.next = cur;
+        pre = dummyHead;
+        cur = next;
+    }
+    return dummyHead.next;
+}
 ```
