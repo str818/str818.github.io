@@ -89,7 +89,48 @@ public List<Integer> inorderTraversal(TreeNode root) {
 }
 ```
 
-### 二叉树的层次遍历
+### 后序遍历
+
+[Leetcode - 145 Binary Tree Postorder Traversal (Hard)](https://leetcode.com/problems/binary-tree-postorder-traversal/)
+
+解法一：递归
+```java
+public List<Integer> postorderTraversal(TreeNode root) {
+    List<Integer> ansList = new ArrayList<Integer>();
+    backtrack(ansList, root);
+    return ansList;
+}
+
+public void backtrack(List<Integer> ansList, TreeNode root){
+    if(root == null) return;
+    backtrack(ansList, root.left);
+    backtrack(ansList, root.right);
+    ansList.add(root.val);
+}
+```
+
+解法二：遍历
+```java
+public List<Integer> postorderTraversal(TreeNode root) {
+    List<Integer> ans = new ArrayList<>();
+    Stack<TreeNode> stack = new Stack<>();
+    if (root == null) return ans;
+    stack.push(root);
+    while (!stack.isEmpty()) {
+        TreeNode cur = stack.pop();
+        ans.addFirst(cur.val);
+        if (cur.left != null) {
+            stack.push(cur.left);
+        }
+        if (cur.right != null) {
+            stack.push(cur.right);
+        } 
+    }
+    return ans;
+}
+```
+
+### 层次遍历
 
 [Leetcode - 102 Binary Tree Level Order Traversal (Medium)](https://leetcode.com/problems/binary-tree-level-order-traversal/)
 
