@@ -233,6 +233,18 @@ stop() 方法在终结一个线程时不会保证线程的资源正常释放，�
 
 <div align="center">  <img src="/img/java_concurrency_thread_communation.png" width="100%"/> </div><br>
 
+### 1. sleep() 和 wait() 的区别？
+
+- 类的不同：sleep() 来自 Thread; wait() 来自 Object。
+- 释放锁：sleep() 不释放锁; wait() 释放锁。
+- 用法不同：sleep() 时间到会自动恢复; wait() 可以使用 notify()/notifyAll() 直接唤醒。
+
+### 2. notify() 和 notifyAll() 的区别？
+
+notifyAll() 会唤醒所有的线程，notify() 之后唤醒一个线程。
+
+nofityAll() 调用后，会将全部线程由等待池移到锁池，然后参与锁的竞争，竞争成功则继续执行，如果不成功则留在锁池等待锁被释放后再次参与竞争。而 notify() 只会唤醒一个线程，具体唤醒哪一个线程由虚拟机控制。
+
 
 ## 二、并发理论 (JMM)
 
