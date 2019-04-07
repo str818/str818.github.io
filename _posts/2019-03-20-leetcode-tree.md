@@ -149,7 +149,7 @@ Output:
 ]
 ```
 
-解法一：递归。
+解法一：递归
 
 ```java
 public List<List<Integer>> levelOrder(TreeNode root) {
@@ -168,7 +168,7 @@ public void backtrack(List<List<Integer>> ans, TreeNode curNode, int level){
 }
 ```
 
-解法二：队列。
+解法二：遍历
 
 ```java
 public List<List<Integer>> levelOrder(TreeNode root) {
