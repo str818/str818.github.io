@@ -55,7 +55,22 @@ public List<Integer> preorderTraversal(TreeNode node) {
 
 [Leetcode - 94 Binary Tree Inorder Traversal (Medium)](https://leetcode.com/problems/binary-tree-inorder-traversal/)
 
-#### 非递归
+解法一：递归
+```java
+public List<Integer> inorderTraversal(TreeNode root) {
+    List<Integer> ans = new ArrayList<Integer>();
+    backtrack(ans, root);
+    return ans;
+}
+public void backtrack(List<Integer> ans, TreeNode root){
+    if(root == null) return;
+    backtrack(ans, root.left);
+    ans.add(root.val);
+    backtrack(ans, root.right);
+}
+```
+
+解法二：遍历
 ```java
 public List<Integer> inorderTraversal(TreeNode root) {
   List<Integer> ans = new ArrayList<Integer>();
@@ -71,22 +86,6 @@ public List<Integer> inorderTraversal(TreeNode root) {
       cur = cur.right;
   }
   return ans;
-}
-```
-
-#### 递归
-
-```java
-public List<Integer> inorderTraversal(TreeNode root) {
-    List<Integer> ans = new ArrayList<Integer>();
-    backtrack(ans, root);
-    return ans;
-}
-public void backtrack(List<Integer> ans, TreeNode root){
-    if(root == null) return;
-    backtrack(ans, root.left);
-    ans.add(root.val);
-    backtrack(ans, root.right);
 }
 ```
 
