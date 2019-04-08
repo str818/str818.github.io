@@ -43,7 +43,7 @@ Java 线程之间的通信由 Java 内存模型（JMM）控制，JMM 决定一�
 
 编译器、runtime 和处理器都必须遵循 as-if-serial 语义。
 
-### 三、happens-before 原则
+## 三、happens-before 原则
 
 JSR-133 使用 happens-before 的概念常数操作之间的内存可见性。在 JMM 中，如果一个操作执行的结果需要对另一个操作可见，那么这两个操作之间必须存在 happens-before 关系。
 
