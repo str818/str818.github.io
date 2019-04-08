@@ -403,6 +403,58 @@ public List<String> binaryTreePaths(TreeNode root) {
 }
 ```
 
+### 路径和
+
+[Leetcode - 112 Path Sum (Easy)](https://leetcode.com/problems/path-sum/)
+
+```
+Given the below binary tree and sum = 22,
+
+      5
+     / \
+    4   8
+   /   / \
+  11  13  4
+ /  \      \
+7    2      1
+
+return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
+```
+
+解法一：递归
+
+```java
+public boolean hasPathSum(TreeNode root, int sum) {
+    if(root == null) return false;
+    if(root.left == null && root.right == null && sum == root.val) return true;
+    return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+}
+```
+
+解法二：遍历
+
+```java
+public boolean hasPathSum(TreeNode root, int sum) {
+    Stack <TreeNode> stack = new Stack<> ();	    
+    stack.push(root) ;	    
+    while (!stack.isEmpty() && root != null){
+        TreeNode cur = stack.pop() ;	
+        if (cur.left == null && cur.right == null){	    		
+            if (cur.val == sum ) return true ;
+        }
+        if (cur.right != null) {
+            cur.right.val = cur.val + cur.right.val ;
+            stack.push(cur.right) ;
+        }
+        if (cur.left != null) {
+            cur.left.val = cur.val + cur.left.val;
+            stack.push(cur.left);
+        }
+    }	    
+    return false ;
+}
+```
+
 ### 验证二叉搜索树
 
 [Leetcode - 98 Validate Binary Search Tree (Medium)](https://leetcode.com/problems/validate-binary-search-tree/)
