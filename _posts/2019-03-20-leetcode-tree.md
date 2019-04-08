@@ -236,6 +236,58 @@ public boolean isSameTree(TreeNode p, TreeNode q) {
 }
 ```
 
+### 对称树
+
+[Leetcode - 101 Symmetric Tree (Easy)](https://leetcode.com/problems/symmetric-tree/)
+
+题目描述：判断一个二叉树是不是对称的。
+
+```
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+```
+
+解法一：递归
+
+```java
+public boolean isSymmetric(TreeNode root) {
+    return isMirror(root, root);
+}
+
+public boolean isMirror(TreeNode t1, TreeNode t2) {
+    if (t1 == null && t2 == null) return true;
+    if (t1 == null || t2 == null) return false;
+    return (t1.val == t2.val)
+        && isMirror(t1.right, t2.left)
+        && isMirror(t1.left, t2.right);
+}
+```
+
+解法二：遍历
+
+```java
+public boolean isSymmetric(TreeNode root) {
+    Queue<TreeNode> q = new LinkedList<>();
+    q.add(root);
+    q.add(root);
+    while (!q.isEmpty()) {
+        TreeNode t1 = q.poll();
+        TreeNode t2 = q.poll();
+        if (t1 == null && t2 == null) continue;
+        if (t1 == null || t2 == null) return false;
+        if (t1.val != t2.val) return false;
+        q.add(t1.left);
+        q.add(t2.right);
+        q.add(t1.right);
+        q.add(t2.left);
+    }
+    return true;
+}
+```
+
 ### 验证二叉搜索树
 
 [Leetcode - 98 Validate Binary Search Tree (Medium)](https://leetcode.com/problems/validate-binary-search-tree/)
@@ -385,59 +437,6 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
     TreeNode left = lowestCommonAncestor(root.left, p, q);
     TreeNode right = lowestCommonAncestor(root.right, p, q);
     return left == null ? right : right == null ? left : root;
-}
-```
-
-### 对称树
-
-[Leetcode - 101 Symmetric Tree (Easy)](https://leetcode.com/problems/symmetric-tree/)
-
-题目描述：判断一个二叉树是不是对称的。
-
-```
-    1
-   / \
-  2   2
-  
- / \ / \
-3  4 4  3
-```
-
-解法一：递归
-
-```java
-public boolean isSymmetric(TreeNode root) {
-    return isMirror(root, root);
-}
-
-public boolean isMirror(TreeNode t1, TreeNode t2) {
-    if (t1 == null && t2 == null) return true;
-    if (t1 == null || t2 == null) return false;
-    return (t1.val == t2.val)
-        && isMirror(t1.right, t2.left)
-        && isMirror(t1.left, t2.right);
-}
-```
-
-解法二：遍历
-
-```java
-public boolean isSymmetric(TreeNode root) {
-    Queue<TreeNode> q = new LinkedList<>();
-    q.add(root);
-    q.add(root);
-    while (!q.isEmpty()) {
-        TreeNode t1 = q.poll();
-        TreeNode t2 = q.poll();
-        if (t1 == null && t2 == null) continue;
-        if (t1 == null || t2 == null) return false;
-        if (t1.val != t2.val) return false;
-        q.add(t1.left);
-        q.add(t2.right);
-        q.add(t1.right);
-        q.add(t2.left);
-    }
-    return true;
 }
 ```
 
