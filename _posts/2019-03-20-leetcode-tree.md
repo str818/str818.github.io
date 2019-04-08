@@ -190,6 +190,8 @@ public List<List<Integer>> levelOrder(TreeNode root) {
 }
 ```
 
+## 先序遍历系列
+
 ### 判断相同树
 
 [Leetcode 100 - Same Tree (Easy)](https://leetcode.com/problems/same-tree/)
@@ -336,6 +338,68 @@ public TreeNode invertTree(TreeNode root) {
         if (current.right != null) queue.add(current.right);
     }
     return root;
+}
+```
+
+### 二叉树路径
+
+[Leetcode - 257 Binary Tree Paths (Easy)](https://leetcode.com/problems/binary-tree-paths/)
+
+```
+Input:
+
+   1
+ /   \
+2     3
+ \
+  5
+
+Output: ["1->2->5", "1->3"]
+
+Explanation: All root-to-leaf paths are: 1->2->5, 1->3
+```
+
+解法一：递归
+
+```java
+public List<String> binaryTreePaths(TreeNode root) {
+    List<String> answer = new ArrayList<String>();
+    if (root != null) searchBT(root, "", answer);
+    return answer;
+}
+private void searchBT(TreeNode root, String path, List<String> answer) {
+    if (root.left == null && root.right == null) answer.add(path + root.val);
+    if (root.left != null) searchBT(root.left, path + root.val + "->", answer);
+    if (root.right != null) searchBT(root.right, path + root.val + "->", answer);
+}
+```
+
+解法二：遍历
+
+```java
+public List<String> binaryTreePaths(TreeNode root) {
+    List<String> list=new ArrayList<String>();
+    Queue<TreeNode> qNode=new LinkedList<TreeNode>();
+    Queue<String> qStr=new LinkedList<String>();
+    
+    if (root==null) return list;
+    qNode.add(root);
+    qStr.add("");
+    while(!qNode.isEmpty()) {
+        TreeNode curNode=qNode.remove();
+        String curStr=qStr.remove();
+        
+        if (curNode.left==null && curNode.right==null) list.add(curStr+curNode.val);
+        if (curNode.left!=null) {
+            qNode.add(curNode.left);
+            qStr.add(curStr+curNode.val+"->");
+        }
+        if (curNode.right!=null) {
+            qNode.add(curNode.right);
+            qStr.add(curStr+curNode.val+"->");
+        }
+    }
+    return list;
 }
 ```
 
