@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Java 并发编程基础
+title: Java 并发-编程基础
 tags: Java
 
 lang: zh-Hans

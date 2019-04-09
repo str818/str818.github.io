@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Java 并发关键字
+title: Java 并发-关键字
 tags: Java
 
 lang: zh-Hans

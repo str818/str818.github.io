@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Java 并发-内存模型
+title: Java 并发-Lock
 tags: Java
 
 lang: zh-Hans
