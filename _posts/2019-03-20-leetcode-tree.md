@@ -593,6 +593,18 @@ public int minDepth(TreeNode root) {
 }
 ```
 
+
+### 二叉树的最大深度
+
+[Leetcode - 104 Maximum Depth of Binary Tree (Easy)](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
+
+```java
+public int maxDepth(TreeNode root) {
+    if(root == null) return 0;
+    return Math.max(maxDepth(root.left),maxDepth(root.right)) + 1;
+}
+```
+
 ### 验证二叉搜索树
 
 [Leetcode - 98 Validate Binary Search Tree (Medium)](https://leetcode.com/problems/validate-binary-search-tree/)
@@ -693,17 +705,6 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
     TreeNode left = lowestCommonAncestor(root.left, p, q);
     TreeNode right = lowestCommonAncestor(root.right, p, q);
     return left == null ? right : right == null ? left : root;
-}
-```
-
-### 二叉树的深度
-
-[Leetcode - 104 Maximum Depth of Binary Tree (Easy)](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
-
-```java
-public int maxDepth(TreeNode root) {
-    if(root == null) return 0;
-    return Math.max(maxDepth(root.left),maxDepth(root.right)) + 1;
 }
 ```
 
