@@ -569,6 +569,30 @@ public int sum(TreeNode root, int s){
 }
 ```
 
+### 二叉树的最小深度
+
+[Leetcode - 111 Minimum Depth of Binary Tree (Easy)](https://leetcode.com/problems/minimum-depth-of-binary-tree/)
+
+```
+Given binary tree [3,9,20,null,null,15,7],
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its minimum depth = 2.
+```
+
+```java
+public int minDepth(TreeNode root) {
+    if(root == null) return 0;
+    int left = minDepth(root.left);
+    int right = minDepth(root.right);
+    return (left == 0 || right == 0) ? left + right + 1: Math.min(left,right) + 1;
+}
+```
+
 ### 验证二叉搜索树
 
 [Leetcode - 98 Validate Binary Search Tree (Medium)](https://leetcode.com/problems/validate-binary-search-tree/)
