@@ -537,6 +537,40 @@ public List<List<Integer>> pathSum(TreeNode root, int sum) {
 }
 ```
 
+### 根到叶节点数字之和
+
+[Leetcode - 129 Sum Root to Leaf Numbers (Medium)](https://leetcode.com/problems/sum-root-to-leaf-numbers/)
+
+```
+Input: [4,9,0,5,1]
+    4
+   / \
+  9   0
+ / \
+5   1
+Output: 1026
+Explanation:
+The root-to-leaf path 4->9->5 represents the number 495.
+The root-to-leaf path 4->9->1 represents the number 491.
+The root-to-leaf path 4->0 represents the number 40.
+Therefore, sum = 495 + 491 + 40 = 1026.
+```
+
+解法一：递归
+
+```java
+public int sumNumbers(TreeNode root) {
+    return sum(root, 0); 
+}
+public int sum(TreeNode root, int s){
+    if(root == null) return 0;
+    if(root.left == null && root.right == null){
+        return s * 10 + root.val;
+    }
+    return sum(root.left, s * 10 + root.val) + sum(root.right, s * 10 + root.val);
+}
+```
+
 ### 验证二叉搜索树
 
 [Leetcode - 98 Validate Binary Search Tree (Medium)](https://leetcode.com/problems/validate-binary-search-tree/)
