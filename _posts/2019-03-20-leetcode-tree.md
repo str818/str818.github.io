@@ -556,8 +556,6 @@ The root-to-leaf path 4->0 represents the number 40.
 Therefore, sum = 495 + 491 + 40 = 1026.
 ```
 
-解法一：递归
-
 ```java
 public int sumNumbers(TreeNode root) {
     return sum(root, 0); 
