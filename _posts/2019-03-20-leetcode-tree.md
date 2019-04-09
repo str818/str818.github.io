@@ -403,7 +403,7 @@ public List<String> binaryTreePaths(TreeNode root) {
 }
 ```
 
-### 路径和
+### 路径和 I
 
 [Leetcode - 112 Path Sum (Easy)](https://leetcode.com/problems/path-sum/)
 
@@ -452,6 +452,88 @@ public boolean hasPathSum(TreeNode root, int sum) {
         }
     }	    
     return false ;
+}
+```
+
+### 路径和 II
+
+[Leetcode - 113 Path Sum II (Medium)](https://leetcode.com/problems/path-sum-ii/)
+
+题目描述：返回路径和为给定值的路径。
+
+```
+Given the below binary tree and sum = 22,
+
+      5
+     / \
+    4   8
+   /   / \
+  11  13  4
+ /  \    / \
+7    2  5   1
+Return:
+[
+   [5,4,11,2],
+   [5,8,4,5]
+]
+```
+
+解法一：递归
+```java
+public List<List<Integer>> pathSum(TreeNode root, int sum) {
+    List<List<Integer>> ansList = new ArrayList<>();
+    pathSum(root, sum, new ArrayList<Integer>(), ansList);
+    return ansList;
+}
+
+public void pathSum(TreeNode root, int sum, List<Integer> curList, List<List<Integer>> ansList){
+    if(root == null) return;
+    
+    if(root.left == null && root.right == null && sum - root.val == 0){
+        List<Integer> cur = new ArrayList(curList);
+        cur.add(root.val);
+        ansList.add(cur);
+        return;
+    }
+    curList.add(root.val);
+    pathSum(root.left, sum - root.val, curList, ansList);
+    pathSum(root.right, sum - root.val, curList, ansList);
+    curList.remove(curList.size() - 1);
+    return;
+}
+```
+
+解法二：遍历
+```java
+public List<List<Integer>> pathSum(TreeNode root, int sum) {
+    List<List<Integer>> res = new ArrayList<>();
+    List<Integer> path = new ArrayList<>();
+    Stack<TreeNode> stack = new Stack<TreeNode>();
+    int SUM = 0;
+    TreeNode cur = root;
+    TreeNode pre = null;
+    while(cur!=null || !stack.isEmpty()){
+        while(cur!=null){
+            stack.push(cur);
+            path.add(cur.val);
+            SUM+=cur.val;
+            cur=cur.left;
+        }
+        cur = stack.peek();
+        if(cur.right!=null && cur.right!=pre){
+            cur = cur.right;
+            continue;
+        } 
+        if(cur.left==null && cur.right==null && SUM==sum) 
+            res.add(new ArrayList<Integer>(path));
+
+        pre = cur;
+        stack.pop();
+        path.remove(path.size()-1);
+        SUM-=cur.val;
+        cur = null;
+    }
+    return res;
 }
 ```
 
