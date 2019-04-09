@@ -593,7 +593,6 @@ public int minDepth(TreeNode root) {
 }
 ```
 
-
 ### 二叉树的最大深度
 
 [Leetcode - 104 Maximum Depth of Binary Tree (Easy)](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
@@ -602,6 +601,44 @@ public int minDepth(TreeNode root) {
 public int maxDepth(TreeNode root) {
     if(root == null) return 0;
     return Math.max(maxDepth(root.left),maxDepth(root.right)) + 1;
+}
+```
+
+### 判断平衡二叉树
+
+[Leetcode - 110 Balanced Binary Tree (Easy)](https://leetcode.com/problems/balanced-binary-tree/)
+
+题目描述：平衡二叉树左右子树高度相差不能超过 1。
+
+```
+Given the following tree [3,9,20,null,null,15,7]:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+Return true.
+```
+
+```java
+public boolean isBalanced(TreeNode root) {
+    return depth(root) != -1;
+}
+
+public int depth(TreeNode root){
+    if(root == null) return 0;
+    int left = depth(root.left);
+    int right = depth(root.right);
+    
+    if(left == -1 || right == -1){
+        return -1;
+    }
+    
+    if(Math.abs(left - right) > 1){
+        return -1;
+    }
+    return Math.max(left, right) + 1;
 }
 ```
 
