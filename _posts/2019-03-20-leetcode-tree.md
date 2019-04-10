@@ -707,6 +707,45 @@ public boolean backtrack(TreeNode root, long maxValue, long minValue){
 }
 ```
 
+### 打家劫舍 III
+
+[Leetcode - 337 House Robber III (Medium)](https://leetcode.com/problems/house-robber-iii/)
+
+题目描述：连续偷窃相连的节点会触发警报，要求在不触发警报的情况下计算偷到的最大金额。
+
+```
+Input: [3,4,5,1,3,null,1]
+
+     3
+    / \
+   4   5
+  / \   \ 
+ 1   3   1
+
+Output: 9
+Explanation: Maximum amount of money the thief can rob = 4 + 5 = 9.
+```
+
+```java
+public int rob(TreeNode root) {
+    int[] res = robSub(root);
+    return Math.max(res[0], res[1]);
+}
+public int[] robSub(TreeNode root){
+    if(root == null) return new int[2];
+    
+    int[] left = robSub(root.left);
+    int[] right = robSub(root.right);
+    
+    int[] res = new int[2];
+    // 不包含当前节点的最大值
+    res[0] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+    // 包含当前节点的最大值
+    res[1] = root.val + left[0] + right[0];
+    
+    return res;
+}
+```
 
 
 ### 实现前缀树(字典树)
