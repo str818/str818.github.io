@@ -165,7 +165,9 @@ ReentrantLock 支持两种锁：公平锁与非公平锁。公平锁是指锁的
 ReentrantLock 的构造方法无参时是构造非公平锁。
 
 ```java
-
+public ReentrantLock() {
+    sync = new NonfairSync();
+}
 ```
 
 另外还能通过有参方法控制，true 代表公平锁，false 代表非公平锁。
