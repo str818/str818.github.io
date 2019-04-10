@@ -680,33 +680,6 @@ public int maxPathDown(TreeNode root){
 }
 ```
 
-### 验证二叉搜索树
-
-[Leetcode - 98 Validate Binary Search Tree (Medium)](https://leetcode.com/problems/validate-binary-search-tree/)
-
-题目描述：给出一个二叉树，判断是否是二叉搜索树。
-
-```
-Input:
-    2
-   / \
-  1   3
-Output: true
-```
-
-解题思路：二叉搜索树需要左子树比根节点小，右子树比根节点大，注意是子树，而不是结点，所以需要子树中的每一个结点都比根节点小/大。
-
-```java
-public boolean isValidBST(TreeNode root) {
-    return backtrack(root, Long.MAX_VALUE, Long.MIN_VALUE);
-}
-public boolean backtrack(TreeNode root, long maxValue, long minValue){
-    if(root == null) return true;
-    if(root.val >= maxValue || root.val <= minValue) return false;
-    return backtrack(root.left, root.val, minValue) && backtrack(root.right, maxValue, root.val);
-}
-```
-
 ### 打家劫舍 III
 
 [Leetcode - 337 House Robber III (Medium)](https://leetcode.com/problems/house-robber-iii/)
@@ -747,6 +720,33 @@ public int[] robSub(TreeNode root){
 }
 ```
 
+
+### 验证二叉搜索树
+
+[Leetcode - 98 Validate Binary Search Tree (Medium)](https://leetcode.com/problems/validate-binary-search-tree/)
+
+题目描述：给出一个二叉树，判断是否是二叉搜索树。
+
+```
+Input:
+    2
+   / \
+  1   3
+Output: true
+```
+
+解题思路：二叉搜索树需要左子树比根节点小，右子树比根节点大，注意是子树，而不是结点，所以需要子树中的每一个结点都比根节点小/大。
+
+```java
+public boolean isValidBST(TreeNode root) {
+    return backtrack(root, Long.MAX_VALUE, Long.MIN_VALUE);
+}
+public boolean backtrack(TreeNode root, long maxValue, long minValue){
+    if(root == null) return true;
+    if(root.val >= maxValue || root.val <= minValue) return false;
+    return backtrack(root.left, root.val, minValue) && backtrack(root.right, maxValue, root.val);
+}
+```
 
 ### 实现前缀树(字典树)
 
