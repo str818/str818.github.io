@@ -593,6 +593,8 @@ public int minDepth(TreeNode root) {
 }
 ```
 
+## 后续遍历系列
+
 ### 二叉树的最大深度
 
 [Leetcode - 104 Maximum Depth of Binary Tree (Easy)](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
@@ -639,6 +641,42 @@ public int depth(TreeNode root){
         return -1;
     }
     return Math.max(left, right) + 1;
+}
+```
+
+### 二叉树最大路径和
+
+[Leetcode - 124 Binary Tree Maximum Path Sum (Hard)](https://leetcode.com/problems/binary-tree-maximum-path-sum/)
+
+题目描述：在二叉树中找到一个路径，使得路径和最大，不限制路径的起点与终点。
+
+```
+Input: [21,9,20,null,null,15,7]
+
+   21
+   / \
+  9  20
+    /  \
+   15   7
+
+Output: 56
+```
+
+题目描述：先递归到叶子节点，如果以 20 为根节点，最大路径和为 20 + 15 + 7，如果再向上回溯到 20 时，就不能同时取两条路径了，15 和 7 中只能选择一个最大的，记录所有路径中的最大路径和。
+
+```java
+int maxValue;
+public int maxPathSum(TreeNode root) {
+    maxValue = Integer.MIN_VALUE;
+    maxPathDown(root);
+    return maxValue;
+}
+public int maxPathDown(TreeNode root){
+    if(root == null) return 0;
+    int left = Math.max(0, maxPathDown(root.left));
+    int right = Math.max(0, maxPathDown(root.right));
+    maxValue = Math.max(maxValue, left + right + root.val);
+    return Math.max(left, right) + root.val;
 }
 ```
 
