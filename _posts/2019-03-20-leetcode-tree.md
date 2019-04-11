@@ -720,7 +720,7 @@ public int[] robSub(TreeNode root){
 }
 ```
 
-## BFS
+## 层次遍历系列
 
 ### 二叉树的层次遍历 II
 
@@ -851,6 +851,67 @@ public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         }
         ansList.add(curList);
         isOdd = isOdd ? false : true;
+        size = queue.size();
+    }
+    return ansList;
+}
+```
+
+### 二叉树的右侧视图
+
+[Leetcode - 199 Binary Tree Right Side View (Medium)](https://leetcode.com/problems/binary-tree-right-side-view/)
+
+题目描述：输出从二叉树右侧看到的节点，也就是每一层最右边的节点。
+
+```
+Input: [1,2,3,null,5,null,4]
+Output: [1, 3, 4]
+Explanation:
+
+   1            <---
+ /   \
+2     3         <---
+ \     \
+  5     4       <---
+```
+
+解法一：递归
+
+```java
+public List<Integer> rightSideView(TreeNode root) {
+    List<Integer> result = new ArrayList<Integer>();
+    rightView(root, result, 0);
+    return result;
+}
+public void rightView(TreeNode curr, List<Integer> result, int currDepth){
+    if(curr == null){
+        return;
+    }
+    if(currDepth == result.size()){
+        result.add(curr.val);
+    }
+    rightView(curr.right, result, currDepth + 1);
+    rightView(curr.left, result, currDepth + 1);
+}
+```
+解法二：遍历
+
+```java
+public List<Integer> rightSideView(TreeNode root) {
+    List<Integer> ansList = new ArrayList<Integer>();
+    Queue<TreeNode> queue = new LinkedList<>();
+    if(root == null) return ansList;
+    queue.offer(root);
+    int size = 1;
+    while(!queue.isEmpty()){
+        for(int i = 0; i < size; i++){
+            TreeNode curNode = queue.poll();
+            if(i == size - 1){
+                ansList.add(curNode.val);
+            }
+            if(curNode.left != null) queue.offer(curNode.left);
+            if(curNode.right != null) queue.offer(curNode.right);
+        }
         size = queue.size();
     }
     return ansList;
