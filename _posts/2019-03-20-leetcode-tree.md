@@ -785,6 +785,78 @@ public List<List<Integer>> levelOrderBottom(TreeNode root) {
 }
 ```
 
+### 二叉树「之」字形层次遍历
+
+[Leetcode - 103 Binary Tree Zigzag Level Order Traversal (Medium)](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/)
+
+```
+Given binary tree [3,9,20,null,null,15,7],
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its zigzag level order traversal as:
+[
+  [3],
+  [20,9],
+  [15,7]
+]
+```
+
+解法一：递归
+
+```java
+public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+    List<List<Integer>> ansList = new ArrayList<>();
+    helper(ansList, root, 0);
+    return ansList;
+}
+
+public void helper(List<List<Integer>> ansList, TreeNode root, int level){
+    if(root == null) return;
+    if(level >= ansList.size()){
+        ansList.add(new ArrayList<Integer>());
+    }
+    if(level % 2 == 0){
+        ansList.get(level).add(root.val);
+    }else{
+        ansList.get(level).add(0, root.val);
+    }
+    helper(ansList, root.left, level + 1);
+    helper(ansList, root.right, level + 1);
+}
+```
+
+解法二：遍历
+```java
+public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+    List<List<Integer>> ansList = new ArrayList<>();
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    if(root == null) return ansList;
+    queue.offer(root);
+    boolean isOdd = false;
+    int size = 1;
+    while(!queue.isEmpty()){
+        List<Integer> curList = new ArrayList<>();
+        for(int i = 0; i < size; i++){
+            TreeNode curNode = queue.poll();
+            if(!isOdd){
+                curList.add(curNode.val);
+            }else{
+                curList.add(0, curNode.val);
+            }
+            if(curNode.left != null) queue.offer(curNode.left);
+            if(curNode.right != null) queue.offer(curNode.right);
+        }
+        ansList.add(curList);
+        isOdd = isOdd ? false : true;
+        size = queue.size();
+    }
+    return ansList;
+}
+```
+
 ### 验证二叉搜索树
 
 [Leetcode - 98 Validate Binary Search Tree (Medium)](https://leetcode.com/problems/validate-binary-search-tree/)
