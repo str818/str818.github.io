@@ -720,6 +720,70 @@ public int[] robSub(TreeNode root){
 }
 ```
 
+## BFS
+
+### 二叉树的层次遍历 II
+
+[Leetcode - 107 Binary Tree Level Order Traversal II (Easy)](https://leetcode.com/problems/binary-tree-level-order-traversal-ii/)
+
+题目描述：将二叉树从下到上存储。
+
+```
+Given binary tree [3,9,20,null,null,15,7],
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its bottom-up level order traversal as:
+[
+  [15,7],
+  [9,20],
+  [3]
+]
+```
+
+解法一：递归 BFS
+
+```java
+public List<List<Integer>> levelOrderBottom(TreeNode root) {
+    List<List<Integer>> ansList = new ArrayList<>();
+    backtrack(ansList, root, 0);
+    return ansList;
+}
+public void backtrack(List<List<Integer>> ansList, TreeNode root, int level){
+    if(root == null) return;
+    if(ansList.size() <= level){
+        ansList.add(0, new ArrayList<>());
+    }
+    backtrack(ansList, root.left, level + 1);
+    backtrack(ansList, root.right, level + 1);
+    ansList.get(ansList.size() - level - 1).add(root.val);
+}
+```
+
+解法二：遍历
+```java
+public List<List<Integer>> levelOrderBottom(TreeNode root) {
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    List<List<Integer>> wrapList = new LinkedList<List<Integer>>();
+    
+    if(root == null) return wrapList;
+    
+    queue.offer(root);
+    while(!queue.isEmpty()){
+        int levelNum = queue.size();
+        List<Integer> subList = new LinkedList<Integer>();
+        for(int i=0; i<levelNum; i++) {
+            if(queue.peek().left != null) queue.offer(queue.peek().left);
+            if(queue.peek().right != null) queue.offer(queue.peek().right);
+            subList.add(queue.poll().val);
+        }
+        wrapList.add(0, subList);
+    }
+    return wrapList;
+}
+```
 
 ### 验证二叉搜索树
 
