@@ -1003,6 +1003,26 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 }
 ```
 
+### 有序数组转为二叉搜索树
+
+[Leetcode - 108 Convert Sorted Array to Binary Search Tree (Easy)](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/)
+
+解题思路：二分搜索的思想，不明白为什么我用 0 到 num.length 划分，就只有 22%，而改成 0 到 num.length - 1 就是 100% 了。
+
+```java
+public TreeNode sortedArrayToBST(int[] num) {
+    return helper(num, 0, num.length - 1);
+}
+public TreeNode helper(int[] num, int low, int high) {
+    if (low > high) return null;
+    int mid = (low + high) / 2;
+    TreeNode node = new TreeNode(num[mid]);
+    node.left = helper(num, low, mid - 1);
+    node.right = helper(num, mid + 1, high);
+    return node;
+}
+```
+
 ### 实现前缀树(字典树)
 
 [Leetcode - 207 Implement Trie(Prefix Tree) (Medium)](https://leetcode.com/problems/implement-trie-prefix-tree/)
