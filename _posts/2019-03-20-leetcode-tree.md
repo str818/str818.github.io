@@ -918,6 +918,8 @@ public List<Integer> rightSideView(TreeNode root) {
 }
 ```
 
+## 二叉搜索树(BST)
+
 ### 验证二叉搜索树
 
 [Leetcode - 98 Validate Binary Search Tree (Medium)](https://leetcode.com/problems/validate-binary-search-tree/)
@@ -942,6 +944,47 @@ public boolean backtrack(TreeNode root, long maxValue, long minValue){
     if(root == null) return true;
     if(root.val >= maxValue || root.val <= minValue) return false;
     return backtrack(root.left, root.val, minValue) && backtrack(root.right, maxValue, root.val);
+}
+```
+
+### 二叉搜索树的最小公共父节点
+
+[Leetcode - 235 Lowest Common Ancestor of a Binary Search Tree (Easy)](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/)
+
+```
+Input: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8
+Output: 6
+Explanation: The LCA of nodes 2 and 8 is 6.
+```
+
+解法一：递归
+
+```java
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    if (p.val > root.val && q.val > root.val) {
+        return lowestCommonAncestor(root.right, p, q);
+    } else if (p.val < root.val && q.val < root.val) {
+        return lowestCommonAncestor(root.left, p, q);
+    } else {
+        return root;
+    }
+}
+```
+
+解法二：遍历
+
+```java
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    while(root != null){
+        if (p.val > root.val && q.val > root.val) {
+            root = root.right;
+        } else if (p.val < root.val && q.val < root.val) {
+            root = root.left;
+        } else {
+            return root;
+        }
+    }
+    return null;
 }
 ```
 
