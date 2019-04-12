@@ -957,6 +957,8 @@ Output: 6
 Explanation: The LCA of nodes 2 and 8 is 6.
 ```
 
+解题思路：利用好二叉搜索树的性质。
+
 解法一：递归
 
 ```java
