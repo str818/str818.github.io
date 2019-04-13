@@ -1078,6 +1078,51 @@ class BSTIterator {
 }
 ```
 
+### 二叉搜索树中第 K 小的节点
+
+[Leetcode - 230 Kth Smallest Element in a BST (Medium)](https://leetcode.com/problems/kth-smallest-element-in-a-bst/)
+
+解法一：递归
+
+```java
+int result = 0;
+int count = 0;
+public int kthSmallest(TreeNode root, int k) {
+    traverse(root, k);
+    return result;
+}
+public void traverse(TreeNode root, int k){
+    if(root == null) return;
+    traverse(root.left, k);
+    if(++count == k) result = root.val;
+    traverse(root.right, k);
+}
+```
+
+解法二：遍历
+
+```java
+public int kthSmallest(TreeNode root, int k) {
+    Stack<TreeNode> stack = new Stack<TreeNode>();
+    TreeNode cur = root;
+    int count = 0;
+
+    while(!stack.isEmpty() || cur != null){
+        if(cur != null){
+            stack.push(cur);
+            cur = cur.left;
+        }else{
+            cur = stack.pop();
+            if(++count == k){
+                return cur.val;
+            }
+            cur = cur.right;
+        }
+    }
+    return -1;
+}
+```
+
 ### 实现前缀树(字典树)
 
 [Leetcode - 207 Implement Trie(Prefix Tree) (Medium)](https://leetcode.com/problems/implement-trie-prefix-tree/)
