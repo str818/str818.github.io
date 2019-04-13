@@ -1123,6 +1123,50 @@ public int kthSmallest(TreeNode root, int k) {
 }
 ```
 
+### 二叉树的序列化与反序列化
+
+[Leetcode - 297 Serialize and Deserialize Binary Tree (Hard)](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)
+
+题目描述：不限制方法。
+
+```java
+private static final String spliter = ",";
+private static final String NN = "X";
+// 序列化
+public String serialize(TreeNode root) {
+    StringBuilder sb = new StringBuilder();
+    buildString(root, sb);
+    return sb.toString();
+}
+
+private void buildString(TreeNode node, StringBuilder sb) {
+    if (node == null) {
+        sb.append(NN).append(spliter);
+    } else {
+        sb.append(node.val).append(spliter);
+        buildString(node.left, sb);
+        buildString(node.right,sb);
+    }
+}
+// 反序列化
+public TreeNode deserialize(String data) {
+    Deque<String> nodes = new LinkedList<>();
+    nodes.addAll(Arrays.asList(data.split(spliter)));
+    return buildTree(nodes);
+}
+
+private TreeNode buildTree(Deque<String> nodes) {
+    String val = nodes.remove();
+    if (val.equals(NN)) return null;
+    else {
+        TreeNode node = new TreeNode(Integer.valueOf(val));
+        node.left = buildTree(nodes);
+        node.right = buildTree(nodes);
+        return node;
+    }
+}
+```
+
 ### 实现前缀树(字典树)
 
 [Leetcode - 207 Implement Trie(Prefix Tree) (Medium)](https://leetcode.com/problems/implement-trie-prefix-tree/)
