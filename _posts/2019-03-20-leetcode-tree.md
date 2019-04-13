@@ -1048,6 +1048,36 @@ public TreeNode toBST(ListNode head, ListNode tail){
 }
 ```
 
+### 二叉搜索树迭代器
+
+[Leetcode - 173 Binary Search Tree Iterator (Medium)](https://leetcode.com/problems/binary-search-tree-iterator/)
+
+题目描述：构造一个迭代器，每次调用 next() 方法返回下一个最小节点的值，调用 hasNext() 返回是否有下一个最小节点。时间复杂度 O(1)，空间复杂度 O(h)，h 是树的高度。
+
+```java
+class BSTIterator {
+    Stack<TreeNode> stack = new Stack<TreeNode>();
+    
+    public BSTIterator(TreeNode root) {
+        pushAll(root);
+    }
+    
+    public int next() {
+        TreeNode node = stack.pop();
+        pushAll(node.right);
+        return node.val;
+    }
+    
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+    
+    public void pushAll(TreeNode node){
+        for(;node != null;stack.push(node), node = node.left);
+    }
+}
+```
+
 ### 实现前缀树(字典树)
 
 [Leetcode - 207 Implement Trie(Prefix Tree) (Medium)](https://leetcode.com/problems/implement-trie-prefix-tree/)
