@@ -1167,6 +1167,91 @@ private TreeNode buildTree(Deque<String> nodes) {
 }
 ```
 
+### 恢复二叉搜索树
+
+[Leetcode - 99 Recover Binary Search Tree (Hard)](https://leetcode.com/problems/recover-binary-search-tree/)
+
+题目描述：二叉搜索树中有两个节点是错位的，在不改变树结构的条件下使二叉树复位。
+
+解题思路：首先想到的就是中序遍历的方法，找到两个错位的节点，因为中序遍历之后前面的节点一定小于后面的节点，如果不是则表示错位了，但是题目进阶要求空间复杂度为 O(1)，中序遍历不论是栈+遍历还是递归的方式空间复杂度都是 O(n)，有没有一种二叉树的遍历方式空间复杂度为 O(1)？有，那就是 Morris Traversal。
+
+解法一：递归
+
+```java
+TreeNode firstNode = null;
+    TreeNode secondNode = null;
+    TreeNode preNode = new TreeNode(Integer.MIN_VALUE);
+    public void recoverTree(TreeNode root) {
+        traverse(root);
+        int temp = firstNode.val;
+        firstNode.val = secondNode.val;
+        secondNode.val = temp;
+    }
+    public void traverse(TreeNode root){
+        if(root == null) return;
+        traverse(root.left);
+        if(firstNode == null && preNode.val >= root.val){
+            firstNode = preNode;  // 注意，第一个是 preNode
+        }
+        if(firstNode != null && preNode.val >= root.val){
+            secondNode = root;    // 第二个是 root
+        }
+        preNode = root;
+        traverse(root.right);
+    }
+```
+
+解法二：Morris Traversal
+
+利用所有叶子节点的 right 指针，指向后继节点，组成一个环，这样就能通过指针的方式记录下当前根节点的位置。
+
+```java
+public void recoverTree(TreeNode root) {
+    TreeNode first = null;
+    TreeNode second = null;
+
+    TreeNode pred = null; // 左子树的最右边节点
+    TreeNode prev = null; 
+
+    TreeNode curr = root;
+
+    while(curr != null){
+        //for each node, we compare it with prev node as we did in in-order-traversal
+        if(prev != null && curr.val <= prev.val){
+            if(first == null) first = prev;
+            second = curr;
+        }
+
+        if(curr.left != null){
+            // 找到左子树的最右边的节点
+            pred = curr.left;
+            while(pred.right != null && pred.right != curr){
+                pred = pred.right;
+            }
+
+            if(pred.right == curr){
+                // 第二次访问该节点，返回到当前子树的后继节点
+                pred.right = null;
+                prev = curr;
+                curr = curr.right;
+            }else{
+                pred.right = curr;
+                curr = curr.left;
+            }
+
+        }else{
+            // 没有左子树，直接访问右子树
+            prev = curr;
+            curr = curr.right;
+        }
+    }
+
+    int temp = first.val;
+    first.val = second.val;
+    second.val = temp;
+}
+```
+
 ### 实现前缀树(字典树)
 
 [Leetcode - 207 Implement Trie(Prefix Tree) (Medium)](https://leetcode.com/problems/implement-trie-prefix-tree/)
