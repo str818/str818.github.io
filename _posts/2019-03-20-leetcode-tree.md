@@ -1252,6 +1252,32 @@ public void recoverTree(TreeNode root) {
 }
 ```
 
+## 其它
+
+### 每个节点的右向指针
+
+[Leetcode - 116 Populating Next Right Pointers in Each Node (Medium)](https://leetcode.com/problems/populating-next-right-pointers-in-each-node/)
+
+<div align="center">  <img src="/img/leetcode-116.png" width="80%"/> </div><br>
+
+解题思路：这道题出的非常好，从上一层对下一层修改。
+
+```java
+public Node connect(Node root) {
+    Node levelStart = root;
+    while(levelStart != null){
+        Node cur = levelStart;
+        while(cur != null){
+            if(cur.left != null) cur.left.next = cur.right;
+            if(cur.right != null && cur.next != null) cur.right.next = cur.next.left;
+            cur = cur.next;
+        }
+        levelStart = levelStart.left;
+    }
+    return root;
+}
+```
+
 ### 实现前缀树(字典树)
 
 [Leetcode - 207 Implement Trie(Prefix Tree) (Medium)](https://leetcode.com/problems/implement-trie-prefix-tree/)
