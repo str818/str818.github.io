@@ -30,7 +30,7 @@ show_subscribe: false
 
 <div align="center">  <img src="/img/java_concurrency_thread_pool.png" width="80%"/> </div><br>
 
-### 3. 线程池的创建
+### 3. 创建
 
 ```java
 ThreadPoolExecutor(int corePoolSize,
@@ -59,3 +59,27 @@ ThreadPoolExecutor(int corePoolSize,
   - CallerRunsPolicy：只用调用者所在的线程来执行任务。
   - DiscardPolicy：不处理直接丢弃掉任务。
   - DiscardOldestPolicy：丢弃掉阻塞队列中存放时间最久的任务，执行当前任务。
+
+### 4. 提交任务
+
+execute() 没有返回值，无法判断是否被线程池执行。
+
+```java
+threadsPool.execute(new Runnable(){
+    @Override
+    public void run(){
+
+    }
+});
+```
+
+submit() 返回 future 对象，通过 future 对象判断任务是否执行成功。
+
+```java
+Future<Object> future = executor.submit(harReturnValuetask);
+```
+
+### 5. 关闭
+
+shutdown() 或 shutdownNow(),遍历线程池的工作线程，然后逐个调用线程的 interrupt 方法来中断线程，所以无法响应中断的任务可能永远无法终止。
+
