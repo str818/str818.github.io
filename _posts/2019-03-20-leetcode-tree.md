@@ -1258,6 +1258,8 @@ public void recoverTree(TreeNode root) {
 
 [Leetcode - 116 Populating Next Right Pointers in Each Node (Medium)](https://leetcode.com/problems/populating-next-right-pointers-in-each-node/)
 
+题目描述：假设二叉树是满二叉树。
+
 <div align="center">  <img src="/img/leetcode-116.png" width="80%"/> </div><br>
 
 解题思路：这道题出的非常好，从上一层对下一层修改。
@@ -1273,6 +1275,35 @@ public Node connect(Node root) {
             cur = cur.next;
         }
         levelStart = levelStart.left;
+    }
+    return root;
+}
+```
+
+### 每个节点的右向指针
+
+[Leetcode - 117 Populating Next Right Pointers in Each Node II (Medium)](https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/)
+
+题目描述：与上一道题不同的是，本次没有规定是满二叉树。
+
+```java
+public Node connect(Node root) {
+    Node cur = root;
+    while (cur != null) {
+        Node dummy = new Node(0);
+        Node son = dummy;
+        while (cur != null) {
+            if (cur.left != null) {
+                son.next = cur.left;
+                son = son.next;
+            }
+            if (cur.right != null) {
+                son.next = cur.right;
+                son = son.next;
+            }
+            cur = cur.next;
+        }
+        cur = dummy.next;
     }
     return root;
 }
