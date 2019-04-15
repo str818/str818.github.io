@@ -12,11 +12,11 @@ show_subscribe: false
 
 ## 回溯
 
-## 子集
+### 子集
 
 [Leetcode - 78 Subsets (Medium)](https://leetcode.com/problems/subsets/)
 
-题目描述：给定一个整数数组，找出所有的子集。
+题目描述：给定一个不重复的整数数组，找出所有的子集。
 
 ```
 Input: nums = [1,2,3]
@@ -39,12 +39,36 @@ public List<List<Integer>> subsets(int[] nums) {
     backtrack(list, new ArrayList<>(), nums, 0);
     return list;
 }
-private void backtrack(List<List<Integer>> list , List<Integer> tempList, int [] nums, int start){
-    list.add(new ArrayList<>(tempList));
+private void backtrack(List<List<Integer>> list , List<Integer> curList, int [] nums, int start){
+    list.add(new ArrayList<>(curList));
     for(int i = start; i < nums.length; i++){
-        tempList.add(nums[i]);
-        backtrack(list, tempList, nums, i + 1);
-        tempList.remove(tempList.size() - 1);
+        curList.add(nums[i]);
+        backtrack(list, curList, nums, i + 1);
+        curList.remove(curList.size() - 1);
+    }
+}
+```
+
+### 子集 II
+
+[Leetcode - 90 Subsets II (Medium)](https://leetcode.com/problems/subsets-ii/)
+
+题目描述：给定一个重复的整数数组，找出所有不重复的子集。
+
+```java
+public List<List<Integer>> subsetsWithDup(int[] nums) {
+    Arrays.sort(nums);
+    List<List<Integer>> list = new ArrayList<>();
+    backtrack(list, new ArrayList<Integer>(), nums, 0);
+    return list;
+}
+public void backtrack(List<List<Integer>> list, List<Integer> curList, int[] nums, int index){
+    list.add(new ArrayList(curList));
+    for(int i = index; i < nums.length; i++){
+        if(i > index && nums[i] == nums[i - 1]) continue;
+        curList.add(nums[i]);
+        backtrack(list, curList, nums, i + 1);
+        curList.remove(curList.size() - 1);
     }
 }
 ```
