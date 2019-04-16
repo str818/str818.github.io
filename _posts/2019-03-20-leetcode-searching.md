@@ -73,6 +73,48 @@ public void backtrack(List<List<Integer>> list, List<Integer> curList, int[] num
 }
 ```
 
+### 组合
+
+[Leetcode - 77 Combinations (Medium)](https://leetcode.com/problems/combinations/)
+
+题目描述：找出 1 - n 中 k 个数字组合的数目。
+
+```
+Input: n = 4, k = 2
+Output:
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+```
+
+解题思路：为什么是 n - k + 1 ? 因为当到后面的时候数字不够了，不能继续循环，例如 n = 10, k = 5，第一个开始循环的数只能是 1 - 6，当为 7 的时候，就算循环到了最后，7 8 9 10，最多也是 4 个数字，达不到 5。
+
+```java
+public List<List<Integer>> combine(int n, int k) {
+    List<List<Integer>> ansList = new ArrayList<>();
+    backtrack(ansList, new ArrayList<Integer>(), 1, n, k);
+    return ansList;
+}
+
+public void backtrack(List<List<Integer>> ansList, List<Integer> curList, int start, int n, int k){
+    if(k == 0){
+        ansList.add(new ArrayList(curList));
+        return;
+    }
+    
+    for(int i = start; i <= n - k + 1; i++){ // 注意是 n - k + 1
+        curList.add(i);
+        backtrack(ansList, curList, i + 1, n, k - 1);
+        curList.remove(curList.size() - 1);
+    }
+}
+```
+
 ### 单词搜索
 
 [Leetcode - 79 Word Search (Medium)](https://leetcode.com/problems/word-search/)
