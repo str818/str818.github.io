@@ -152,6 +152,36 @@ public void backtrack(List<List<Integer>> ansList, List<Integer> curList, int[] 
 }
 ```
 
+### 组合数之和 II
+
+[Leetcode - 40 Combination Sum II (Medium)](https://leetcode.com/problems/combination-sum-ii/)
+
+题目描述：候选序列中有重复的元素，求和过程不能重复使用一个元素。
+
+```java
+public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+    Arrays.sort(candidates);
+    List<List<Integer>> ansList = new ArrayList<>();
+    backtrack(ansList, new ArrayList<Integer>(), candidates, target, 0);
+    return ansList;
+}
+
+public void backtrack(List<List<Integer>> ansList, List<Integer> curList, int[] candidates, int target, int start){
+    if(target < 0) return;
+    if(target == 0){
+        ansList.add(new ArrayList(curList));
+    }else{
+        for(int i = start; i < candidates.length; i++){
+            if(target - candidates[i] < 0) break; // 剪枝
+            if(i > start && candidates[i] == candidates[i - 1]) continue; // 避免使用重复元素
+            curList.add(candidates[i]);
+            backtrack(ansList, curList, candidates, target - candidates[i], i + 1);
+            curList.remove(curList.size() - 1);
+        }
+    }
+}
+```
+
 ### 单词搜索
 
 [Leetcode - 79 Word Search (Medium)](https://leetcode.com/problems/word-search/)
