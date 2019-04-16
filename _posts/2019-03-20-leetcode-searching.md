@@ -115,6 +115,43 @@ public void backtrack(List<List<Integer>> ansList, List<Integer> curList, int st
 }
 ```
 
+### 组合数之和
+
+[Leetcode - 39 Combination Sum (Medium)](https://leetcode.com/problems/combination-sum/)
+
+题目描述：给定一无重复的候选序列和一个 target 值，找出序列中所有能组成和为 target 的组合。可以从候选序列中重复使用同一个元素。假设所有元素均为正数，返回结果中不能出现相同的组合。
+
+```
+Input: candidates = [2,3,6,7], target = 7,
+A solution set is:
+[
+  [7],
+  [2,2,3]
+]
+```
+
+```java
+public List<List<Integer>> combinationSum(int[] nums, int target) {
+    Arrays.sort(nums);
+    List<List<Integer>> ans = new ArrayList();
+    backtrack(ans, new ArrayList<Integer>(), nums, 0, target);
+    return ans;
+}
+public void backtrack(List<List<Integer>> ans, List<Integer> oneAns, int[] nums, int start, int remain){
+    if(remain < 0) return;
+    if(remain == 0){
+        ans.add(new ArrayList<>(oneAns));
+    }else{
+        for(int i = start; i < nums.length; i++){
+            oneAns.add(nums[i]);
+            // i 可以重用相同的元素
+            backtrack(ans, oneAns, nums, i, remain - nums[i]);
+            oneAns.remove(oneAns.size() - 1);
+        }
+    }
+}
+```
+
 ### 单词搜索
 
 [Leetcode - 79 Word Search (Medium)](https://leetcode.com/problems/word-search/)
