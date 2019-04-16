@@ -133,21 +133,21 @@ A solution set is:
 ```java
 public List<List<Integer>> combinationSum(int[] nums, int target) {
     Arrays.sort(nums);
-    List<List<Integer>> ans = new ArrayList();
-    backtrack(ans, new ArrayList<Integer>(), nums, 0, target);
-    return ans;
+    List<List<Integer>> ansList = new ArrayList<>();
+    backtrack(ansList, new ArrayList<Integer>(), nums, 0, target);
+    return ansList;
 }
-public void backtrack(List<List<Integer>> ans, List<Integer> oneAns, int[] nums, int start, int remain){
-    if(remain < 0) return;
-    if(remain == 0){
-        ans.add(new ArrayList<>(oneAns));
-    }else{
-        for(int i = start; i < nums.length; i++){
-            oneAns.add(nums[i]);
-            // i 可以重用相同的元素
-            backtrack(ans, oneAns, nums, i, remain - nums[i]);
-            oneAns.remove(oneAns.size() - 1);
-        }
+
+public void backtrack(List<List<Integer>> ansList, List<Integer> curList, int[] nums, int start, int target){
+    if(target == 0){
+        ansList.add(new ArrayList(curList));
+        return;
+    }
+    for(int i = start; i < nums.length; i++){
+        if(target - nums[i] < 0) break;
+        curList.add(nums[i]);
+        backtrack(ansList, curList, nums, i, target - nums[i]);
+        curList.remove(curList.size() - 1);
     }
 }
 ```
