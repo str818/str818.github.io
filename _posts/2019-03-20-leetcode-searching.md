@@ -213,6 +213,45 @@ public void backtrack(List<List<Integer>> ansList, List<Integer> curList, int k,
 }
 ```
 
+#### 全排列
+
+[Leetcode - 46 Permutations (Medium)](https://leetcode.com/problems/permutations/)
+
+题目描述: 给定无重复的整数序列，返回所有全排列的可能。
+
+```
+Input: [1,2,3]
+Output:
+[
+  [1,2,3],
+  [1,3,2],
+  [2,1,3],
+  [2,3,1],
+  [3,1,2],
+  [3,2,1]
+]
+```
+
+```java
+public List<List<Integer>> permute(int[] nums) {
+    List<List<Integer>> ansList = new ArrayList<>();
+    backtrack(ansList, new ArrayList<Integer>(), nums);
+    return ansList;
+}
+public void backtrack(List<List<Integer>> ansList, List<Integer> curList, int[] nums){
+    if(curList.size() == nums.length){
+        ansList.add(new ArrayList(curList));
+    }else{
+        for(int i = 0; i <nums.length; i++){
+            if(curList.contains(nums[i])) continue;
+            curList.add(nums[i]);
+            backtrack(ansList, curList, nums);
+            curList.remove(curList.size() - 1);
+        }
+    }
+}
+```
+
 ### 单词搜索
 
 [Leetcode - 79 Word Search (Medium)](https://leetcode.com/problems/word-search/)
