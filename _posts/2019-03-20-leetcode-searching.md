@@ -213,7 +213,7 @@ public void backtrack(List<List<Integer>> ansList, List<Integer> curList, int k,
 }
 ```
 
-#### 全排列
+### 全排列
 
 [Leetcode - 46 Permutations (Medium)](https://leetcode.com/problems/permutations/)
 
@@ -248,6 +248,48 @@ public void backtrack(List<List<Integer>> ansList, List<Integer> curList, int[] 
             backtrack(ansList, curList, nums);
             curList.remove(curList.size() - 1);
         }
+    }
+}
+```
+
+### 全排列 II
+
+[Leetcode - 47 Permutations II (Medium)](https://leetcode.com/problems/permutations-ii/)
+
+题目描述：给定有重复的整数序列，返回所有全排列的可能。
+
+```
+Input: [1,1,2]
+Output:
+[
+  [1,1,2],
+  [1,2,1],
+  [2,1,1]
+]
+```
+
+```java
+public List<List<Integer>> permuteUnique(int[] nums) {
+    List<List<Integer>> ansList = new ArrayList<>();
+    Arrays.sort(nums);
+    backtrack(ansList, new ArrayList<Integer>(), new boolean[nums.length], nums);
+    return ansList;
+}
+
+public void backtrack(List<List<Integer>> ansList, List<Integer> curList, boolean[] used, int[] nums){
+    if(curList.size() == nums.length){
+        ansList.add(new ArrayList(curList));
+        return;
+    }
+    
+    for(int i = 0; i < nums.length; i++){
+        if(used[i]) continue;
+        if(i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) continue; // used[i - 1] 也可以，但效率低
+        used[i] = true;
+        curList.add(nums[i]);
+        backtrack(ansList, curList, used, nums);
+        curList.remove(curList.size() - 1);
+        used[i] = false;
     }
 }
 ```
