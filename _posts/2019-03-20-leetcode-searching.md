@@ -182,6 +182,37 @@ public void backtrack(List<List<Integer>> ansList, List<Integer> curList, int[] 
 }
 ```
 
+### 组合数之和 III
+
+[Leetcode - 216 Combination Sum III (Medium)](https://leetcode.com/problems/combination-sum-iii/)
+
+题目描述：找出 k 个数字之和为 n 的组合，从 1 - 9 中选择，数字不能重复使用。
+
+```
+Input: k = 3, n = 9
+Output: [[1,2,6], [1,3,5], [2,3,4]]
+```
+
+```java
+public List<List<Integer>> combinationSum3(int k, int n) {
+    List<List<Integer>> ansList = new ArrayList<>();
+    backtrack(ansList, new ArrayList<Integer>(), k, n, 1);
+    return ansList;
+}
+public void backtrack(List<List<Integer>> ansList, List<Integer> curList, int k, int n, int start){
+    if(n < 0 || k < 0) return;
+    if(k == 0 && n == 0){
+        ansList.add(new ArrayList<Integer>(curList));
+        return;
+    }
+    for(int i = start; i <= 9 - k + 1; i++){
+        curList.add(i);
+        backtrack(ansList, curList, k - 1, n - i, i + 1);
+        curList.remove(curList.size() - 1);
+    }
+}
+```
+
 ### 单词搜索
 
 [Leetcode - 79 Word Search (Medium)](https://leetcode.com/problems/word-search/)
