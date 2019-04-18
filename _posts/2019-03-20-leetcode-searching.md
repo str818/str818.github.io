@@ -356,6 +356,50 @@ public class Solution {
 }
 ```
 
+### 序列排序
+
+[Leetcode - 60 Permutation Sequence](https://leetcode.com/problems/permutation-sequence/)
+
+题目描述：返回 n 个数字的第 k 个排列，共有 n! 种排列方式。
+
+```
+Input: n = 3, k = 3
+Output: "213"
+
+1 "123"
+2 "132"
+3 "213"
+4 "231"
+5 "312"
+6 "321"
+```
+
+解题思路：如果一个一个推的话一定会超时，所以肯定有优化的方法。可以把排列结果分成组，例如 n = 3 的全排列可以根据最高位分成 3 组，每组的数量是相同的，都是 (n - 1)! = 2，第一组："123" 与 "132"，第二组："213" 与 "231"，第三组："312" 与 "321"。这样我们就可以通过这个性质定位到第 k 种排列在哪个组，例如当 n = 3，k = 3，能够通过 (k - 1) / (n - 1)! = 3 / 2 = 1，这样就定位到了在第二组，也就确定了最高位是 2，依次后推，就能得到所有的位数字。
+
+```java
+public String getPermutation(int n, int k) {
+    // 转为list
+    List<Integer> list = new ArrayList<Integer>();
+    for(int i = 1; i <= n; i++) list.add(i);
+    
+    // 计算阶乘
+    int[] fact = new int[n];
+    fact[0] = 1;
+    for(int i = 1; i < fact.length; i++) fact[i] = i * fact[i - 1];
+    
+    k -= 1;// 下标从 0 开始
+    
+    StringBuilder sb = new StringBuilder();
+    for(int i = n; i > 0 ; i--){
+        int ind = k / fact[i - 1];
+        k = k % fact[i - 1];
+        sb.append(list.get(ind));
+        list.remove(ind);
+    }
+    return sb.toString();
+}
+```
+
 ### 单词搜索
 
 [Leetcode - 79 Word Search (Medium)](https://leetcode.com/problems/word-search/)
