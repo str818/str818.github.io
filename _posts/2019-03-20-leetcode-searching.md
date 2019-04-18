@@ -441,6 +441,40 @@ public void backtrack(String combination, String nextDigits) {
 }
 ```
 
+### 复原 IP 地址
+
+[Leetcode - 93 Restore IP Addresses (Medium)](https://leetcode.com/problems/restore-ip-addresses/)
+
+题目描述：给定一个只含有数字的字符串，返回所有 IP 地址的可能情况。
+
+```
+Input: "25525511135"
+Output: ["255.255.11.135", "255.255.111.35"]
+```
+
+解题思路：要考虑到所有的情况，IP 地址共包含四段，每段最大值为 255，且不能超过三个数字，如果首数字是 0 后面就不能跟任何数字了。
+
+```java
+public List<String> restoreIpAddresses(String s) {
+    List<String> ansList = new ArrayList<String>();
+    backtrack(s, ansList, "", 0, 0);
+    return ansList;
+}
+
+public void backtrack(String ip, List<String> ansList, String curString, int index, int count){
+    if(count > 4) return;
+    if(count == 4 && index == ip.length()){
+        ansList.add(curString);
+    }
+    for(int i = 1; i < 4; i++){
+        if(index + i > ip.length()) break;
+        String s = ip.substring(index, index + i);
+        if(s.startsWith("0") && s.length() > 1 || s.length() == 3 && Integer.parseInt(s) >= 256) continue;
+        backtrack(ip, ansList, curString + s + (count == 3?"":"."), index + i, count + 1);
+    }
+}
+```
+
 ### 单词搜索
 
 [Leetcode - 79 Word Search (Medium)](https://leetcode.com/problems/word-search/)
