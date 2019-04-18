@@ -316,7 +316,7 @@ public void backtrack(List<List<Integer>> ansList, List<Integer> curList, boolea
 
 以序列 158476531 为例，首先从后向前找到第一个相邻的递增序列，47 满足要求，将第一个数字 4 作为替换数，记录其下标位置，之后，再从后面的序列中找到一个比替换数 4 大的最小数，5 满足要求，将 4 与 5 交换，得到序列 158576431 ，最后将替换数下标后面的序列反转，得到下一种全排列 158513467。
 
-<div align="center">  <img src="./pic/31_Next_Permutation.gif" width="70%"/> </div><br>
+<div align="center">  <img src="/img/leetcode-31.gif" width="70%"/> </div><br>
 
 如题目所述，本题使用第三种方法直接计算下一种全排列最为合适。
 
