@@ -294,6 +294,68 @@ public void backtrack(List<List<Integer>> ansList, List<Integer> curList, boolea
 }
 ```
 
+### 下一种全排列
+
+[Leetcode - 31 Next Permutation (Medium)](https://leetcode.com/problems/next-permutation/)
+
+题目描述：给定一个整型数组，输出该整型数组的下一种全排列，如果是最后一种，则输出第一种全排列，要求只能使用常数的额外空间。
+
+```
+1,2,3 → 1,3,2
+3,2,1 → 1,2,3
+1,1,5 → 1,5,1
+```
+
+计算全排列的方式有三种：
+
+1. 递归实现 ：从第一个数字起每个数分别于它后面的数字交换。
+2. 去掉重复的递归实现：从第一个数字起每个数分别于它后面非重复的数字交换。
+3. 非递归实现：不断的计算下一种的排列方式。
+
+那么如果计算下一种全排列呢？
+
+以序列 158476531 为例，首先从后向前找到第一个相邻的递增序列，47 满足要求，将第一个数字 4 作为替换数，记录其下标位置，之后，再从后面的序列中找到一个比替换数 4 大的最小数，5 满足要求，将 4 与 5 交换，得到序列 158576431 ，最后将替换数下标后面的序列反转，得到下一种全排列 158513467。
+
+<div align="center">  <img src="./pic/31_Next_Permutation.gif" width="70%"/> </div><br>
+
+如题目所述，本题使用第三种方法直接计算下一种全排列最为合适。
+
+```java
+public class Solution {
+    public static void nextPermutation(int[] num) {
+        
+        // 从后向前找到第一个增序序列
+        int i = num.length - 2;
+        while(i >= 0 && num[i] >= num[i + 1]){
+            i--;
+        }
+        
+        // 将替换数与后面序列中比替换数大的最小数交换
+        if(i >= 0){
+            int j = i + 1;
+            while(j < num.length && num[i] < num[j]){
+                j++;
+            }
+            swap(num, i, j - 1);
+        }
+        
+        // 将替换数后面的序列反转
+        i++;
+        int k = num.length - 1;
+        for(; i < k; i++, k--){
+            swap(num, i, k);
+        }
+
+    }
+    
+    public static void swap(int[] num, int a, int b){
+        int temp = num[a];
+        num[a] = num[b];
+        num[b] = temp;
+    }
+}
+```
+
 ### 单词搜索
 
 [Leetcode - 79 Word Search (Medium)](https://leetcode.com/problems/word-search/)
