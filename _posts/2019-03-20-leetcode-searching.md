@@ -519,6 +519,57 @@ public void backtrack(List<String> ansList, String path, String num, int target,
 }
 ```
 
+### 拆分词句 II
+
+[Leetcode - 140 Word Break II (Hard)](https://leetcode.com/problems/word-break-ii/)
+
+题目描述：计算出所有合法的拆分情况。
+
+```
+Input:
+s = "catsanddog"
+wordDict = ["cat", "cats", "and", "sand", "dog"]
+Output:
+[
+  "cats and dog",
+  "cat sand dog"
+]
+```
+
+解题思路：如果不记录会超时。
+
+```java
+public List<String> wordBreak(String s, List<String> wordDict) {
+    Set<String> dict = new HashSet<>(wordDict);
+    Map<String, List<String>> cache = new HashMap<>();
+    return dfs(s, cache, dict);
+}
+
+private List<String> dfs(String s, Map<String, List<String>> cache, Set<String> dict){
+    if(cache.containsKey(s)) return cache.get(s);
+    
+    LinkedList<String> res = new LinkedList<>();
+    if(s.length()==0){
+        res.add("");
+        return res;
+    }
+    
+    for(String word : dict){
+        if(s.startsWith(word)){
+            List<String> sublist = dfs(s.substring(word.length()), cache, dict);
+            for(String sub : sublist){
+                if(sub.isEmpty()){
+                    res.add(word + sub);
+                }
+                else res.add(word + " " + sub);
+            }
+        }
+    }
+    cache.put(s, res);
+    return res;
+}
+```
+
 ### 单词搜索
 
 [Leetcode - 79 Word Search (Medium)](https://leetcode.com/problems/word-search/)
