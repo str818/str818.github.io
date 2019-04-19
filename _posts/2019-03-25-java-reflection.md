@@ -118,7 +118,7 @@ public static void printClassMessage(Object obj){
     /* Method 类，方法对象
      * 一个成员方法就是一个 Method 对象
      * getMethods() 方法获取的是所有的 public 函数，包括父类继承而来的
-     * getDeclaredMethods() 获取的是所有该类自己生命的方法，不问访问权限
+     * getDeclaredMethods() 获取的是所有该类自己声明的方法，不管访问权限
      */
     Method[] ms = c.getMethods();//c.getDeclaredMethods()
     for(int i = 0; i < ms.length; i++){
