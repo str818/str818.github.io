@@ -475,6 +475,50 @@ public void backtrack(String ip, List<String> ansList, String curString, int ind
 }
 ```
 
+### 表达式增加操作符
+
+[Leetcode - 282 Expression Add Operators (Hard)](https://leetcode.com/problems/expression-add-operators/)
+
+题目描述：给定一个由数字组成的字符串，向字符串中添加 `+、-、*` 形成一个表达式，使该表达式的计算和为 target。
+
+```
+Input: num = "123", target = 6
+Output: ["1+2+3", "1*2*3"] 
+Input: num = "105", target = 5
+Output: ["1*0+5","10-5"]
+```
+
+解题思路：注意，可以拆成多位的数字，不只是一位数字。需要遍历所有的情况，找出和为 target 的表达式，需要注意几个边界条件：1. 计算结果可能溢出，所有使用 Long 存储结果。2. 0 开头的数字不成立，例如 05。3. 需要存储上次的结果，用以计算 1 + 2 * 3，这时需要先计算后面的乘法，而不是按前后顺序计算。
+
+```java
+public List<String> addOperators(String num, int target) {
+    List<String> ansList = new ArrayList<String>();
+    if(num == null || num.length() == 0) return ansList;
+    backtrack(ansList, "", num, target, 0, 0, 0);
+    return ansList;
+}
+
+public void backtrack(List<String> ansList, String path, String num, int target, int pos, long eval, long multed){
+    if(pos == num.length()){
+        if(eval == target){
+            ansList.add(path);
+        }
+        return;
+    }
+    for(int i = pos; i < num.length(); i++){
+        if(i != pos && num.charAt(pos) == '0') break; // 跳过首位为0的数字
+        long cur = Long.parseLong(num.substring(pos, i + 1));
+        if(pos == 0){
+            backtrack(ansList, path + cur, num, target, i + 1, cur, cur);
+        }else{
+            backtrack(ansList, path + "+" + cur, num, target, i + 1, eval + cur, cur);
+            backtrack(ansList, path + "-" + cur, num, target, i + 1, eval - cur, -cur);
+            backtrack(ansList, path + "*" + cur, num, target, i + 1, eval - multed + cur * multed, cur * multed);
+        }
+    }
+}
+```
+
 ### 单词搜索
 
 [Leetcode - 79 Word Search (Medium)](https://leetcode.com/problems/word-search/)
