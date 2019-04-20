@@ -659,3 +659,70 @@ public boolean backtrack(char[][] board, String word, int index, int x, int y){
 }
 ```
 
+### 包围区域
+
+[Leetcode - 130 Surrounded Regions (Medium)](https://leetcode.com/problems/surrounded-regions/)
+
+题目描述：将被包围的 O 全部替换成 X，边界的 O 不是被包围的。
+
+```
+X X X X
+X O O X
+X X O X
+X O X X
+After running your function, the board should be:
+X X X X
+X X X X
+X X X X
+X O X X
+```
+
+解题思路：本来想从中间的每个 O 进行 DFS，发现太麻烦了，应该从四个边向中间遍历，将 O 串成一个字符串，例如 *，然后剩下的 O 是被包围的，替换成 X，最后再将 * 替换为 O。
+
+```java
+public void solve(char[][] board) {
+    if (board.length == 0 || board[0].length == 0)
+        return;
+    if (board.length < 2 || board[0].length < 2)
+        return;
+    int m = board.length, n = board[0].length;
+
+    for (int i = 0; i < m; i++) {
+        if (board[i][0] == 'O')
+            boundaryDFS(board, i, 0);
+        if (board[i][n-1] == 'O')
+            boundaryDFS(board, i, n-1);	
+    }
+
+    for (int j = 0; j < n; j++) {
+        if (board[0][j] == 'O')
+            boundaryDFS(board, 0, j);
+        if (board[m-1][j] == 'O')
+            boundaryDFS(board, m-1, j);	
+    }
+
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (board[i][j] == 'O')
+                board[i][j] = 'X';
+            else if (board[i][j] == '*')
+                board[i][j] = 'O';
+        }
+    }
+}
+
+private void boundaryDFS(char[][] board, int i, int j) {
+    if (i < 0 || i > board.length - 1 || j <0 || j > board[0].length - 1)
+        return;
+    if (board[i][j] == 'O')
+        board[i][j] = '*';
+    if (i > 1 && board[i-1][j] == 'O')
+        boundaryDFS(board, i-1, j);
+    if (i < board.length - 2 && board[i+1][j] == 'O')
+        boundaryDFS(board, i+1, j);
+    if (j > 1 && board[i][j-1] == 'O')
+        boundaryDFS(board, i, j-1);
+    if (j < board[i].length - 2 && board[i][j+1] == 'O' )
+        boundaryDFS(board, i, j+1);
+}
+```
