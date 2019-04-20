@@ -400,7 +400,7 @@ public String getPermutation(int n, int k) {
 }
 ```
 
-## 电话号码的字母组合
+### 电话号码的字母组合
 
 [Leetcode - 17 Letter Combinations of a Phone Number (Medium)](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)
 
@@ -570,6 +570,48 @@ private List<String> dfs(String s, Map<String, List<String>> cache, Set<String> 
 }
 ```
 
+## BFS & DFS
+
+### 岛屿的数量
+
+[Leetcode - 200 Number of Islands (Medium)](https://leetcode.com/problems/number-of-islands/)
+
+题目描述：给定一个二维数组，1 代表陆地，0 代表海洋，计算岛屿的数量。
+
+```
+Input:
+11000
+11000
+00100
+00011
+
+Output: 3
+```
+
+```java
+public int numIslands(char[][] grid) {
+    int count = 0;
+    if (grid.length == 0) return 0;
+    for (int i = 0; i < grid.length; i++){
+        for (int j = 0; j < grid[0].length; j++)
+            if (grid[i][j] == '1') {
+                DFSMarking(grid, i, j);
+                ++count;
+            }
+    }    
+    return count;
+}
+
+private void DFSMarking(char[][] grid, int i, int j) {
+    if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length || grid[i][j] != '1') return;
+    grid[i][j] = '0';
+    DFSMarking(grid, i + 1, j);
+    DFSMarking(grid, i - 1, j);
+    DFSMarking(grid, i, j + 1);
+    DFSMarking(grid, i, j - 1);
+}
+```
+
 ### 单词搜索
 
 [Leetcode - 79 Word Search (Medium)](https://leetcode.com/problems/word-search/)
@@ -616,3 +658,4 @@ public boolean backtrack(char[][] board, String word, int index, int x, int y){
     return flag;
 }
 ```
+
