@@ -726,3 +726,52 @@ private void boundaryDFS(char[][] board, int i, int j) {
         boundaryDFS(board, i, j+1);
 }
 ```
+
+### 词语阶梯
+
+[Leetcode - 127 Word Ladder (Medium)](https://leetcode.com/problems/word-ladder/)
+
+题目描述：给定两个单词和一个字典，每次变换开始单词的一个字母，变换后的单词存在于字典中，计算通过多少次变换能变换到终止单词。
+
+```
+Input:
+beginWord = "hit",
+endWord = "cog",
+wordList = ["hot","dot","dog","lot","log","cog"]
+
+Output: 5
+
+Explanation: As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
+return its length 5.
+```
+
+解题思路：BFS，每次将单词中的每个字符替换成 26 个字母，判断变换后的单词是否存在于字典中。
+
+```java
+public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+    Set<String> set = new HashSet<>(wordList);
+    Queue<String> q = new LinkedList<>();
+    q.offer(beginWord);
+    int step = 1;
+    while (!q.isEmpty()) {
+        int size = q.size();
+        for (int j = 0; j < size; j++) {
+            String cur = q.poll();
+            for (int i = 0; i < endWord.length(); i++) {
+                for (char letter = 'a'; letter <= 'z'; letter++) {
+                    StringBuilder newWord = new StringBuilder(cur);
+                    newWord.setCharAt(i, letter);
+                    if (set.contains(newWord.toString())) {
+                        if (newWord.toString().equals(endWord)) return step + 1;
+                        set.remove(newWord.toString());
+                        q.offer(newWord.toString());
+                    }
+                }
+            }
+
+        }
+        step++;
+    }
+    return 0;
+}
+```
