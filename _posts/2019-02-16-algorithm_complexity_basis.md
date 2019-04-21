@@ -94,6 +94,10 @@ for(int i = 0; i < N; i = i + 2){}
 for(int i = N; i >= 0; i = i / 2){}
 ```
 
+#### 6. 递归
+
+<div align="center">  <img src="/img/algorithm_master_theorem.png" width="80%"/> </div><br>
+
 ## 三、空间复杂度
 
 空间复杂度同样可以用 $O()$ 来衡量，与时间复杂度分析类似，既要考虑算法处理的数据，也要考虑辅助变量。
