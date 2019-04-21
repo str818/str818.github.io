@@ -775,3 +775,71 @@ public int ladderLength(String beginWord, String endWord, List<String> wordList)
     return 0;
 }
 ```
+
+### N 皇后
+
+[Leetcode - 51 N-Queens (Hard)](https://leetcode.com/problems/n-queens/)
+
+题目描述：找到 N 皇后的所有情况。
+
+<div align="center">  <img src="/img/leetcode-51.png" width="60%"/> </div><br>
+
+```
+Input: 4
+Output: [
+ [".Q..",  // Solution 1
+  "...Q",
+  "Q...",
+  "..Q."],
+
+ ["..Q.",  // Solution 2
+  "Q...",
+  "...Q",
+  ".Q.."]
+]
+Explanation: There exist two distinct solutions to the 4-queens puzzle as shown above.
+```
+
+```java
+public List<List<String>> solveNQueens(int n) {
+    char[][] board = new char[n][n];
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            board[i][j] = '.';
+        }
+    }
+    List<List<String>> res = new ArrayList<>();
+    dfs(board, res, 0);
+    return res;
+}
+public void dfs(char[][] board, List<List<String>> res, int index){
+    if(index == board.length){
+        List<String> cur = new ArrayList<>();
+        for(int i = 0; i < board.length; i++){
+            String s = new String(board[i]);
+            cur.add(s);
+        }
+        res.add(cur);
+        return;
+    }
+    for(int i = 0; i < board.length; i++){
+        if(validate(board, i, index)){
+            board[i][index] = 'Q';
+            dfs(board, res, index + 1);
+            board[i][index] = '.';
+        }
+    }
+}
+public boolean validate(char[][] board, int row, int col){
+    for(int i = 0; i < col ; i++){
+        if(board[row][i] == 'Q') return false;
+    }
+    for(int i = row, j = col; i >= 0 && j >= 0; i--, j--){
+        if(board[i][j] == 'Q') return false;
+    }
+    for(int i = row, j = col; i < board.length && j >= 0; i++, j--){
+        if(board[i][j] == 'Q') return false;
+    }
+    return true;
+}
+```
