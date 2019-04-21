@@ -4,7 +4,7 @@ title: 我的书单
 tags: 读书
 
 lang: zh-Hans
-key: Reading-Book-List
+key: Reading_Book_List
 pageview: true
 toc: true
 show_subscribe: false
