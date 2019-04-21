@@ -97,5 +97,30 @@ public boolean hasCycle(ListNode head) {
 }
 ```
 
+### 4. 单链表中的环 II
+
+[Leetcode - 142 Linked List Cycle II (Medium)](https://leetcode.com/problems/linked-list-cycle-ii/)
+
+题目描述：找到环的入口位置。
+
+```java
+public ListNode detectCycle(ListNode head) {
+    ListNode slow = head;
+    ListNode fast = head;
+    while (fast != null && fast.next != null){
+        fast = fast.next.next;
+        slow = slow.next;
+        if (fast == slow){
+            ListNode slow2 = head; 
+            while (slow2 != slow){
+                slow = slow.next;
+                slow2 = slow2.next;
+            }
+            return slow;
+        }
+    }
+    return null;
+}
+```
 
 
