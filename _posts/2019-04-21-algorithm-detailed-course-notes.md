@@ -123,4 +123,6 @@ public ListNode detectCycle(ListNode head) {
 }
 ```
 
+[Leetcode - 25 Reverse Nodes in k-Group (Hard)](https://leetcode.com/problems/reverse-nodes-in-k-group/)
+
 
