@@ -843,3 +843,53 @@ public boolean validate(char[][] board, int row, int col){
     return true;
 }
 ```
+
+### N 皇后 II
+
+[Leetcode - 52 N-Queens II (Hard)](https://leetcode.com/problems/n-queens-ii/)
+
+题目描述：这道题只是让求出 N 皇后的摆放数量。
+
+```
+Input: 4
+Output: 2
+Explanation: There are two distinct solutions to the 4-queens puzzle as shown below.
+[
+ [".Q..",  // Solution 1
+  "...Q",
+  "Q...",
+  "..Q."],
+
+ ["..Q.",  // Solution 2
+  "Q...",
+  "...Q",
+  ".Q.."]
+]
+```
+
+解题思路：只是求数量的话就不同列出每次的摆放情况了，只需要使用三个数组标记列、正反对象线上是否摆放皇后即可。正对角线上的元素行列序号相加结果相等，反对角线上的元素行列序号相减结果相等。
+
+```java
+int count = 0;
+public int totalNQueens(int n) {
+    boolean[] cols = new boolean[n];     // columns   |
+    boolean[] d1 = new boolean[2 * n];   // diagonals \
+    boolean[] d2 = new boolean[2 * n];   // diagonals /
+    backtracking(0, cols, d1, d2, n);
+    return count;
+}
+
+public void backtracking(int row, boolean[] cols, boolean[] d1, boolean []d2, int n) {
+    if(row == n) count++;
+
+    for(int col = 0; col < n; col++) {
+        int id1 = col - row + n;
+        int id2 = col + row;
+        if(cols[col] || d1[id1] || d2[id2]) continue;
+        
+        cols[col] = true; d1[id1] = true; d2[id2] = true;
+        backtracking(row + 1, cols, d1, d2, n);
+        cols[col] = false; d1[id1] = false; d2[id2] = false;
+    }
+}
+```
