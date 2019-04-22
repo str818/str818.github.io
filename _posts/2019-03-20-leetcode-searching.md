@@ -782,7 +782,7 @@ public int ladderLength(String beginWord, String endWord, List<String> wordList)
 
 题目描述：找到 N 皇后的所有情况。
 
-<div align="center">  <img src="/img/leetcode-51.png" width="60%"/> </div><br>
+<div align="center">  <img src="/img/leetcode-51.png" width="40%"/> </div><br>
 
 ```
 Input: 4

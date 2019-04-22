@@ -18,7 +18,7 @@ show_subscribe: false
 
 <div align="center">  <img src="/img/algorithm_common_data_structure_operations.png" width="100%"/> </div><br>
 
-<div align="center">  <img src="/img/algorithm_array_sorting_algorithms.png" width="100%"/> </div><br>
+<div align="center">  <img src="/img/algorithm_array_sorting_algorithms.png" width="80%"/> </div><br>
 
 
 ## 二、数组和链表
