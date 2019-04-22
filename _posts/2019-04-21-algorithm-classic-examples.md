@@ -14,7 +14,7 @@ show_subscribe: false
 
 ## 一、复杂度
 
-[http://www.bigocheatsheet.com/](http://www.bigocheatsheet.com/)
+[图片来源](http://www.bigocheatsheet.com/)
 
 <div align="center">  <img src="/img/algorithm_common_data_structure_operations.png" width="100%"/> </div><br>
 
@@ -213,4 +213,37 @@ public boolean isValid(String s) {
 }
 ```
 
+### 2. 使用栈实现队列
 
+[Leetcode - 232 Implement Queue using Stacks (Easy)](https://leetcode.com/problems/implement-queue-using-stacks/)
+
+把第一个入队列的元素放入栈 1，其他的放入栈 2，只有在将队首元素推出之后，才将栈 2 的元素推入栈 1，这样就 peek() 时就不需要交换元素了。
+
+```java
+private Stack<Integer> mainStack = new Stack<>();
+private Stack<Integer> secStack = new Stack<>();
+public MyQueue() {}
+public void push(int x) {
+    if (mainStack.isEmpty()) {
+        mainStack.push(x);
+    } else {
+        secStack.push(x);
+    }
+}
+public int pop() {
+    int pop = mainStack.pop();
+    
+    if (mainStack.isEmpty()) {
+        while (!secStack.isEmpty()) {
+            mainStack.push(secStack.pop());
+        }
+    }
+    return pop;
+}
+public int peek() {
+    return mainStack.peek();
+}
+public boolean empty() {
+    return mainStack.isEmpty();
+}
+```
