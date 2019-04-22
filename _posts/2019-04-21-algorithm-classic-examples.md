@@ -12,7 +12,16 @@ show_subscribe: false
 
 [课程链接](https://www.bilibili.com/video/av46292575/)
 
-## 一、数组和链表
+## 一、复杂度
+
+[http://www.bigocheatsheet.com/](http://www.bigocheatsheet.com/)
+
+<div align="center">  <img src="/img/algorithm_common_data_structure_operations.png" width="100%"/> </div><br>
+
+<div align="center">  <img src="/img/algorithm_array_sorting_algorithms.png" width="100%"/> </div><br>
+
+
+## 二、数组和链表
 
 ### 1. 反转链表
 
