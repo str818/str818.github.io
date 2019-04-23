@@ -332,3 +332,19 @@ public int[] maxSlidingWindow(int[] nums, int k) {
     return res;
 }
 ```
+
+## 五、哈希表
+
+### 1. 验证变位词
+
+[Leetcode - 242 Valid Anagram (Easy)](https://leetcode.com/problems/valid-anagram/)
+
+```java
+public boolean isAnagram(String s, String t) {
+    int[] alphabet = new int[26];
+    for (int i = 0; i < s.length(); i++) alphabet[s.charAt(i) - 'a']++;
+    for (int i = 0; i < t.length(); i++) alphabet[t.charAt(i) - 'a']--;
+    for (int i : alphabet) if (i != 0) return false;
+    return true;
+}
+```
