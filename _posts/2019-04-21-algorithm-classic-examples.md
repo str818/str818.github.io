@@ -303,3 +303,32 @@ public int add(int val) {
     return q.peek();
 }
 ```
+
+### 2. 滑动窗口的最大值
+
+[Leetcode - 239 Sliding Window Maximum (Hard)](https://leetcode.com/problems/sliding-window-maximum/)
+
+```java
+public int[] maxSlidingWindow(int[] nums, int k) {
+    if(nums == null || k <= 0) return new int[0];
+    int[] res = new int[nums.length - k + 1];
+    int ri = 0;
+    
+    Deque<Integer> q = new ArrayDeque<>();
+    for(int i = 0; i < nums.length; i++){
+        // 删除前面超出滑动窗口的元素
+        while(!q.isEmpty() && q.peek() < i - k + 1){
+            q.poll();
+        }
+        // 删除比 i 小的元素
+        while(!q.isEmpty() && nums[q.peekLast()] < nums[i]){
+            q.pollLast();
+        }
+        q.offer(i);
+        if(i >= k - 1){
+            res[ri++] = nums[q.peek()];
+        }
+    }
+    return res;
+}
+```
