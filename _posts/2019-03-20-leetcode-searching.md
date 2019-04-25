@@ -929,6 +929,8 @@ public boolean isValidSudoku(char[][] board) {
 
 [Leetcode - 37 Sudoku Solver (Hard)](https://leetcode.com/problems/sudoku-solver/)
 
+题目描述：给定一个不完整的数独数组，正确的填充该数组。
+
 ```java
 public void solveSudoku(char[][] board) {
     dfs(board, 0);
