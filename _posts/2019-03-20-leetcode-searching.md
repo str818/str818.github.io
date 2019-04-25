@@ -893,3 +893,34 @@ public void backtracking(int row, boolean[] cols, boolean[] d1, boolean []d2, in
     }
 }
 ```
+
+### 有效数独
+
+[Leetcode - 36 Valid Sudoku (Medium)](https://leetcode.com/problems/valid-sudoku/)
+
+题目描述：给定一个 9 × 9 的不完整数独数组，判定是否合法。
+
+解题思路：判断每一行、每一列和每个 3 × 3 单元格是否有重复的数字。
+
+```java
+public boolean isValidSudoku(char[][] board) {
+    boolean[][] row = new boolean[9][9];
+    boolean[][] col = new boolean[9][9];
+    boolean[][] block = new boolean[9][9];
+    for(int i = 0; i < 9; i++) {
+        for(int j = 0; j < 9; j++) {
+            if(board[i][j] != '.') {
+                int num = board[i][j] - '1';
+                if(row[i][num] || col[j][num] || block[i/3*3 + j/3][num]) {
+                    return false;
+                } else {
+                    row[i][num] = true;
+                    col[j][num] = true;
+                    block[i/3*3 + j/3][num] = true;
+                }
+            }
+        }
+    }
+    return true;
+}
+```
