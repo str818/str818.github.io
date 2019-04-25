@@ -924,3 +924,42 @@ public boolean isValidSudoku(char[][] board) {
     return true;
 }
 ```
+
+### 求解数独
+
+[Leetcode - 37 Sudoku Solver (Hard)](https://leetcode.com/problems/sudoku-solver/)
+
+```java
+public void solveSudoku(char[][] board) {
+    dfs(board, 0);
+}
+
+public boolean dfs(char[][] b, int n) {
+    if (n == 81) return true;
+    int x = n / 9;
+    int y = n % 9;
+    if (b[x][y] != '.') return dfs(b, n + 1);
+    for (int i = 0; i < 9; i++) {
+        b[x][y] = (char)('1' + i);
+        if (validate(b, x, y) && dfs(b, n + 1)) return true;
+        b[x][y] = '.';
+    }
+    return false;
+}
+
+public boolean validate(char[][] b, int x, int y) {
+    for (int i = 0; i < 9; i++) {
+        if (i != x && b[i][y] == b[x][y]) return false;
+        if (i != y && b[x][i] == b[x][y]) return false;
+    }
+    int r = x / 3 * 3;
+    int c = y / 3 * 3;
+    for (int i = r; i < r + 3; i++) {
+        for (int j = c; j < c + 3; j++) {
+            if (i == x && j == y) continue;
+            if (b[i][j] == b[x][y]) return false;
+        }
+    }
+    return true;
+}
+```
