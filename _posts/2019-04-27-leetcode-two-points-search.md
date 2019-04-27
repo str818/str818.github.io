@@ -17,6 +17,12 @@ show_subscribe: false
 
 题目描述：输入一个整数，求该整数的开方，去除结果的小数位，返回整数。
 
+```
+Input: 8
+Output: 2
+Explanation: The square root of 8 is 2.82842..., and since the decimal part is truncated, 2 is returned.
+```
+
 解题思路：测试用例中含有较大的整数，所以要用 x / m 进行比较。
 
 ```java
