@@ -1252,64 +1252,9 @@ public void recoverTree(TreeNode root) {
 }
 ```
 
-## 其它
+## 字典树(Trie)
 
-### 每个节点的右向指针
-
-[Leetcode - 116 Populating Next Right Pointers in Each Node (Medium)](https://leetcode.com/problems/populating-next-right-pointers-in-each-node/)
-
-题目描述：假设二叉树是满二叉树。
-
-<div align="center">  <img src="/img/leetcode-116.png" width="80%"/> </div><br>
-
-解题思路：这道题出的非常好，从上一层对下一层修改。
-
-```java
-public Node connect(Node root) {
-    Node levelStart = root;
-    while(levelStart != null){
-        Node cur = levelStart;
-        while(cur != null){
-            if(cur.left != null) cur.left.next = cur.right;
-            if(cur.right != null && cur.next != null) cur.right.next = cur.next.left;
-            cur = cur.next;
-        }
-        levelStart = levelStart.left;
-    }
-    return root;
-}
-```
-
-### 每个节点的右向指针
-
-[Leetcode - 117 Populating Next Right Pointers in Each Node II (Medium)](https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/)
-
-题目描述：与上一道题不同的是，本次没有规定是满二叉树。
-
-```java
-public Node connect(Node root) {
-    Node cur = root;
-    while (cur != null) {
-        Node dummy = new Node(0);
-        Node son = dummy;
-        while (cur != null) {
-            if (cur.left != null) {
-                son.next = cur.left;
-                son = son.next;
-            }
-            if (cur.right != null) {
-                son.next = cur.right;
-                son = son.next;
-            }
-            cur = cur.next;
-        }
-        cur = dummy.next;
-    }
-    return root;
-}
-```
-
-### 实现前缀树(字典树)
+### 实现字典树(Trie)
 
 [Leetcode - 207 Implement Trie(Prefix Tree) (Medium)](https://leetcode.com/problems/implement-trie-prefix-tree/)
 
@@ -1367,6 +1312,133 @@ class Trie {
         }
         return true;
     }
+}
+```
+
+### 单词搜索 II
+
+[Leetcode - 212 Word Search II (Hard)](https://leetcode.com/problems/word-search-ii/)
+
+题目描述：搜索在字符矩阵中的字符串。
+
+```
+Input: 
+board = [
+  ['o','a','a','n'],
+  ['e','t','a','e'],
+  ['i','h','k','r'],
+  ['i','f','l','v']
+]
+words = ["oath","pea","eat","rain"]
+
+Output: ["eat","oath"]
+```
+
+解题思路：先将带查找字符串构建成字典树，再利用回溯法判断矩阵中的字符串是否在字典树中。
+
+```java
+public List<String> findWords(char[][] board, String[] words) {
+    List<String> res = new ArrayList<>();
+    TrieNode root = buildTrie(words);
+    for(int i = 0; i < board.length; i++){
+        for(int j = 0; j < board[0].length; j++){
+            dfs(board, i, j, root, res);
+        }
+    }
+    return res;
+}
+
+public void dfs(char[][] board, int i, int j, TrieNode p, List<String> res){
+    char c = board[i][j];
+    if(c == '#' || p.next[c - 'a'] == null) return;
+    p = p.next[c - 'a'];
+    if(p.word != null){
+        res.add(p.word);
+        p.word = null; // 去重
+    }
+    
+    board[i][j] = '#';
+    if (i > 0) dfs(board, i - 1, j, p, res); 
+    if (j > 0) dfs(board, i, j - 1, p, res);
+    if (i < board.length - 1) dfs(board, i + 1, j, p, res); 
+    if (j < board[0].length - 1) dfs(board, i, j + 1, p, res); 
+    board[i][j] = c;
+}
+
+public TrieNode buildTrie(String[] words){
+    TrieNode root = new TrieNode();
+    for(String s : words){
+        TrieNode p = root;
+        for(char c : s.toCharArray()){
+            int i = c - 'a';
+            if(p.next[i] == null) p.next[i] = new TrieNode();
+            p = p.next[i];
+        }
+        p.word = s;
+    }
+    return root;
+}
+
+class TrieNode{
+    TrieNode[] next = new TrieNode[26];
+    String word;
+}
+```
+
+## 其它
+
+### 每个节点的右向指针
+
+[Leetcode - 116 Populating Next Right Pointers in Each Node (Medium)](https://leetcode.com/problems/populating-next-right-pointers-in-each-node/)
+
+题目描述：假设二叉树是满二叉树。
+
+<div align="center">  <img src="/img/leetcode-116.png" width="80%"/> </div><br>
+
+解题思路：这道题出的非常好，从上一层对下一层修改。
+
+```java
+public Node connect(Node root) {
+    Node levelStart = root;
+    while(levelStart != null){
+        Node cur = levelStart;
+        while(cur != null){
+            if(cur.left != null) cur.left.next = cur.right;
+            if(cur.right != null && cur.next != null) cur.right.next = cur.next.left;
+            cur = cur.next;
+        }
+        levelStart = levelStart.left;
+    }
+    return root;
+}
+```
+
+### 每个节点的右向指针
+
+[Leetcode - 117 Populating Next Right Pointers in Each Node II (Medium)](https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/)
+
+题目描述：与上一道题不同的是，本次没有规定是满二叉树。
+
+```java
+public Node connect(Node root) {
+    Node cur = root;
+    while (cur != null) {
+        Node dummy = new Node(0);
+        Node son = dummy;
+        while (cur != null) {
+            if (cur.left != null) {
+                son.next = cur.left;
+                son = son.next;
+            }
+            if (cur.right != null) {
+                son.next = cur.right;
+                son = son.next;
+            }
+            cur = cur.next;
+        }
+        cur = dummy.next;
+    }
+    return root;
 }
 ```
 
