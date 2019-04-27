@@ -10,7 +10,7 @@ toc: true
 show_subscribe: false
 ---
 
-# 一、什么是 JUnit？
+## 一、什么是 JUnit？
 
 JUnit 是一个 Java 编程语言的单元测试框架。
 
@@ -30,7 +30,7 @@ JUnit 是一个 Java 编程语言的单元测试框架。
 
 这种以测试为驱动的开发模式最大的好处就是确保一个程序模块的行为符合我们设计的测试用例。在将来修改的时候，可以极大程度地保证该模块行为仍然是正确的。
 
-# 二、实践
+## 二、实践
 
 计算类。
 
@@ -60,7 +60,7 @@ public class CalculateTest {
 
 当运行单元测试类时，如果测试用例不通过，则会报错。
 
-# 三、常用注解
+## 三、常用注解
 
 1. `@Test`：测试方法
   - (expected = XX.class) 如果程序抛出 XX 异常，则测试通过
@@ -71,7 +71,7 @@ public class CalculateTest {
 5. `@BeforeClass`：方法必须声明为 public static，当前类测试开始前执行
 6. `@AfterClass`：方法必须声明为 public static，当前类测试结束后执行
 
-# 参考
+## 参考
 
 - [Junit5](https://junit.org/junit5/)
 - [JUnit-W3Cschool](https://www.w3cschool.cn/junit/fegu1hv3.html)
