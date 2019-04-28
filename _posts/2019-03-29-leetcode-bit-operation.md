@@ -119,3 +119,21 @@ public boolean isPowerOfTwo(int n) {
     return n > 0 && ((n & (n - 1)) == 0);
 }
 ```
+
+## 计算位数
+
+[Leetcode - 338 Counting Bits (Medium)](https://leetcode.com/problems/counting-bits/)
+
+题目描述：给定一个数 num，返回 0 <= i <= num 的所有二进制形式中包含的 1 的个数。
+
+解题思路：在去掉最低位后 1 的个数的基础上加 1。
+
+```java
+public int[] countBits(int num) {
+    int[] bits = new int[num + 1];
+    for(int i = 1; i <= num; i++){
+        bits[i] = bits[i & (i - 1)] + 1; 
+    }
+    return bits;
+}
+```
