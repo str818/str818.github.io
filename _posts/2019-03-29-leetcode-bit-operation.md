@@ -105,3 +105,17 @@ public int hammingWeight(int n) {
     return sum;
 }
 ```
+
+## 二的次方
+
+[Leetcode - 231 Power of Two (Easy)](https://leetcode.com/problems/power-of-two/)
+
+题目描述：判断输入整数是否为 2 的次方。
+
+解题思路：2 的次方二进制表示只会有一位是 1。
+
+```java
+public boolean isPowerOfTwo(int n) {
+    return n > 0 && ((n & (n - 1)) == 0);
+}
+```
