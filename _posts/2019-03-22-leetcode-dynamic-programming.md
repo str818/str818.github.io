@@ -292,3 +292,25 @@ public int minimumTotal(List<List<Integer>> triangle) {
     return res[0];
 }
 ```
+
+## 爬台阶
+
+[Leetcode - 70 Climbing Stairs (Easy)](https://leetcode.com/problems/climbing-stairs/)
+
+题目描述：每次能爬一个或两个台阶，如果有 n 个台阶的话，计算爬到顶端的方法数量。
+
+解题思路：dp(1) = 1   dp(2) = 2  dp(n) = dp(n - 1) + dp(n - 2)
+
+```java
+public int climbStairs(int n) {
+    if(n <= 0) return 0;
+    if(n <= 2) return n;
+    int f1 = 1, f2 = 2;
+    for(int i = 3; i <= n; i++){
+        int t = f1 + f2;
+        f1 = f2;
+        f2 = t;
+    }
+    return f2;
+}
+```
