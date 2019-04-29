@@ -314,3 +314,34 @@ public int climbStairs(int n) {
     return f2;
 }
 ```
+
+## 最大乘积子序列
+
+[Leetcode - 152 Maximum Product Subarray (Medium)](https://leetcode.com/problems/maximum-product-subarray/)
+
+```
+Input: [2,3,-2,4]
+Output: 6
+Explanation: [2,3] has the largest product 6.
+```
+
+解题思路：记录从 0 到 i，每个 i 的最大乘积值与最小乘积值。
+
+```java
+public int maxProduct(int[] nums) {
+    if(nums.length == 0) return 0;
+    int maxPre = nums[0];
+    int minPre = nums[0];
+    int max, min;
+    int maxSoFar = nums[0];
+    for(int i = 1; i < nums.length; i++){
+        max = Math.max(Math.max(maxPre * nums[i], minPre * nums[i]), nums[i]);
+        min = Math.min(Math.min(maxPre * nums[i], minPre * nums[i]), nums[i]);
+        System.out.println(max + " " + min);
+        maxSoFar = Math.max(max, maxSoFar);
+        maxPre = max;
+        minPre = min;
+    }
+    return maxSoFar;
+}
+```
