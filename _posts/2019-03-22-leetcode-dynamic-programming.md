@@ -270,3 +270,25 @@ public boolean wordBreak(String s, List<String> wordDict) {
     return dp[s.length()];
 }
 ```
+
+## 三角形
+
+[Leetcode - 120 Triangle (Medium)](https://leetcode.com/problems/triangle/)
+
+题目描述：给定一个三角形，寻找一条自上而下的路径，使得路径和最短，只能向下走相邻的节点。
+
+解题思路： 每个节点记录从下到上的最短路径和。
+
+dp[i] = min(triangle[j], triangle[j + 1]) + triangle[i][j]
+
+```java
+public int minimumTotal(List<List<Integer>> triangle) {
+    int[] res = new int[triangle.size() + 1];
+    for (int i = triangle.size() - 1; i >= 0; i--) {
+        for (int j = 0; j < triangle.get(i).size(); j++) {
+            res[j] = Math.min(res[j], res[j + 1]) + triangle.get(i).get(j);
+        }
+    }
+    return res[0];
+}
+```
