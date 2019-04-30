@@ -345,3 +345,43 @@ public int maxProduct(int[] nums) {
     return maxSoFar;
 }
 ```
+
+## 最佳买卖股票的时间 I
+
+[Leetcode - 121 Best Time to Buy and Sell Stock (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
+
+题目描述：只能持有一只股票，一天只能买卖一次。
+
+解法一：DP 解法
+
+```java
+public int maxProfit(int[] prices) {
+    if(prices == null || prices.length == 0) return 0;
+    int[][] mp = new int[prices.length][3];
+    mp[0][1] = -prices[0];
+    int res = 0;
+    for (int i = 1; i < prices.length; i++){
+        mp[i][0] = mp[i - 1][0]; // 没有买卖
+        mp[i][1] = Math.max(mp[i - 1][1], mp[i - 1][0] - prices[i]); // 买了股票
+        mp[i][2] = mp[i - 1][1] + prices[i]; // 卖了股票
+        res = Math.max(res, Math.max(mp[i][0], Math.max(mp[i][1], mp[i][2])));
+    }
+    return res;
+}
+```
+
+解法二：优解
+
+```java
+public int maxProfit(int prices[]) {
+    int minprice = Integer.MAX_VALUE;
+    int maxprofit = 0;
+    for (int i = 0; i < prices.length; i++) {
+        if (prices[i] < minprice)
+            minprice = prices[i];
+        else if (prices[i] - minprice > maxprofit)
+            maxprofit = prices[i] - minprice;
+    }
+    return maxprofit;
+}
+```
