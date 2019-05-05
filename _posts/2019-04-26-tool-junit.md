@@ -1,7 +1,7 @@
 ---
 layout: article
 title: 工具 — JUnit 单元测试
-tags: Leetcode
+tags: 工具
 
 lang: zh-Hans
 key: Tool_JUnit
