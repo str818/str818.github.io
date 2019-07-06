@@ -10,13 +10,15 @@ toc: true
 show_subscribe: false
 ---
 
-## 概述
+# 一、概述
 
 CAP 理论是指：一个分布式系统最多只能同时满足一致性（Consistency）、可用性（Availability）和分区容错性（Partition tolerance）这三项中的两项。
 
 <div align="center">  <img src="../img/distributed_cap.png" width="100%"/> </div><br>
 
-## Consistency 一致性
+# 二、性质
+
+## 1. Consistency 一致性
 
 一致性指 `all nodes see the same data at the same time`，即更新操作成功并返回客户端完成后，所有节点在同一时间的数据完全一致，所以，一致性，说的就是数据一致性。
 
@@ -30,19 +32,19 @@ CAP 理论是指：一个分布式系统最多只能同时满足一致性（Cons
 
 CAP 中说，不可能同时满足的这个一致性就是强一致性。
 
-## Availability 可用性
+## 2. Availability 可用性
 
 可用性指 `Reads and writes always succeed`，即服务一直可用，而且是正常响应时间。
 
 可以用系统可用时间占总时间的比值来衡量，4 个 9 的可用性表示系统 99.99% 的时间是可用的。
 
-## Partition Tolerance 分区容错性
+## 3. Partition Tolerance 分区容错性
 
 网络分区指分布式系统中的节点被划分为多个区域，每个区域内部可以通信，但是区域之间无法通信。
 
 分区容错性指 `the system continues to operate despite arbitrary message loss or failure of part of the system`，即分布式系统在遇到某节点或网络分区故障的时候，仍然能够对外提供满足一致性和可用性的服务。
 
-## 权衡
+# 三、权衡
 
 在分布式系统中，分区容忍性必不可少，因为需要总是假设网络是不可靠的。因此，CAP 理论实际上是要在可用性和一致性之间做权衡。
 
