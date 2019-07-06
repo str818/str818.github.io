@@ -172,6 +172,8 @@ Given linked list: 1->2->3->4->5, and n = 2.
 After removing the second node from the end, the linked list becomes 1->2->3->5.
 ```
 
+解题思路：可能会删除第 0 个节点，所以要使用尾节点。
+
 ```java
 public ListNode removeNthFromEnd(ListNode head, int n) {
     ListNode dummyHead = new ListNode(0);
