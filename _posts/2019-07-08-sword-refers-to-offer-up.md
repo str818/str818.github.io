@@ -1,4 +1,3 @@
-
 ---
 layout: article
 title: 剑指Offer - Java题解 「上」
@@ -344,6 +343,411 @@ public int minNumberInRotateArray(int [] array) {
         }
     }
     return array[l];
+}
+```
+
+## 12. 矩阵中的路径
+
+[Online Programming Link](https://www.nowcoder.com/practice/9f3231a991af4f55b95579b44b7a01ba?tpId=13&tqId=11159&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向上下左右移动一个格子。如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。
+
+```java
+private static final int[][] next = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+private int cols;
+private int rows;
+public boolean hasPath(char[] array, int rows, int cols, char[] str) {
+    this.cols = cols;
+    this.rows = rows;
+    boolean[][] marked = new boolean[rows][cols];
+    char[][] matrix = buildMatrix(array);
+    
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (backtrack(matrix, marked, str, 0, i, j)) return true;
+        }
+    }
+    return false;
+}
+
+private boolean backtrack(char[][] matrix, boolean[][] marked, char[] str, int pathLen, int r, int c) {
+    
+    if (str.length == pathLen) return true;
+    if (r < 0 || r >= rows || c < 0 || c >= cols || marked[r][c]
+        || matrix[r][c] != str[pathLen]) return false;
+    
+    marked[r][c] = true;
+    for (int i = 0; i < next.length; i++) {
+        if (backtrack(matrix, marked, str, pathLen + 1, r + next[i][0], c + next[i][1])) {
+            return true;
+        }
+    }
+    marked[r][c] = false;
+    return false;
+}
+
+private char[][] buildMatrix(char[] array) {
+    char[][] matrix = new char[rows][cols];
+    for (int i = 0, idx = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            matrix[i][j] = array[idx++];
+        }
+    }
+    return matrix;
+}
+```
+
+## 13. 机器人的运动范围
+
+[Online Programming Link](https://www.nowcoder.com/practice/6e5207314b5241fb83f2329e89fdecc8?tpId=13&tqId=11219&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：地上有一个 m 行和 n 列的方格。一个机器人从坐标 [0,0] 的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于 k 的格子。 例如，当 k 为 18 时，机器人能够进入方格 [35,37]，因为 3+5+3+7 = 18。但是，它不能进入方格 [35,38]，因为 3+5+3+8 = 19。请问该机器人能够达到多少个格子？
+
+```java
+private static final int[][] next = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+private int[][] digitSum;
+private int count = 0;
+private int rows, cols, threshold;
+public int movingCount(int threshold, int rows, int cols) {
+    this.rows = rows;
+    this.cols = cols;
+    this.threshold = threshold;
+    initStatus(rows, cols);
+    boolean[][] marked = new boolean[rows][cols];
+    dfs(marked, 0, 0);
+    return count;
+}
+
+private void dfs(boolean[][] marked, int r, int c) {
+    if (r < 0 || r >= rows || c < 0 || c >= cols || marked[r][c]) return;
+    
+    marked[r][c] = true;
+    if (digitSum[r][c] > threshold) return;
+        count++;
+    for (int[] n : next) {
+        dfs(marked, r + n[0], c + n[1]);
+    }
+}
+
+private void initStatus(int rows, int cols) {
+    int n = Math.max(rows, cols);
+    int[] digitSum = new int[n];
+    for (int i = 0; i < n; i++) {
+        int tmp = i;
+        while (tmp != 0) {
+            digitSum[i] += tmp % 10;
+            tmp /= 10;
+        }
+    }
+    
+    this.digitSum = new int[rows][cols];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            this.digitSum[i][j] = digitSum[i] + digitSum[j];
+        }
+    }
+}
+```
+
+## 14. 剪绳子
+
+[Online Programming Link](https://leetcode.com/problems/integer-break)
+
+题目描述：把一根绳子剪成多段，并且使得每段的长度乘积最大。
+
+```java
+public int integerBreak(int n) {
+    int[] dp = new int[n + 1];
+    dp[1] = 1;
+    for (int i = 2; i <= n; i++)
+        for (int j = 1; j < i; j++)
+            dp[i] = Math.max(dp[i], Math.max(j * (i - j), dp[j] * (i - j)));
+    return dp[n];
+}
+```
+
+## 15. 二进制中 1 的个数
+
+[Online Programming Link](https://www.nowcoder.com/practice/8ee967e43c2c4ec193b040ea7fbb10b8?tpId=13&tqId=11164&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。
+
+```java
+public int NumberOf1(int n) {
+    int cnt = 0;
+    while (n != 0) {
+        cnt++;
+        n &= (n - 1);
+    }
+    return cnt;
+}
+```
+
+## 16. 数值的整数次方 
+
+[Online Programming Link](https://www.nowcoder.com/practice/8ee967e43c2c4ec193b040ea7fbb10b8?tpId=13&tqId=11164&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：给定一个 double 类型的浮点数 base 和 int 类型的整数 exponent，求 base 的 exponent 次方。
+
+```java
+public double Power(double base, int exponent) {
+    if (exponent == 1) return base;
+    if (exponent == 0) return 1;
+    boolean isNegative = false;
+    if (exponent < 0) {
+        isNegative = true;
+        exponent = -exponent;
+    }
+    double pow = Power(base * base, exponent / 2);
+    if (exponent % 2 == 1) {
+        pow *= base;
+    }
+    return isNegative ? 1 / pow : pow;
+}
+```
+
+## 17. 打印从 1 到最大的 n 位数
+
+题目描述：输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。比如输入 3，则打印出 1、2、3 一直到最大的 3 位数即 999。
+
+```java
+public void print1ToMaxOfNDigits(int n) {
+    if (n <= 0)
+        return;
+    char[] number = new char[n];
+    print1ToMaxOfNDigits(number, 0);
+}
+
+private void print1ToMaxOfNDigits(char[] number, int digit) {
+    if (digit == number.length) {
+        printNumber(number);
+        return;
+    }
+    for (int i = 0; i < 10; i++) {
+        number[digit] = (char) (i + '0');
+        print1ToMaxOfNDigits(number, digit + 1);
+    }
+}
+
+private void printNumber(char[] number) {
+    int index = 0;
+    while (index < number.length && number[index] == '0')
+        index++;
+    while (index < number.length)
+        System.out.print(number[index++]);
+    System.out.println();
+}
+```
+
+## 18.1 在 O(1) 时间内删除链表节点
+
+解题思路：如果该节点不是尾节点，那么可以直接将下一个节点的值赋给该节点，然后令该节点指向下下个节点，再删除下一个节点，时间复杂度为 O(1)；否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向 null，时间复杂度为 O(N)。
+
+```java
+public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
+    if (head == null || tobeDelete == null)
+        return null;
+    if (tobeDelete.next != null) {
+        // 要删除的节点不是尾节点
+        ListNode next = tobeDelete.next;
+        tobeDelete.val = next.val;
+        tobeDelete.next = next.next;
+    } else {
+        if (head == tobeDelete)
+            // 只有一个节点
+            head = null;
+        else {
+            ListNode cur = head;
+            while (cur.next != tobeDelete)
+                cur = cur.next;
+            cur.next = null;
+        }
+    }
+    return head;
+}
+```
+
+## 18.2 删除链表中重复的结点
+
+[Online Programming Link](https://www.nowcoder.com/practice/fc533c45b73a41b0b44ccba763f866ef?tpId=13&tqId=11209&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+```java
+public ListNode deleteDuplication(ListNode pHead) {
+    if (pHead == null || pHead.next == null)
+        return pHead;
+    ListNode next = pHead.next;
+    if (pHead.val == next.val) {
+        while (next != null && pHead.val == next.val)
+            next = next.next;
+        return deleteDuplication(next);
+    } else {
+        pHead.next = deleteDuplication(pHead.next);
+        return pHead;
+    }
+}
+```
+
+## 19. 正则表达式匹配
+
+[Online Programming Link](https://www.nowcoder.com/practice/45327ae22b7b413ea21df13ee7d6429c?tpId=13&tqId=11205&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：请实现一个函数用来匹配包括 `.` 和 `*` 的正则表达式。模式中的字符 `.` 表示任意一个字符，而 `*` 表示它前面的字符可以出现任意次（包含 0 次）。
+
+```java
+public boolean match(char[] str, char[] pattern) {
+    int m = str.length, n = pattern.length;
+    boolean[][] dp = new boolean[m + 1][n + 1];
+    
+    dp[0][0] = true;
+    for (int i = 1; i <= n; i++) {
+        if (pattern[i - 1] == '*') {
+            dp[0][i] = dp[0][i - 2];
+        }
+    }
+    
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (str[i - 1] == pattern[j - 1] || pattern[j - 1] == '.') {
+                dp[i][j] = dp[i - 1][j - 1];
+            } else if (pattern[j - 1] == '*') {
+                if (pattern[j - 2] == str[i - 1] || pattern[j - 2] == '.') {
+                    dp[i][j] |= dp[i][j - 1]; // a* counts as single a
+                    dp[i][j] |= dp[i - 1][j]; // a* counts as multiple a
+                    dp[i][j] |= dp[i][j - 2]; // a* counts as empty
+                } else {
+                    dp[i][j] = dp[i][j - 2]; // a* only counts as empty
+                }
+            }
+        }
+    }
+    return dp[m][n];
+}
+```
+
+## 20. 表示数值的字符串
+
+[Online Programming Link](https://www.nowcoder.com/practice/6f8c901d091949a5837e24bb82a731f2?tpId=13&tqId=11206&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串"+100","5e2","-123","3.1416"和"-1E-16"都表示数值。 但是"12e","1a3.14","1.2.3","+-5"和"12e+4.3"都不是。
+
+```java
+public boolean isNumeric(char[] str) {
+    if (str == null || str.length == 0) return false;
+    return new String(str).matches("[+-]?\\d*(\\.\\d+)?([eE][+-]?\\d+)?");
+}
+```
+
+## 21. 调整数组顺序使奇数位于偶数前面
+
+[Online Programming Link](https://www.nowcoder.com/practice/beb5aa231adc45b2a5dcc5b62c93f593?tpId=13&tqId=11166&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：需要保证奇数和奇数，偶数和偶数之间的相对位置不变。
+
+```java
+public void reOrderArray(int[] nums) {
+    int oddCount = 0;
+    for (int x : nums) {
+        if (x % 2 == 1) oddCount++;
+    }
+    int[] copy = nums.clone();
+    int i = 0, j = oddCount;
+    for (int x : copy) {
+        if (x % 2 == 1) nums[i++] = x;
+        else nums[j++] = x;
+    }
+}
+```
+
+## 22. 链表中倒数第 K 个结点
+
+[Online Programming Link](https://www.nowcoder.com/practice/529d3ae5a407492994ad2a246518148a?tpId=13&tqId=11167&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+```java
+public ListNode FindKthToTail(ListNode head, int k) {
+    if (head == null) return null;
+    ListNode p1 = head;
+    while (p1 != null && k-- > 0) {
+        p1 = p1.next;
+    }
+    if (k > 0) return null;
+    ListNode p2 = head;
+    while (p1 != null) {
+        p1 = p1.next;
+        p2 = p2.next;
+    }
+    return p2;
+}
+```
+
+## 23. 链表中环的入口结点
+
+[Online Programming Link](https://www.nowcoder.com/practice/253d2c59ec3e4bc68da16833f79a38e4?tpId=13&tqId=11208&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+```java
+public ListNode EntryNodeOfLoop(ListNode pHead) {
+    if (pHead == null || pHead.next == null)
+        return null;
+    ListNode slow = pHead, fast = pHead;
+    do {
+        fast = fast.next.next;
+        slow = slow.next;
+    } while (slow != fast);
+    fast = pHead;
+    while (slow != fast) {
+        slow = slow.next;
+        fast = fast.next;
+    }
+    return slow;
+}
+```
+
+## 24. 反转链表
+
+[Online Programming Link](https://www.nowcoder.com/practice/75e878df47f24fdc9dc3e400ec6058ca?tpId=13&tqId=11168&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+方法一：递归
+
+```java
+public ListNode ReverseList(ListNode head) {
+    if (head == null || head.next == null) return head;
+    ListNode next = head.next;
+    head.next = null;
+    ListNode newHead = ReverseList(next);
+    next.next = head;
+    return newHead;
+}
+```
+
+方法二：头插法
+
+```java
+public ListNode ReverseList(ListNode head) {
+    ListNode newList = new ListNode(-1);
+    while (head != null) {
+        ListNode next = head.next;
+        head.next = newList.next;
+        newList.next = head;
+        head = next;
+    }
+    return newList.next;
+}
+```
+
+## 25. 合并两个排序的链表
+
+[Online Programming Link](https://www.nowcoder.com/practice/d8b6b4358f774294a89de2a6ac4d9337?tpId=13&tqId=11169&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+```java
+public ListNode Merge(ListNode list1,ListNode list2) {
+    if (list1 == null) return list2;
+    if (list2 == null) return list1;
+    if (list1.val > list2.val) {
+        list2.next = Merge(list1, list2.next);
+        return list2;
+    } else {
+        list1.next = Merge(list1.next, list2);
+        return list1;
+    }
 }
 ```
 
