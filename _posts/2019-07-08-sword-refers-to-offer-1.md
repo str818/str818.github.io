@@ -1,7 +1,7 @@
 ---
 layout: article
 title: 剑指Offer — Java 题解 「上」
-tags: 剑指Offer
+tags: 剑指
 
 lang: zh-Hans
 key: Sword_Refers_To_Offer_1
