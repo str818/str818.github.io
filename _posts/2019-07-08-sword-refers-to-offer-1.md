@@ -1,6 +1,6 @@
 ---
 layout: article
-title: 剑指Offer — Java 题解「上」
+title: 剑指Offer — Java 题解 「上」
 tags: 剑指Offer
 
 lang: zh-Hans
