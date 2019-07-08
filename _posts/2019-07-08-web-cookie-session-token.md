@@ -28,7 +28,7 @@ Cookie 由服务器生成然后发送给浏览器的，浏览器把 Cookie 以�
 
 - 服务器接收请求，分解 cookie，验证信息，核对成功后返回 response 给客户端。
 
-<div align="center">  <img src="img/web_cookie_session_token_1.png" width="60%"/> </div><br>
+<div align="center">  <img src="/img/web_cookie_session_token_1.png" width="60%"/> </div><br>
 
 
 ## 二、Session
