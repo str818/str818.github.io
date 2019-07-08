@@ -135,3 +135,314 @@ public String replaceSpace(StringBuffer str) {
     return str.toString();
 }
 ```
+
+## 6. 从尾到头打印链表
+
+[Online Programming Link](https://www.nowcoder.com/practice/d0267f7f55b3412ba93bd35cfa8e8035?tpId=13&tqId=11156&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+解法一：递归
+
+```java
+public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+    ArrayList<Integer> list = new ArrayList<>();
+    if (listNode != null) {
+        list.addAll(printListFromTailToHead(listNode.next));
+        list.add(listNode.val);
+    }
+    return list;
+}
+```
+
+解法二：栈。
+
+```java
+public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+    Stack<Integer> stack = new Stack<>();
+    while (listNode != null) {
+        stack.add(listNode.val);
+        listNode = listNode.next;
+    }
+    ArrayList<Integer> list = new ArrayList<>();
+    while (!stack.isEmpty())
+        list.add(stack.pop());
+    return list;
+}
+```
+
+## 7. 重建二叉树
+
+[Online Programming Link](https://www.nowcoder.com/practice/8a19cbe657394eeaac2f6ea9b0f6fcf6?tpId=13&tqId=11157&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：给定二叉树的先序与中序遍历，重建二叉树。
+
+解题思路：二叉树先序遍历的第一个结点是根节点，找到其在中序遍历里的位置，二分。
+
+```java
+public TreeNode reConstructBinaryTree(int[] pre,int[] in) {
+    return reConstructBinaryTree(pre, 0, in, 0, in.length);
+}
+private TreeNode reConstructBinaryTree(int[] pre, int preIndex, int[] in, int inL, int inR) {
+    
+    if (preIndex >= pre.length || inL == inR)
+        return null;
+    
+    TreeNode root = new TreeNode(pre[preIndex]);
+    for (int i = inL; i < inR; i++) {
+        if (in[i] == pre[preIndex]) {
+            root.left = reConstructBinaryTree(pre, preIndex + 1, in, inL, i);
+            root.right = reConstructBinaryTree(pre, preIndex + i - inL + 1, in, i + 1, inR);
+        }
+    }
+    return root;
+}
+```
+
+## 8. 二叉树的下一个结点
+
+[Online Programming Link](https://www.nowcoder.com/practice/9023a0c988684a53960365b889ceaf5e?tpId=13&tqId=11210&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
+
+解题思路：如果右结点不为空，则为右子树的最左结点；否则，为当前树的根结点，前提是当前结点为该左子树中的结点。
+
+```java
+public TreeLinkNode GetNext(TreeLinkNode pNode) {
+    if (pNode.right != null) {
+        TreeLinkNode node = pNode.right;
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node;
+    } else {
+        while (pNode.next != null) {
+            TreeLinkNode parent = pNode.next;
+            if (parent.left == pNode)
+                return parent;
+            pNode = pNode.next;
+        }
+    }
+    return null;
+}
+```
+
+## 9. 用两个栈实现队列
+
+[Online Programming Link](https://www.nowcoder.com/practice/54275ddae22f475981afa2244dd448c6?tpId=13&tqId=11158&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+```java
+Stack<Integer> in = new Stack<Integer>();
+Stack<Integer> out = new Stack<Integer>();
+
+public void push(int node) {
+    in.push(node);
+}
+
+public int pop() throws Exception {
+    if (out.isEmpty())
+        while (!in.isEmpty())
+            out.push(in.pop());
+
+    if (out.isEmpty())
+        throw new Exception("queue is empty");
+
+    return out.pop();
+}
+```
+
+## 10.1 斐波那契数列
+
+[Online Programming Link](https://www.nowcoder.com/practice/c6c7742f5ba7442aada113136ddea0c3?tpId=13&tqId=11160&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+```java
+public int Fibonacci(int n) {
+    if (n <= 1) return n;
+    int a = 0, b = 1;
+    for (int i = 2; i <= n; i++) {
+        int tmp = b;
+        b = a + b;
+        a = tmp;
+    }
+    return b;
+}
+```
+
+## 10.2 矩形覆盖
+
+[Online Programming Link](https://www.nowcoder.com/practice/72a5a919508a4251859fb2cfb987a0e6?tpId=13&tqId=11163&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：我们可以用 `2*1` 的小矩形横着或者竖着去覆盖更大的矩形。请问用 n 个 `2*1` 的小矩形无重叠地覆盖一个 `2*n` 的大矩形，总共有多少种方法？
+
+```java
+public int RectCover(int target) {
+    if (target <= 2) return target;
+    int a = 1, b = 2;
+    for (int i = 3; i <= target; i++) {
+        int tmp = b;
+        b += a;
+        a = tmp;
+    }
+    return b;
+}
+```
+
+## 10.3 跳台阶
+
+[Online Programming Link](https://www.nowcoder.com/practice/8c82a5b80378478f9484d87d1c5f12a4?tpId=13&tqId=11161&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
+
+```java
+public int JumpFloor(int target) {
+    if (target <= 2) return target;
+    int a = 1, b = 2;
+    for (int i = 3; i <= target; i++) {
+        int tmp = b;
+        b += a;
+        a = tmp;
+    }
+    return b;
+}
+```
+
+## 10.4 变态跳台阶
+
+[Online Programming Link](https://www.nowcoder.com/practice/22243d016f6b47f2a6928b4313c85387?tpId=13&tqId=11162&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级……它也可以跳上 n 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
+
+```java
+public int JumpFloorII(int target) {
+    int[] dp = new int[target];
+    Arrays.fill(dp, 1);
+    for (int i = 1; i < target; i++) {
+        for (int j = 0; j < i; j++) {
+            dp[i] += dp[j];
+        }
+    }
+    return dp[target - 1];
+}
+```
+
+## 11. 旋转数组的最小数字
+
+[Online Programming Link](https://www.nowcoder.com/practice/9f3231a991af4f55b95579b44b7a01ba?tpId=13&tqId=11159&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。
+
+```java
+public int minNumberInRotateArray(int [] array) {
+    int l = 0, r = array.length - 1;
+    while (l < r) {
+        int mid = l + (r - l) / 2;
+        if (array[r] >= array[mid]) {
+            r = mid;
+        } else {
+            l = mid + 1;
+        }
+    }
+    return array[l];
+}
+```
+
+## 12. 矩阵中的路径
+
+[Online Programming Link](https://www.nowcoder.com/practice/9f3231a991af4f55b95579b44b7a01ba?tpId=13&tqId=11159&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向上下左右移动一个格子。如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。
+
+```java
+private static final int[][] next = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+private int cols;
+private int rows;
+public boolean hasPath(char[] array, int rows, int cols, char[] str) {
+    this.cols = cols;
+    this.rows = rows;
+    boolean[][] marked = new boolean[rows][cols];
+    char[][] matrix = buildMatrix(array);
+    
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (backtrack(matrix, marked, str, 0, i, j)) return true;
+        }
+    }
+    return false;
+}
+
+private boolean backtrack(char[][] matrix, boolean[][] marked, char[] str, int pathLen, int r, int c) {
+    
+    if (str.length == pathLen) return true;
+    if (r < 0 || r >= rows || c < 0 || c >= cols || marked[r][c]
+        || matrix[r][c] != str[pathLen]) return false;
+    
+    marked[r][c] = true;
+    for (int i = 0; i < next.length; i++) {
+        if (backtrack(matrix, marked, str, pathLen + 1, r + next[i][0], c + next[i][1])) {
+            return true;
+        }
+    }
+    marked[r][c] = false;
+    return false;
+}
+
+private char[][] buildMatrix(char[] array) {
+    char[][] matrix = new char[rows][cols];
+    for (int i = 0, idx = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            matrix[i][j] = array[idx++];
+        }
+    }
+    return matrix;
+}
+```
+
+## 13. 机器人的运动范围
+
+[Online Programming Link](https://www.nowcoder.com/practice/6e5207314b5241fb83f2329e89fdecc8?tpId=13&tqId=11219&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+题目描述：地上有一个 m 行和 n 列的方格。一个机器人从坐标 [0,0] 的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于 k 的格子。 例如，当 k 为 18 时，机器人能够进入方格 [35,37]，因为 3+5+3+7 = 18。但是，它不能进入方格 [35,38]，因为 3+5+3+8 = 19。请问该机器人能够达到多少个格子？
+
+```java
+private static final int[][] next = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+private int[][] digitSum;
+private int count = 0;
+private int rows, cols, threshold;
+public int movingCount(int threshold, int rows, int cols) {
+    this.rows = rows;
+    this.cols = cols;
+    this.threshold = threshold;
+    initStatus(rows, cols);
+    boolean[][] marked = new boolean[rows][cols];
+    dfs(marked, 0, 0);
+    return count;
+}
+
+private void dfs(boolean[][] marked, int r, int c) {
+    if (r < 0 || r >= rows || c < 0 || c >= cols || marked[r][c]) return;
+    
+    marked[r][c] = true;
+    if (digitSum[r][c] > threshold) return;
+        count++;
+    for (int[] n : next) {
+        dfs(marked, r + n[0], c + n[1]);
+    }
+}
+
+private void initStatus(int rows, int cols) {
+    int n = Math.max(rows, cols);
+    int[] digitSum = new int[n];
+    for (int i = 0; i < n; i++) {
+        int tmp = i;
+        while (tmp != 0) {
+            digitSum[i] += tmp % 10;
+            tmp /= 10;
+        }
+    }
+    
+    this.digitSum = new int[rows][cols];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            this.digitSum[i][j] = digitSum[i] + digitSum[j];
+        }
+    }
+}
+```
