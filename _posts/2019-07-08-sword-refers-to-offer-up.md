@@ -351,7 +351,7 @@ public int minNumberInRotateArray(int [] array) {
 题目描述：判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向上下左右移动一个格子。如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。
 
 ```java
-private static final int[][] next = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+private static final int[][] next = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
 private int cols;
 private int rows;
 public boolean hasPath(char[] array, int rows, int cols, char[] str) {
