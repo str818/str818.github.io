@@ -210,28 +210,40 @@ defaults:
       show_edit_on_github: false
       show_subscribe: true
       pageview: true
-  ## algorithm
+  # ## algorithm
+  # - scope:
+  #     path: "notes/algorithm"
+  #   values:
+  #     layout: article
+  #     nav_key: algorithm
+  #     sidebar:
+  #       nav: algorithm
+  #     license: true
+  #     aside:
+  #       toc: true
+  #     show_edit_on_github: false
+  #     show_date: false
+  #     pageview: true
+  # ## java
+  # - scope:
+  #     path: "notes/java"
+  #   values:
+  #     layout: article
+  #     nav_key: java
+  #     sidebar:
+  #       nav: java
+  #     license: true
+  #     aside:
+  #       toc: true
+  #     show_edit_on_github: false
+  #     show_date: false
+  #     pageview: true
+  ## 目录
   - scope:
-      path: "notes/algorithm"
+      path: "notes/contents"
     values:
       layout: article
-      nav_key: algorithm
-      sidebar:
-        nav: algorithm
-      license: true
-      aside:
-        toc: true
-      show_edit_on_github: false
-      show_date: false
-      pageview: true
-  ## java
-  - scope:
-      path: "notes/java"
-    values:
-      layout: article
-      nav_key: java
-      sidebar:
-        nav: java
+      nav_key: contents
       license: true
       aside:
         toc: true
