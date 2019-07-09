@@ -38,6 +38,10 @@ key: notes-content
 - [Java 函数式编程](https://str818.github.io/2019/03/18/java-functional-programming-for-the-masses.html)
 - [Java 正则表达式详解](https://str818.github.io/2018/12/19/java-detailed-expression-of-regular-expression.html)
 
+## 数据库
+
+- [MySQL - 索引](https://str818.github.io/2019/07/09/mysql-index.html)
+
 ## Web
 
 [弄懂 Cookie、Session 和 Token](https://str818.github.io/2019/07/08/web-cookie-session-token.html)
