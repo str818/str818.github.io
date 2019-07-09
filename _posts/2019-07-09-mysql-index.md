@@ -4,7 +4,7 @@ title: MySQL — 索引
 tags: Mysql
 
 lang: zh-Hans
-key: Mysql_Index
+key: MySQL_Index
 pageview: true
 toc: true
 show_subscribe: false
