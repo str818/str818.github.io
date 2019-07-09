@@ -1,9 +1,12 @@
 header:
-  - title:      Java 技术栈
-    url:        /notes/java/basics/basic
+  # - title:      Java 技术栈
+  #   url:        /notes/java/basics/basic
   
-  - title:      算法
-    url:        /notes/algorithm/sort
+  # - title:      算法
+  #   url:        /notes/algorithm/sort
+
+  - title:      复习目录
+    url:        /notes/contents/review
     
   - titles:
       en      : &EN       Archive
@@ -17,29 +20,29 @@ header:
       zh-Hant : &ZH_HANT  關於
     url: /about.html   
 
-algorithm:
-  - title:      经典算法
-    children:
-      - title:  排序
-        url:    /notes/algorithm/sort
-  - title:      算法练习
-    children:
-      - title:  算法思想
-        url:    /notes/algorithm/code-thought
-      - title:  数据结构相关
-        url:    /notes/algorithm/code-data-structure
-      - title:  经典综合问题
-        url:    /notes/algorithm/code-classical-synthesis
-java:
-  - title:      Java基础
-    children:
-      - title:  基础
-        url:    /notes/java/basics/basic
-  - title:      内功心法
-    children:
-      - title:  UML类图
-        url:    /notes/java/internal/class-diagram
-      - title:  设计原则
-        url:    /notes/java/internal/design-principles
-      - title:  设计模式
-        url:    /notes/java/internal/design-pattern
+# algorithm:
+#   - title:      经典算法
+#     children:
+#       - title:  排序
+#         url:    /notes/algorithm/sort
+#   - title:      算法练习
+#     children:
+#       - title:  算法思想
+#         url:    /notes/algorithm/code-thought
+#       - title:  数据结构相关
+#         url:    /notes/algorithm/code-data-structure
+#       - title:  经典综合问题
+#         url:    /notes/algorithm/code-classical-synthesis
+# java:
+#   - title:      Java基础
+#     children:
+#       - title:  基础
+#         url:    /notes/java/basics/basic
+#   - title:      内功心法
+#     children:
+#       - title:  UML类图
+#         url:    /notes/java/internal/class-diagram
+#       - title:  设计原则
+#         url:    /notes/java/internal/design-principles
+#       - title:  设计模式
+#         url:    /notes/java/internal/design-pattern
