@@ -1,5 +1,5 @@
 ---
-title: 复习目录
+title: 技术栈目录
 permalink: /notes/contents/review
 key: notes-content
 ---
@@ -21,6 +21,7 @@ key: notes-content
 #### 剑指Offer
 
 - [剑指Offer - Java 题解（上）](https://str818.github.io/2019/07/08/sword-refers-to-offer-up.html)
+- [剑指Offer - Java 题解（上）](https://str818.github.io/2019/07/09/sword-refers-to-offer-middle.html)
 
 #### Leetcode
 
