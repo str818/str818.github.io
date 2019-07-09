@@ -8,11 +8,9 @@ key: notes-content
 
 ### 基础
 
-[复杂度基础](https://str818.github.io/2019/02/16/algorithm_complexity_basis.html)
-
-[十大排序算法](https://str818.github.io/2019/03/25/algorithm-sorting.html)
-
-[图](https://str818.github.io/2019/03/23/algorithmic-graph-basic.html)
+- [复杂度基础](https://str818.github.io/2019/02/16/algorithm_complexity_basis.html)
+- [十大排序算法](https://str818.github.io/2019/03/25/algorithm-sorting.html)
+- [图](https://str818.github.io/2019/03/23/algorithmic-graph-basic.html)
 
 ### 刷题
 
