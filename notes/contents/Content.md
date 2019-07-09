@@ -24,27 +24,19 @@ key: notes-content
 
 #### Leetcode
 
-[Leetcode - 链表](https://str818.github.io/2019/03/22/leetcode-linked-list.html)
-
-[Leetcode - 数组](https://str818.github.io/2019/03/20/leetcode-array.html)
-
-[Leetcode - 双指针](https://str818.github.io/2019/03/20/leetcode-double-pointer.html)
-
-[Leetcode - 搜索](https://str818.github.io/2019/03/20/leetcode-searching.html)
-
-[Leetcode - 树](https://str818.github.io/2019/03/20/leetcode-tree.html)
-
-[Leetcode - 动态规划](https://str818.github.io/2019/03/22/leetcode-dynamic-programming.html)
-
-[Leetcode - 二分查找](https://str818.github.io/2019/04/27/leetcode-two-points-search.html)
-
-[Leetcode - 数学](https://str818.github.io/2019/03/31/leetcode-math.html)
+- [Leetcode - 链表](https://str818.github.io/2019/03/22/leetcode-linked-list.html)
+- [Leetcode - 数组](https://str818.github.io/2019/03/20/leetcode-array.html)
+- [Leetcode - 双指针](https://str818.github.io/2019/03/20/leetcode-double-pointer.html)
+- [Leetcode - 搜索](https://str818.github.io/2019/03/20/leetcode-searching.html)
+- [Leetcode - 树](https://str818.github.io/2019/03/20/leetcode-tree.html)
+- [Leetcode - 动态规划](https://str818.github.io/2019/03/22/leetcode-dynamic-programming.html)
+- [Leetcode - 二分查找](https://str818.github.io/2019/04/27/leetcode-two-points-search.html)
+- [Leetcode - 数学](https://str818.github.io/2019/03/31/leetcode-math.html)
 
 ## Java
 
-[Java 函数式编程](https://str818.github.io/2019/03/18/java-functional-programming-for-the-masses.html)
-
-[Java 正则表达式详解](https://str818.github.io/2018/12/19/java-detailed-expression-of-regular-expression.html)
+- [Java 函数式编程](https://str818.github.io/2019/03/18/java-functional-programming-for-the-masses.html)
+- [Java 正则表达式详解](https://str818.github.io/2018/12/19/java-detailed-expression-of-regular-expression.html)
 
 ## Web
 
