@@ -16,11 +16,11 @@ key: notes-content
 
 #### 经典例题
 
-[经典例题](https://str818.github.io/2019/04/21/algorithm-classic-examples.html)
+- [经典例题](https://str818.github.io/2019/04/21/algorithm-classic-examples.html)
 
 #### 剑指Offer
 
-[剑指Offer - Java 题解（上）](https://str818.github.io/2019/07/08/sword-refers-to-offer-up.html)
+- [剑指Offer - Java 题解（上）](https://str818.github.io/2019/07/08/sword-refers-to-offer-up.html)
 
 #### Leetcode
 
@@ -44,10 +44,9 @@ key: notes-content
 
 ## Web
 
-[弄懂 Cookie、Session 和 Token](https://str818.github.io/2019/07/08/web-cookie-session-token.html)
-
+- [弄懂 Cookie、Session 和 Token](https://str818.github.io/2019/07/08/web-cookie-session-token.html)
 
 ## 分布式
 
-[CAP 理论](https://str818.github.io/2019/07/06/distributed-cap.html)
+- [CAP 理论](https://str818.github.io/2019/07/06/distributed-cap.html)
 
