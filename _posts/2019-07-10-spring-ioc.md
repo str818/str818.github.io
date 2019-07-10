@@ -24,12 +24,12 @@ IoC - Inversion of Control，即「控制反转」，不是什么技术，而是
 
 传统的程序设计如下图所示，都是主动去创建相关对象然后再组合起来。
 
-<div align="center">  <img src="../img/spring_ioc_1.png" width="50%"/> </div><br>
+<div align="center">  <img src="/img/spring_ioc_1.png" width="50%"/> </div><br>
 
 
 当有了 IoC 容器后，在客户端类中不再主动去创建这些对象了。
 
-<div align="center">  <img src="../img/spring_ioc_2.png" width="50%"/> </div><br>
+<div align="center">  <img src="/img/spring_ioc_2.png" width="50%"/> </div><br>
 
 ### 2. IoC 能做什么
 
