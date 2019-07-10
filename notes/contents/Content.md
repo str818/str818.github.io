@@ -22,7 +22,7 @@ key: notes-content
 
 - [剑指Offer - Java 题解（上）](https://str818.github.io/2019/07/08/sword-refers-to-offer-up.html)
 - [剑指Offer - Java 题解（中）](https://str818.github.io/2019/07/09/sword-refers-to-offer-middle.html)
-- [剑指Offer - Java 题解（下）](https://str818.github.io/2019/07/08/sword-refers-to-offer-up.html)
+- [剑指Offer - Java 题解（下）](https://str818.github.io/2019/07/08/sword-refers-to-offer-down.html)
 
 #### Leetcode
 
