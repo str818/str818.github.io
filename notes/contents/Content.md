@@ -51,7 +51,7 @@ key: notes-content
 
 ## Spring
 
-[Spirng - 控制反转 IoC](https://str818.github.io/2019/07/10/spring-ioc.html)
+- [Spirng - 控制反转 IoC](https://str818.github.io/2019/07/10/spring-ioc.html)
 
 ## 分布式
 

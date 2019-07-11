@@ -10,4 +10,7 @@ toc: true
 show_subscribe: false
 ---
 
+
+1. hashcode 和 equals 方法的作用？
+
 [一面](https://www.nowcoder.com/discuss/205034?type=2&order=0&pos=7&page=1)
