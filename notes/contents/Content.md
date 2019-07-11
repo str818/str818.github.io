@@ -42,7 +42,7 @@ key: notes-content
 
 ## 数据库
 
-- [MySQL - 索引](https://str818.github.io/2019/07/09/mysql-index.html)
+- [MySQL - 索引](https://str818.github.io/2019/07/09/mysql-index-bak.html)
 - [MySQL - 存储引擎](https://str818.github.io/2019/07/09/mysql-storage-engine.html)
 
 ## Web
