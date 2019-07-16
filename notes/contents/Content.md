@@ -39,6 +39,7 @@ key: notes-content
 
 - [Java 函数式编程](https://str818.github.io/2019/03/18/java-functional-programming-for-the-masses.html)
 - [Java 正则表达式详解](https://str818.github.io/2018/12/19/java-detailed-expression-of-regular-expression.html)
+- [equals() 和 hashcode()](https://str818.github.io/2019/07/11/java-equals-and-hashcode.html)
 
 ## 数据库
 
