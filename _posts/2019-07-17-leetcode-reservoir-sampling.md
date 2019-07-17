@@ -13,7 +13,7 @@ show_subscribe: false
 给定一个无限的数据流，要求随机取出 k 个数。也就是说当数据流有 N 个数据时，不论 N 为多少，每个数被取出的概率都为 k / N。
 
 - 先取出前 k 个数；
-- 从第 k+1 开始，以 k / i 的概率取出这个数，并随机替换掉之前已经取出的 k 个数中的一个。
+- 从第 k + 1 开始，以 k / i 的概率取出这个数，并随机替换掉之前已经取出的 k 个数中的一个。
 
 ## 随机数索引
 
@@ -36,6 +36,30 @@ public int pick(int target) {
             int x = rand.nextInt(++total);
             res = x == 0 ? i : res;
         }
+    }
+    return res;
+}
+```
+
+## 链表随机索引
+
+[Leetcode - 382 Linked List Random Node (Medium)](https://leetcode.com/problems/linked-list-random-node/)
+
+题目描述：给定一个单链表，随机选择链表的一个节点，并返回相应的节点值，保证每个节点被选的概率一样。
+
+```java
+private ListNode head;
+private Random rand;
+public Solution(ListNode head) {
+    this.head = head;
+    this.rand = new Random();
+}
+public int getRandom() {
+    ListNode tmp = head;
+    int res = -1;
+    for (int i = 1; tmp != null; i++, tmp = tmp.next) {
+        int x = rand.nextInt(i);
+        res = x == 0 ? tmp.val : res;
     }
     return res;
 }
