@@ -417,30 +417,25 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
 
 [Online Programming Link](<https://www.nowcoder.com/practice/762836f4d43d43ca9deb273b3de8e1f4?tpId=13&tqId=11198&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking>)
 
-题目描述：五张牌，其中大小鬼为癞子，牌面为 0。判断这五张牌是否能组成顺子。
+题目描述：五张牌，其中大小鬼为癞子，牌面为 0，判断这五张牌是否能组成顺子。
+
+解题思路：必须要满足：(1) 没有重复的牌 (2) max - min < 5
 
 ```java
 public boolean isContinuous(int[] nums) {
-    
-    if (nums.length < 5) 
+    if (nums == null || nums.length == 0) {
         return false;
-
-    Arrays.sort(nums);
-
-    // 统计癞子数量
-    int cnt = 0;
-    for (int num : nums)
-        if (num == 0)
-            cnt++;
-
-    // 使用癞子去补全不连续的顺子
-    for (int i = cnt; i < nums.length - 1; i++) {
-        if (nums[i + 1] == nums[i])
-            return false;
-        cnt -= nums[i + 1] - nums[i] - 1;
     }
-
-    return cnt >= 0;
+    int max = -1, min = 14;
+    int[] d = new int[14];
+    for (int num : nums) {
+        d[num]++;
+        if (num == 0) continue;
+        if (d[num] > 1) return false;
+        if (num > max) max = num;
+        if (num < min) min = num;
+    }
+    return max - min < 5;
 }
 ```
 
