@@ -1,7 +1,7 @@
 ---
 layout: article
 title: 计算机网络 — 基础知识
-tags: 网路
+tags: 计算机网络
 
 lang: zh-Hans
 key: Network_Basic
