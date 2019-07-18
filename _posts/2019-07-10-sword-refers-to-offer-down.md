@@ -382,7 +382,7 @@ public ArrayList<Integer> maxInWindows(int[] num, int size) {
 
 ## 60. n 个骰子的点数
 
-[Online Programming Link](<https://www.lintcode.com/problem/dices-sum/description>)
+[Online Programming Link](https://www.lintcode.com/problem/dices-sum/description)
 
 题目描述：把 n 个骰子仍在地上，求点数和为 s 的概率。
 
@@ -415,7 +415,7 @@ public List<Map.Entry<Integer, Double>> dicesSum(int n) {
 
 ## 61. 扑克牌顺子
 
-[Online Programming Link](<https://www.nowcoder.com/practice/762836f4d43d43ca9deb273b3de8e1f4?tpId=13&tqId=11198&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking>)
+[Online Programming Link](https://www.nowcoder.com/practice/762836f4d43d43ca9deb273b3de8e1f4?tpId=13&tqId=11198&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 题目描述：五张牌，其中大小鬼为癞子，牌面为 0，判断这五张牌是否能组成顺子。
 
@@ -441,7 +441,7 @@ public boolean isContinuous(int[] nums) {
 
 ## 62. 圆圈中最后剩下的数 {X}
 
-[Online Programming Link](<https://www.nowcoder.com/practice/f78a359491e64a50bce2d89cff857eb6?tpId=13&tqId=11199&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking>)
+[Online Programming Link](https://www.nowcoder.com/practice/f78a359491e64a50bce2d89cff857eb6?tpId=13&tqId=11199&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 题目描述：让小朋友们围成一个大圈。然后，随机指定一个数 m，让编号为 0 的小朋友开始报数。每次喊到 m-1 的那个小朋友要出列唱首歌，然后可以在礼品箱中任意的挑选礼物，并且不再回到圈中，从他的下一个小朋友开始，继续 0...m-1 报数 .... 这样下去 .... 直到剩下最后一个小朋友，可以不用表演。
 
