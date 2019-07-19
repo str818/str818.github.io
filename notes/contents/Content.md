@@ -22,7 +22,7 @@ key: notes-content
 
 - [剑指Offer - Java 题解（上）](https://str818.github.io/2019/07/08/sword-refers-to-offer-up.html)
 - [剑指Offer - Java 题解（中）](https://str818.github.io/2019/07/09/sword-refers-to-offer-middle.html)
-- [剑指Offer - Java 题解（下）](https://str818.github.io/2019/07/08/sword-refers-to-offer-down.html)
+- [剑指Offer - Java 题解（下）](https://str818.github.io/2019/07/10/sword-refers-to-offer-down.html)
 
 #### Leetcode
 
@@ -34,12 +34,17 @@ key: notes-content
 - [Leetcode - 动态规划](https://str818.github.io/2019/03/22/leetcode-dynamic-programming.html)
 - [Leetcode - 二分查找](https://str818.github.io/2019/04/27/leetcode-two-points-search.html)
 - [Leetcode - 数学](https://str818.github.io/2019/03/31/leetcode-math.html)
+- [Leetcode - 蓄水池采样](https://str818.github.io/2019/07/17/leetcode-reservoir-sampling.html)
 
 ## Java
 
 - [Java 函数式编程](https://str818.github.io/2019/03/18/java-functional-programming-for-the-masses.html)
 - [Java 正则表达式详解](https://str818.github.io/2018/12/19/java-detailed-expression-of-regular-expression.html)
 - [equals() 和 hashcode()](https://str818.github.io/2019/07/11/java-equals-and-hashcode.html)
+
+## 计算机网络
+
+- [计算机网络 - 传输层 TCP 与 UDP 详解](https://str818.github.io/2019/07/18/network-transport_layer.html)
 
 ## 数据库
 
