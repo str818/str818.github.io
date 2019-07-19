@@ -76,19 +76,8 @@ CSRF 攻击之所以能够成功，是因为黑客可以完全伪造用户的请
 
 ## 参考
 
-[彻底理解cookie，session，token](https://www.cnblogs.com/moyand/p/9047978.html)
-
-[彻底弄懂session，cookie，token](https://segmentfault.com/a/1190000017831088)
-
-[Cookie、Session、Token那点事儿](https://www.jianshu.com/p/bd1be47a16c1)
-
-[浅谈CSRF攻击方式](https://www.cnblogs.com/hyddd/archive/2009/04/09/1432744.html)
-
-[CSRF 攻击的应对之道](https://www.ibm.com/developerworks/cn/web/1102_niugang_csrf/index.html)
-
-
-
-
-
-
-
+- [彻底理解cookie，session，token](https://www.cnblogs.com/moyand/p/9047978.html)
+- [彻底弄懂session，cookie，token](https://segmentfault.com/a/1190000017831088)
+- [Cookie、Session、Token那点事儿](https://www.jianshu.com/p/bd1be47a16c1)
+- [浅谈CSRF攻击方式](https://www.cnblogs.com/hyddd/archive/2009/04/09/1432744.html)
+- [CSRF 攻击的应对之道](https://www.ibm.com/developerworks/cn/web/1102_niugang_csrf/index.html)
