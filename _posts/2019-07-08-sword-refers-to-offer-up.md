@@ -155,7 +155,7 @@ public void helper(ListNode node) {
 }
 ```
 
-解法二：栈。
+解法二：栈
 
 ```java
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
