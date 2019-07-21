@@ -143,13 +143,15 @@ public String replaceSpace(StringBuffer str) {
 解法一：递归
 
 ```java
+private ArrayList<Integer> res = new ArrayList<>();
 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
-    ArrayList<Integer> list = new ArrayList<>();
-    if (listNode != null) {
-        list.addAll(printListFromTailToHead(listNode.next));
-        list.add(listNode.val);
-    }
-    return list;
+    helper(listNode);
+    return res;
+}
+public void helper(ListNode node) {
+    if (node == null) return;
+    helper(node.next);
+    res.add(node.val);
 }
 ```
 
