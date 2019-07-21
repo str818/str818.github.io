@@ -65,6 +65,37 @@ public boolean judgeSquareSum(int c) {
 }
 ```
 
+## 反转字符串中的元音字母
+
+[Leetcode - 345 Reverse Vowels of a String (Easy)](https://leetcode.com/problems/reverse-vowels-of-a-string/description/)
+
+```
+Input: "leetcode"
+Output: "leotcede"
+```
+
+```java
+private final HashSet<Character> vowels = new HashSet<>(
+    Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
+
+public String reverseVowels(String s) {
+    int i = 0, j = s.length() - 1;
+    char[] res = new char[s.length()];
+    while (i <= j) {
+        char ci = s.charAt(i);
+        char cj = s.charAt(j);
+        if (!vowels.contains(ci)) {
+            res[i++] = ci;
+        } else if (!vowels.contains(cj)) {
+            res[j--] = cj;
+        } else {
+            res[i++] = cj;
+            res[j--] = ci;
+        }
+    }
+    return new String(res);
+}
+```
 
 ## 寻找重复数
 
