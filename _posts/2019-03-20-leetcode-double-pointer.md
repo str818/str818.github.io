@@ -11,6 +11,33 @@ show_subscribe: false
 ---
 
 
+## 有序数组的两数之和
+
+[Leetcode - 167 Two Sum II - Input array is sorted (Easy)](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/)
+
+```
+Input: numbers = [2,7,11,15], target = 9
+Output: [1,2]
+Explanation: The sum of 2 and 7 is 9. Therefore index1 = 1, index2 = 2.
+```
+
+```java
+public int[] twoSum(int[] nums, int target) {
+    int l = 0, r = nums.length - 1;
+    while (l < r) {
+        int num = nums[l] + nums[r];
+        if (num == target) {
+            return new int[]{l + 1, r + 1};
+        } else if (num > target) {
+            r--;
+        } else {
+            l++;
+        }
+    }
+    return null;
+}
+```
+
 
 ## 寻找重复数
 
