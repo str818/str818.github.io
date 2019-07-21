@@ -1,7 +1,7 @@
 ---
 layout: article
 title: Java - equals() 和 hashCode()
-tags: Spring
+tags: Java
 
 lang: zh-Hans
 key: Java_Equals_And_Hashcode
