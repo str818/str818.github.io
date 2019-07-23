@@ -97,6 +97,38 @@ public String reverseVowels(String s) {
 }
 ```
 
+## 验证回文字符串
+
+[Leetcode - 680 Valid Palindrome II (Easy)](https://leetcode.com/problems/valid-palindrome-ii/)
+
+题目描述：可以删除一个字符，判断是否能构成回文字符串。
+
+```
+Input: "abca"
+Output: True
+Explanation: You could delete the character 'c'.
+```
+
+```java
+public boolean validPalindrome(String s) {
+    for (int i = 0, j = s.length() - 1; i < s.length(); i++, j--) {
+        if (s.charAt(i) != s.charAt(j)) {
+            return isPalindrome(s, i + 1, j) || isPalindrome(s, i, j - 1);
+        }
+    }
+    return true;
+}
+
+private boolean isPalindrome(String s, int i, int j) {
+    while (i < j) {
+        if (s.charAt(i++) != s.charAt(j--)) {
+            return false;
+        }
+    }
+    return true;
+}
+```
+
 ## 寻找重复数
 
 [Leetcode - 287 Find the Duplicate Number (Medium)](https://leetcode.com/problems/find-the-duplicate-number/)
