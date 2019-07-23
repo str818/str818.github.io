@@ -129,6 +129,34 @@ private boolean isPalindrome(String s, int i, int j) {
 }
 ```
 
+## 合并两个有序数组
+
+[Leetcode - 88 Merge Sorted Array (Easy)](https://leetcode.com/problems/merge-sorted-array/)
+
+题目描述：把归并结果存到第一个数组上。
+
+```
+Input:
+nums1 = [1,2,3,0,0,0], m = 3
+nums2 = [2,5,6],       n = 3
+
+Output: [1,2,2,3,5,6]
+```
+
+```java
+public void merge(int[] nums1, int m, int[] nums2, int n) {
+    int len = m + n - 1;
+    int index1 = m - 1, index2 = n - 1;
+    while (len >= 0) {
+        if (index2 >= 0 && index1 >= 0) {
+            nums1[len--] = nums1[index1] > nums2[index2] ? nums1[index1--] : nums2[index2--];
+        } else {
+            nums1[len--] = index1 >= 0 ? nums1[index1--] : nums2[index2--];
+        }
+    }
+}
+```
+
 ## 寻找重复数
 
 [Leetcode - 287 Find the Duplicate Number (Medium)](https://leetcode.com/problems/find-the-duplicate-number/)
