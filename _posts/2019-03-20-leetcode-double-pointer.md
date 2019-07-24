@@ -208,6 +208,34 @@ public int findDuplicate(int[] nums) {
 }
 ```
 
-## 最长子序列
+## 通过删除字母匹配到自带里最长单词
 
-[Leetcode - ]
+[Leetcode - 524 Longest Word in Dictionary through Deleting (Medium)](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/)
+
+题目描述：删除 s 中的一些字符，使得它构成字符串列表 d 中的一个字符串，找出能构成的最长字符串。如果有多个相同长度的结果，返回字典序的最小字符串。
+
+```java
+public String findLongestWord(String s, List<String> d) {
+    String longestWord = "";
+    for (String target : d) {
+        int l1 = longestWord.length(), l2 = target.length();
+        if (l1 > l2 || (l1 == l2 && longestWord.compareTo(target) < 0)) {
+            continue;
+        }
+        if (isSubstr(s, target)) {
+            longestWord = target;
+        }
+    }
+    return longestWord;
+}
+private boolean isSubstr(String s, String target) {
+    int i = 0, j = 0;
+    while (i < s.length() && j < target.length()) {
+        if (s.charAt(i) == target.charAt(j)) {
+            j++;
+        }
+        i++;
+    }
+    return j == target.length();
+}
+```
