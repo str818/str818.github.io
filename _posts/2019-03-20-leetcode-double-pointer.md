@@ -208,3 +208,6 @@ public int findDuplicate(int[] nums) {
 }
 ```
 
+## 最长子序列
+
+[Leetcode - ]
