@@ -30,3 +30,26 @@ public int findContentChildren(int[] g, int[] s) {
     return gi;
 }
 ```
+
+## 无重叠区间
+
+[Leetcode - 435 Non-overlapping Intervals (Medium)](https://leetcode.com/problems/non-overlapping-intervals/)
+
+题目描述：给定一个区间的集合，找到需要移除区间的最小数量，使剩余区间互不重叠。
+
+解释思路：根据右边界进行排序，选择的区间结尾越小，留给后面的区间空间越大，依次判断当前左区间是否大于等于上一个的右区间。
+
+```java
+public int eraseOverlapIntervals(int[][] intervals) {
+    if (intervals.length == 0) return 0;
+    
+    Arrays.sort(intervals, (i1, i2) -> Integer.compare(i1.end, i2.end));
+    
+    int end = Integer.MIN_VALUE, count = 0;
+    for (int i = 0; i < intervals.length; i++) {
+        if (intervals[i][0] >= end) end = intervals[i][1];
+        else count++;
+    }
+    return count;
+}
+```
