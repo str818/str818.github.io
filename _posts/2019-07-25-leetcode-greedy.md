@@ -43,7 +43,7 @@ public int findContentChildren(int[] g, int[] s) {
 public int eraseOverlapIntervals(int[][] intervals) {
     if (intervals.length == 0) return 0;
     
-    Arrays.sort(intervals, (i1, i2) -> Integer.compare(i1.end, i2.end));
+    Arrays.sort(intervals, (i1, i2) -> Integer.compare(i1[1], i2[1]));
     
     int end = Integer.MIN_VALUE, count = 0;
     for (int i = 0; i < intervals.length; i++) {
