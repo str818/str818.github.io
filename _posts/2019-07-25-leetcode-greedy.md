@@ -107,3 +107,23 @@ public int[][] reconstructQueue(int[][] people) {
     return queue.toArray(new int[queue.size()][]);
 }
 ```
+
+## 买股票的最佳时机
+
+[Leetcode - 121 Best Time to Buy and Sell Stock (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
+
+题目描述：如果你最多只允许完成一笔交易，计算能获取的最大利润。
+
+```java
+public int maxProfit(int[] prices) {
+    int minPrice = Integer.MAX_VALUE;
+    int maxProfit = 0;
+    for (int i = 0; i < prices.length; i++) {
+        if (i != 0) {
+            maxProfit = Math.max(maxProfit, prices[i] - minPrice);
+        }
+        minPrice = Math.min(minPrice, prices[i]);
+    }
+    return maxProfit;
+}
+```
