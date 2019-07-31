@@ -127,3 +127,21 @@ public int maxProfit(int[] prices) {
     return maxProfit;
 }
 ```
+
+## 买股票的最佳时机 II
+
+[Leetcode - 122 Best Time to Buy and Sell Stock II (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)
+
+题目描述：能够进行多次交易，计算能获取的最大利润。
+
+```java
+public int maxProfit(int[] prices) {
+    int max = 0;
+    for (int i = 1; i < prices.length; i++) {
+        if (prices[i] > prices[i - 1]) {
+            max += prices[i] - prices[i - 1];
+        }
+    }
+    return max;
+}
+```
