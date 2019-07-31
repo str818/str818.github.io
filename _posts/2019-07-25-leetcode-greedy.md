@@ -145,3 +145,25 @@ public int maxProfit(int[] prices) {
     return max;
 }
 ```
+
+## 种花问题
+
+[Leetcode - 605 Can Place Flowers (Easy)](https://leetcode.com/problems/can-place-flowers/)
+
+题目描述：有一个花坛，不能连续种花，1 表示种了花， 0 表示没种花，给定 n 朵花，判断是否能种入花坛。
+
+```java
+public boolean canPlaceFlowers(int[] flowerbed, int n) {
+    int cnt = 0;
+    for (int i = 0; i < flowerbed.length && cnt < n; i++) {
+        if (flowerbed[i] == 1) continue;
+        int pre = i == 0 ? 0 : flowerbed[i - 1];
+        int next = i == flowerbed.length - 1 ? 0 : flowerbed[i + 1];
+        if (pre == 0 && next == 0) {
+            cnt++;
+            flowerbed[i] = 1;
+        }
+    }
+    return cnt >= n;
+}
+```
