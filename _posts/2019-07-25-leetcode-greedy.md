@@ -167,3 +167,22 @@ public boolean canPlaceFlowers(int[] flowerbed, int n) {
     return cnt >= n;
 }
 ```
+
+## 判断子序列
+
+[Leetcode - 392 Is Subsequence (Medium)](https://leetcode.com/problems/is-subsequence/)
+
+题目描述：给定字符串 s 和 t ，判断 s 是否为 t 的子序列。
+
+```java
+public boolean isSubsequence(String s, String t) {
+    int index = -1;
+    for (char c : s.toCharArray()) {
+        index = t.indexOf(c, index + 1);
+        if (index == -1)
+            return false;
+    }
+    return true;
+}
+```
+
