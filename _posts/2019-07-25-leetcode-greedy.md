@@ -211,3 +211,27 @@ public boolean checkPossibility(int[] nums) {
     return cnt <= 1;
 }
 ```
+
+## 最大子序和
+
+[Leetcode - 53 Maximum Subarray (Easy)](https://leetcode.com/problems/maximum-subarray)
+
+```
+Input: [-2,1,-3,4,-1,2,1,-5,4],
+Output: 6
+Explanation: [4,-1,2,1] has the largest sum = 6.
+```
+
+```java
+public int maxSubArray(int[] nums) {
+    if (nums == null || nums.length == 0)
+        return 0;
+    int preSum = nums[0];
+    int max = preSum;
+    for (int i = 1; i < nums.length; i++) {
+        preSum = preSum > 0 ? preSum + nums[i] : nums[i];
+        max = Math.max(max, preSum);
+    }
+    return max;
+}
+```
