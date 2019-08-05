@@ -235,3 +235,39 @@ public int maxSubArray(int[] nums) {
     return max;
 }
 ```
+
+## 划分字母区间
+
+[Leetcode - 763 Partition Labels (Medium)](https://leetcode.com/problems/partition-labels/)
+
+题目描述：划分字母区间，使得同一个字母只会出现在其中一个片段。
+
+```
+Input: S = "ababcbacadefegdehijhklij"
+Output: [9,7,8]
+Explanation:
+The partition is "ababcbaca", "defegde", "hijhklij".
+```
+
+```java
+public List<Integer> partitionLabels(String S) {
+    int[] lastIndexOfChar = new int[26];
+    for (int i = 0; i < S.length(); i++) {
+        lastIndexOfChar[S.charAt(i) - 'a'] = i;
+    }
+    List<Integer> res = new ArrayList<>();
+    int firstIndex = 0;
+    while (firstIndex < S.length()) {
+        int lastIndex = firstIndex;
+        for (int i = firstIndex; i < S.length() && i <= lastIndex; i++) {
+            int index = lastIndexOfChar[S.charAt(i) - 'a'];
+            if (index > lastIndex) {
+                lastIndex = index;
+            }
+        }
+        res.add(lastIndex - firstIndex + 1);
+        firstIndex = lastIndex + 1;
+    }
+    return res;
+}
+```
