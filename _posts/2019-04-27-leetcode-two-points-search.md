@@ -43,4 +43,29 @@ public int mySqrt(int x) {
 }
 ```
 
-## 
+## 寻找比目标字母大的最小字母
+
+[Leetcode - 744 Find Smallest Letter Greater Than Target (Easy)](https://leetcode.com/problems/find-smallest-letter-greater-than-target)
+
+```
+Input:
+letters = ["c", "f", "j"]
+target = "d"
+Output: "f"
+```
+
+```java
+public char nextGreatestLetter(char[] letters, char target) {
+    int n = letters.length;
+    int l = 0, h = n - 1;
+    while (l <= h) {
+        int m = l + (h - l) / 2;
+        if (letters[m] <= target) {
+            l = m + 1;
+        } else {
+            h = m - 1;
+        }
+    }
+    return l < n ? letters[l] : letters[0];
+}
+```
