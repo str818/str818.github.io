@@ -69,3 +69,32 @@ public char nextGreatestLetter(char[] letters, char target) {
     return l < n ? letters[l] : letters[0];
 }
 ```
+
+## 有序数组中的单一元素
+
+[Leetcode - 540 Single Element in a Sorted Array (Medium)](https://leetcode.com/problems/single-element-in-a-sorted-array/)
+
+题目描述：给定一个只包含整数的有序数组，每个元素都会出现两次，唯有一个数只会出现一次，找出这个数。
+
+```
+Input: [1,1,2,3,3,4,4,8,8]
+Output: 2
+```
+
+解题思路：假设这个数的序号是 index，那么所有小于 index 的奇数位与偶数位一定相等；而大于 index 的奇数位于偶数位一定不相等，根据这个规律进行二分查找。
+
+```java
+public int singleNonDuplicate(int[] nums) {
+    int l = 0, h = nums.length - 1;
+    while (l < h) {
+        int mid = l + (h - l) / 2;
+        if (mid % 2 == 1) mid--;
+        if (nums[mid] != nums[mid + 1]) {
+            h = mid;
+        } else {
+            l = mid + 2;
+        }
+    }
+    return nums[l];
+}
+```
