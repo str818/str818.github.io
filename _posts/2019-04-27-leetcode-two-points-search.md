@@ -98,3 +98,24 @@ public int singleNonDuplicate(int[] nums) {
     return nums[l];
 }
 ```
+
+## 第一个错误的版本
+
+[Leetcode - 278 First Bad Version (Easy)](https://leetcode.com/problems/first-bad-version/)
+
+题目描述：给定一个数组 [1, 2 ... n] 表示 n 个版本，如果一个版本出现错误，那本这个版本之后的版本都将出现错误，调用 `isBadVersion(n)` 方法能够判断某个版本是否出现错误，在调用该函数次数最少的情况下，找出第一个出现错误的版本。
+
+```java
+public int firstBadVersion(int n) {
+    int l = 1, h = n;
+    while (l < h) {
+        int mid = l + (h - l) / 2;
+        if (isBadVersion(mid)) {
+            h = mid;
+        } else {
+            l = mid + 1;
+        }
+    }
+    return l;
+}
+```
