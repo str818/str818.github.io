@@ -119,3 +119,29 @@ public int firstBadVersion(int n) {
     return l;
 }
 ```
+
+## 寻找旋转排序数组中的最小值
+
+[Leetcode - 153 Find Minimum in Rotated Sorted Array (Medium)](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)
+
+题目描述：给定升序数组在某个点上进行的旋转，找出最小元素。
+
+```
+Input: [4,5,6,7,0,1,2]
+Output: 0
+```
+
+```java
+public int findMin(int[] nums) {
+    int l = 0, h = nums.length - 1;
+    while (l < h) {
+        int mid = l + (h - l) / 2;
+        if (nums[h] >= nums[mid]) {
+            h = mid;
+        } else {
+            l = mid + 1;
+        }
+    }
+    return nums[l];
+}
+```
