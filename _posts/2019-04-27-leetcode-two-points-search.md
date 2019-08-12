@@ -145,3 +145,32 @@ public int findMin(int[] nums) {
     return nums[l];
 }
 ```
+
+## 在排序数组中查找元素的第一个和最后一个位置
+
+[Leetcode - 34 Find First and Last Position of Element in Sorted Array (Medium)](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+
+```java
+public int[] searchRange(int[] nums, int target) {
+    int first = binarySearch(nums, target);
+    int last = binarySearch(nums, target + 1) - 1;
+    if (first == nums.length || nums[first] != target) {
+        return new int[]{-1, -1};
+    } else {
+        return new int[]{first, Math.max(first, last)};
+    }
+}
+
+public int binarySearch(int[] nums, int target) {
+    int l = 0, h = nums.length; // 注意 h 初始值
+    while (l < h) {
+        int mid = l + (h - l) / 2;
+        if (nums[mid] >= target) {
+            h = mid;
+        } else {
+            l = mid + 1;
+        }
+    }
+    return l;
+}
+```
