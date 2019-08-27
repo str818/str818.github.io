@@ -41,15 +41,15 @@ Python 文件首行加入 `# -*- coding: utf-8 -*-` 是为了告诉 Python 解�
 列表。可变有序表，list 里面的元素数据类型可以不同。
 
 ```python
-classmates = ['Michael', 'Bob', 'Tracy'] 	# 定义 list
-len(classmates)														# 长度
-classmates[0]															# 访问第一个元素
-classmates[-1]														# 访问倒数第一个元素
-classmates.append('Adam')									# 追加元素到末尾
-classmates.insert(1, 'Jack')							# 插入元素到指定位置
-classmates.pop()													# 删除末尾元素
-classmates.pop(i)													# 删除指定位置的元素
-classmates[1] = 'Sarah'										# 替换元素
+classmates = ['Michael', 'Bob', 'Tracy'] 	    # 定义 list
+len(classmates)                                 # 长度
+classmates[0]                                   # 访问第一个元素
+classmates[-1]                                  # 访问倒数第一个元素
+classmates.append('Adam')                       # 追加元素到末尾
+classmates.insert(1, 'Jack')                    # 插入元素到指定位置
+classmates.pop()                                # 删除末尾元素
+classmates.pop(i)                               # 删除指定位置的元素
+classmates[1] = 'Sarah'                         # 替换元素
 ```
 
 ### 2. tuple
@@ -57,8 +57,8 @@ classmates[1] = 'Sarah'										# 替换元素
 元组。一旦初始化就不能修改。
 
 ```python
-classmates = ('Michael', 'Bob', 'Tracy')	# 定义 tuple
-t = (1,)																	# 当元组中只有一个数时，必须加逗号消除和小括号的歧义
+classmates = ('Michael', 'Bob', 'Tracy')        # 定义 tuple
+t = (1,)                                        # 当元组中只有一个数时，必须加逗号消除和小括号的歧义
 ```
 
 ### 3. dict
@@ -66,12 +66,12 @@ t = (1,)																	# 当元组中只有一个数时，必须加逗号消�
 字典。使用 键-值（key - value）存储，key 必须是不可变对象。
 
 ```python
-d = {'Michael': 95, 'Bob': 75}						# 定义字典
-d['Adam'] = 67														# 字典插入/赋值
-'Thomas' in d															# 判断字典中是否存在 key
-d.get('Thomas')														# 若 key 不存在，返回 None
-d.get('Thomas', -1)												# 若 key 不存在，返回指定 value
-d.pop('Thomas')														# 删除元素
+d = {'Michael': 95, 'Bob': 75}                  # 定义字典
+d['Adam'] = 67                                  # 字典插入/赋值
+'Thomas' in d                                   # 判断字典中是否存在 key
+d.get('Thomas')                                 # 若 key 不存在，返回 None
+d.get('Thomas', -1)                             # 若 key 不存在，返回指定 value
+d.pop('Thomas')                                 # 删除元素
 ```
 
 ### 4. Set
@@ -79,11 +79,11 @@ d.pop('Thomas')														# 删除元素
 无序、不重复，重复元素会被自动过滤。
 
 ```python
-s = set([1, 2, 3])												# 定义集合
-s.add(4)																	# 添加元素
-s.remove(4)																# 删除元素
-s1 & s2																		# 并集操作
-s1 | s2																		# 交集操作
+s = set([1, 2, 3])                              # 定义集合
+s.add(4)                                        # 添加元素
+s.remove(4)                                     # 删除元素
+s1 & s2                                         # 并集操作
+s1 | s2                                         # 交集操作
 ```
 
 ## 函数参数
@@ -160,14 +160,14 @@ list、tuple 和字符串都可以使用切片操作。
 
 ```python
 L = list(range(100))
-L[0:3]												# 取前 3 个元素
-L[:3]													# 若第一个元素为 0，可以省略
-L[-1]													# 取倒数第一个元素
-L[-2:-1]											# 倒数第二个 — 倒数第一个
-L[-10:]												# 取后 10 个数
-L[:10:2]											# 前 10 个数，每两个取一个
-L[::5]												# 所有数，每 5 个取一个
-L[:]													# 原样复制一个 list
+L[0:3]          # 取前 3 个元素
+L[:3]           # 若第一个元素为 0，可以省略
+L[-1]           # 取倒数第一个元素
+L[-2:-1]        # 倒数第二个 — 倒数第一个
+L[-10:]         # 取后 10 个数
+L[:10:2]        # 前 10 个数，每两个取一个
+L[::5]          # 所有数，每 5 个取一个
+L[:]            # 原样复制一个 list
 ```
 
 ### 2. 迭代
@@ -189,9 +189,9 @@ for i, value in enumerate(['A', 'B', 'C']):
 ### 3. 列表生成式
 
 ```python
-list(range(1, 11))													# [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-[x * x for x in range(1, 11)]								# [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
-[m + n for m in 'ABC' for n in 'XYZ']				# ['AX','AY','AZ','BX','BY','BZ','CX','CY','CZ']
+list(range(1, 11))                      # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+[x * x for x in range(1, 11)]           # [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+[m + n for m in 'ABC' for n in 'XYZ']   # ['AX','AY','AZ','BX','BY','BZ','CX','CY','CZ']
 ```
 
 ### 4. 生成器
@@ -199,9 +199,9 @@ list(range(1, 11))													# [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 列表容量是有限的，如果创建一个 100 万个元素的列表，只需要访问前面几个元素的话，后面元素占用的空间就浪费了，这时就可以使用生成器。
 
 ```python
-g = (x * x for x in range(10))							# 使用小括号
-next(g)																			# 获得下一个返回值，没有下一个元素时抛出 StopIteration
-for n in g:																	# 一般使用 for 进行迭代
+g = (x * x for x in range(10))  # 使用小括号
+next(g)                         # 获得下一个返回值，没有下一个元素时抛出 StopIteration
+for n in g:                     # 一般使用 for 进行迭代
   	print(n)
 ```
 
@@ -230,5 +230,4 @@ next(f)
 集合数据类型如 `list`、`dict`、`str` 等是 `Iterable` 但不是 `Iterator`，不过可以通过 `iter()` 函数获得一个 `Iterator` 对象。
 
 Python 的`for`循环本质上就是通过不断调用 `next()` 函数实现的，
-
 
