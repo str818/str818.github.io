@@ -41,7 +41,7 @@ Python 文件首行加入 `# -*- coding: utf-8 -*-` 是为了告诉 Python 解�
 列表。可变有序表，list 里面的元素数据类型可以不同。
 
 ```python
-classmates = ['Michael', 'Bob', 'Tracy'] 	    # 定义 list
+classmates = ['Michael', 'Bob', 'Tracy']        # 定义 list
 len(classmates)                                 # 长度
 classmates[0]                                   # 访问第一个元素
 classmates[-1]                                  # 访问倒数第一个元素
@@ -199,9 +199,9 @@ list(range(1, 11))                      # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 列表容量是有限的，如果创建一个 100 万个元素的列表，只需要访问前面几个元素的话，后面元素占用的空间就浪费了，这时就可以使用生成器。
 
 ```python
-g = (x * x for x in range(10))  # 使用小括号
-next(g)                         # 获得下一个返回值，没有下一个元素时抛出 StopIteration
-for n in g:                     # 一般使用 for 进行迭代
+g = (x * x for x in range(10))          # 使用小括号
+next(g)                                 # 获得下一个返回值，没有下一个元素时抛出 StopIteration
+for n in g:                             # 一般使用 for 进行迭代
   	print(n)
 ```
 
