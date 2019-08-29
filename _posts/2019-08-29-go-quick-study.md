@@ -208,3 +208,115 @@ a, b, c := 5, 7, "abc"
 
 ### 3. 基本类型和运算符
 
+Go 是强类型语言，不会进行隐式转换，任何不同类型之间的转换都必须显式说明。
+
+&& 和 || 是具有快捷性质的运算符，当运算符左边表达式的值已经能够决定整个表达式的值的时候（&& 左边的值为 false，|| 左边的值为 true），运算符右边的表达式将不会被执行。
+
+- 整数：
+int8（-128 -> 127）
+int16（-32768 -> 32767）
+int32（-2,147,483,648 -> 2,147,483,647）
+int64（-9,223,372,036,854,775,808 -> 9,223,372,036,854,775,807）
+
+- 无符号整数：
+uint8（0 -> 255）
+uint16（0 -> 65,535）
+uint32（0 -> 4,294,967,295）
+uint64（0 -> 18,446,744,073,709,551,615）
+
+- 浮点型（IEEE-754 标准）：
+float32（+- 1e-45 -> +- 3.4 * 1e38）
+float64（+- 5 * 1e-324 -> 107 * 1e308）
+
+float32 精确到小数点后 7 位，float64 精确到小数点后 15 位。
+
+带有 ++ 和 -- 的只能作为语句，而非表达式，因此 n = i++ 这种写法是无效的，其它像 f(i++) 或者 a[i]=b[i++] 这些可以用于 C、C++ 和 Java 中的写法在 Go 中也是不允许的。
+
+#### 格式化说明符
+
+在格式化字符串里，`%d` 用于格式化整数（`%x` 和 `%X` 用于格式化 16 进制表示的数字），`%g` 用于格式化浮点型（`%f` 输出浮点数，`%e` 输出科学计数表示法），`%0nd` 用于规定输出长度为 `n` 的整数，其中开头的数字 0 是必须的。
+
+`%n.mg` 用于表示数字 n 并精确到小数点后 m 位，除了使用 g 之外，还可以使用 e 或者 f，例如：使用格式化字符串 `%5.2e` 来输出 3.4 的结果为 3.40e+00。
+
+### 4. 字符串
+
+判断字符串 s 是否以 prefix 开头或结尾：
+```go
+strings.HasPrefix(s, prefix string) bool
+strings.HasSuffix(s, suffix string) bool
+```
+
+判断字符串 s 是否包含 substr：
+```go
+strings.Contains(s, substr string) bool
+```
+
+判断子字符串或字符在父字符串中出现的位置：
+```go
+strings.Index(s, str string) int        // str 在字符串 s 中的索引位置
+strings.LastIndex(s, str string) int    // str 在字符串 s 中最后出现的索引位置
+```
+
+将字符串 str 中前 n 个字符串 old 替换为字符串 new，并返回一个新的字符串，如果 `n = -1` 则替换所有字符串 old 为字符串 new：
+```go
+strings.Replace(str, old, new, n) string
+```
+
+计算字符串 str 在 s 中出现的非重叠次数：
+```go
+strings.Count(s, str string) int
+```
+
+重复 count 次字符串 s 并返回一个新的字符串：
+```go
+strings.Repeat(s, count int) string
+```
+
+修改大小写：
+```go
+strings.ToLower(s) string
+strings.ToUpper(s) string
+```
+
+修剪字符串：
+```go
+strings.TrimSpace(s)
+strings.Trim(s, "cut")
+strings.TrimLeft(s, "cut")
+strings.TrimRight(s, "cut")
+```
+
+分割字符串：
+```go
+strings.Fields(s)       // 利用 1 个或多个空白符号进行分割
+strings.Split(s, sep)   // 自定义分割符号进行分割
+```
+
+拼接 slice 到字符串，将元素类型为 string 的 slice 使用分割符号来拼接组成一个字符串。
+```go
+strings.Join(sl []string, sep string) string
+```
+
+类型转换：
+```go
+strconv.Itoa(i int) string                              // 返回数字 i 所表示的字符串类型的十进制数
+// 将 64 位浮点型的数字转换为字符串，其中 fmt 表示格式，prec 表示精度
+strconv.FormatFloat(f float64, fmt byte, prec int, bitSize int) string
+strconv.Atoi(s string) (i int, err error)                           // 将字符串转换为 int 型
+strconv.ParseFloat(s string, bitSize int) (f float64, err error)    // 将字符串转换为 float64 型
+```
+
+### 5. 指针
+
+一个指针变量可以指向任何一个值的内存地址，内存地址与值的大小无关，在 32 位机器上占用 4 个字节，在 64 位机器上占用 8 个字节。
+
+`&` 为取地址符，放到一个变量前就会返回相应变量的内存地址；在指针类型前面加上 * 号能够获取指针所指向的内容。
+
+使用一个指针引用一个值被称为间接引用。为了保证内存安全，移动指针指向字符串的字节数或数组的某个位置是不被允许的。
+
+```go
+var i1 = 5
+var intP *int
+intP = &i1
+```
+
