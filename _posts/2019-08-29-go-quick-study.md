@@ -320,3 +320,152 @@ var intP *int
 intP = &i1
 ```
 
+## 三、控制结构
+
+### 1. if-else 结构
+
+```go
+if condition1 {
+	// do something	
+} else if condition2 {
+	// do something else	
+} else {
+	// catch-all or default
+}
+```
+
+if 可以包含一个初始化语句：
+
+```go
+if val := 10; val > max {
+	// do something
+}
+```
+
+### 2. 多返回值
+
+```go
+anInt, _ = strconv.Atoi(origStr)
+value, err := pack1.Function1(param1)
+if err != nil {
+	fmt.Printf("An error occured in pack1.Function1 with parameter %v", param1)
+	return err
+}
+```
+
+下面这种方式是能够通过编译的，必须要有新的变量生成否则不会通过编译，重复的变量会由定义变为赋值。
+```go
+a, b := 1, 2
+k, b := 3, 4
+```
+
+### 3. switch 结构
+
+#### 第一种形式
+
+```go
+switch var1 {
+	case val1:
+		...
+	case val2:
+		...
+	default:
+		...
+}
+```
+
+变量 var1 可以是任何类型，但 val1 和 val2 必须是相同类型。
+
+匹配到某个分支并执行完成后，会退出整个 switch 代码块，不需要特别使用 break 语句来表示结束。
+
+执行完某个分支后还希望继续执行后续代码，可以使用 `fallthrough` 关键字实现。
+
+```go
+switch i {
+	case 0: fallthrough
+	case 1:
+		f()
+}
+```
+
+#### 第二种形式
+
+不提供任何被判断的值，当任一分支的测试结果为 true 时，该分支的代码就会被执行。
+
+```go
+switch {
+	case i < 0:
+		f1()
+	case i == 0:
+		f2()
+	case i > 0:
+		f3()
+}
+```
+
+#### 第三种形式
+
+包含初始化语句，可以优雅的进行条件判断。
+
+```go
+switch result := calculate() {
+	case result < 0:
+		...
+	case result > 0:
+		...
+	default:
+		// 0
+}
+```
+
+### 4. for 结构
+
+#### 基于计数器的迭代
+
+for 初始化语句; 条件语句; 修饰语句 {}
+
+```go
+for i := 0; i < 5; i++ {}
+for i, j := 0, N; i < j; i, j = i+1, j-1 {}
+```
+
+#### 基于条件判断的迭代
+
+for 条件语句 {}，类似于 while 循环。
+
+```go
+var i int = 5
+for i >= 0 {
+    i = i - 1
+    fmt.Printf("The variable i is now: %d\n", i)
+}
+```
+
+#### for-range 结构
+
+for ix, val := range coll { }，val 是集合中对应索引的值拷贝，一般只具有只读性质，对它所做的任何修改不会影响到集合中原有的值，如果 val 为指针，则会产生指针的拷贝，依旧可以修改集合中的原值。
+
+```go
+for pos, char := range str {
+    ...
+}
+```
+
+### 5. 标签与 goto
+
+for、switch 或 select 语句都可以配合标签（label）形式的标识符使用，建议全部使用大写字母。
+
+```go
+LABEL1:
+    for i := 0; i <= 5; i++ {
+        for j := 0; j <= 5; j++ {
+            if j == 4 {
+                continue LABEL1
+            }
+            fmt.Printf("i is: %d, and j is: %d\n", i, j)
+        }
+    }
+}
+```
+
+Go 也支持 goto 配合标签使用，但可读性很差，不建议使用。
