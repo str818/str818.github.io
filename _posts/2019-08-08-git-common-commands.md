@@ -47,6 +47,8 @@ Git 跟踪并管理的是修改而非文件。
 2. 将文件在工作区的修改全部撤销，一键还原，回到最近一次 `git commit` 或 `git add` 时的状态：`git checkout -- <file>`
 3. 将暂存区的修改回退到工作区：`git reset HEAD <file>`
 4. 当手头工作没有完成时，先把工作现场 `git stash` 一下，然后去修复 bug，修复后，再 `git stash pop`，回到工作现场
+5. 清空工作区修改过的文件：`git checkout .`
+6. 清空工作区新建的文件和文件夹：`git clean -d`
 
 ## 分支
 
