@@ -520,3 +520,88 @@ func myFunc(a, b, arg ...int) {}
 关键字 defer 允许我们推迟到函数返回之前（或任意位置执行 return 语句之后）一刻才执行某个语句或函数（为什么要在返回之后才执行这些语句？因为 return 语句同样可以包含一些操作，而不是单纯地返回某个值）。
 
 关键字 defer 的用法类似于面向对象编程语言 Java 和 C# 的 finally 语句块，它一般用于释放某些已分配的资源。
+
+#### 将函数作为参数
+
+```go
+func main() {
+	callback(1, Add)
+}
+
+func Add(a, b int) {
+	fmt.Printf("The sum of %d and %d is: %d\n", a, b, a+b)
+}
+
+func callback(y int, f func(int, int)) {
+	f(y, 2) // this becomes Add(1, 2)
+}
+```
+
+### 2. 闭包
+
+闭包同样称为匿名函数，不需要给函数起名字。
+
+闭包函数能够将地址保存到变量中：`fplus := func(x, y int) int { return x + y }`，然后通过变量名对函数进行调用：`fplus(3,4)`。
+
+闭包函数保存并积累其中的变量的值，不管外部函数退出与否，他都能够继续操作外部函数中的局部变量。
+
+```go
+func MakeAddSuffix(suffix string) func(string) string {
+	return func(name string) string {
+		if !strings.HasSuffix(name, suffix) {
+			return name + suffix
+		}
+		return name
+	}
+}
+addBmp := MakeAddSuffix(".bmp")
+addJpeg := MakeAddSuffix(".jpeg")
+
+addBmp("file") // returns: file.bmp
+addJpeg("file") // returns: file.jpeg
+```
+
+## 五、数组与切片
+
+### 1. 声明与初始化
+
+#### 概念
+
+声明格式：
+
+```go
+var arr1 [5]int						// arr1 的类型为 [5]int
+var arr2 = new([5]int)		// arr2 的类型为 *[5]int
+```
+
+数组赋值，进行了一次数组内存拷贝操作，修改 arr2 不会对 arr1 生效。
+
+```go
+arr2 := *arr1
+```
+
+同样，将数组作为参数传入函数中，`func1(arr2)` 会产生一次数组拷贝，方法不会修改原数组，如果向修改原数组，需要以引用的方式传递进来 `func1(&arr2)`。
+
+遍历数组：
+
+```go
+// 普通 for 循环
+for i:=0; i < len(arr1); i++｛
+	arr1[i] = ...
+}
+
+// for-range 生成方式
+for i,_:= range arr1 {
+...
+}
+```
+
+#### 数组常量
+
+如果数组值已经提前知道了，可以通过数组常量的方式来初始化数组。
+
+```go
+var arrAge = [10]int{18, 20, 15, 22, 16}							// 前 5 个元素被赋值，后 5 个元素默认为 0
+var arrLazy = [...]int{5, 6, 7, 8, 22}								// ...可以忽略
+var arrKeyValue = [5]string{3: "Chris", 4: "Ron"}			// key-value 语法，索引 3 和 4 位置被赋值
+```
