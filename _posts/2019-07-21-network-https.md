@@ -22,7 +22,7 @@ HTTPS 并不是新协议，而是 HTTP 先和 SSL（Secure Sockets Layer 安全�
 
 通过使用 SSL，HTTPS 具有了加密（防窃听）、认证（防伪装）和完整性保护（防篡改）。
 
-<div align="center">  <img src="../img/network_https.jpg" width="70%"/> </div><br>
+<div align="center">  <img src="/img/network_https.jpg" width="70%"/> </div><br>
 
 ### HTTP 和 HTTPS 的区别
 
