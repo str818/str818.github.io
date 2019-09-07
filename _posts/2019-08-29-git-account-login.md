@@ -19,11 +19,11 @@ ssh 方式链接到 Github，需要唯一的公钥，如果想同一台电脑绑
 
 ## 二、操作方法
 
-1. 查看已有密钥
+- 查看已有密钥
 
 Mac 下输入命令 `ls ~/.ssh/`，看到 id_rsa 与 id_rsa_pub 则说明已经有一对密钥。
 
-2. 生成新的公钥
+- 生成新的公钥
 
 ```
 ssh-keygen -t rsa -f ~/.ssh/id_rsa_home -C "yourmail@xxx.com"
@@ -31,7 +31,7 @@ ssh-keygen -t rsa -f ~/.ssh/id_rsa_home -C "yourmail@xxx.com"
 
 并命名为 id_rsa_home (保证与之前密钥文件名称不同即可)。
 
-3. 编辑 config
+- 编辑 config
 
 在 .ssh 文件夹下新建 config 文件并编辑，另不同 Host 实际映射到同一 HostName，但密钥文件不同。Host 前缀可自定义，例子中 ieit。
 
@@ -48,11 +48,11 @@ User git
 IdentityFile ~/.ssh/id_rsa_home
 ```
 
-4. 拷贝公钥
+- 拷贝公钥
 
 将生成的 id_rsa.pub，id_rsa_home.pub 内容 copy 到对应的仓库。
 
-5. 设置 push 账号
+- 设置 push 账号
 
 将常用的账号设置为全局的，将不常用的账号设置到指定仓库下，设置之前要初始化一下 git。
 
