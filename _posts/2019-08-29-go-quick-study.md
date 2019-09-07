@@ -25,9 +25,9 @@ export GOPATH=$HOME/Applications/Go
 
 在完成这些设置后，你需要在终端输入指令 `source .bashrc` 以使这些环境变量生效。然后重启终端，输入 `go env` 和 `env` 来检查环境变量是否设置正确。
 
-## 二、基本结构和基本数据类型
+## 二、基本结构
 
-### 1.基本结构和要素
+### 1. 基本结构和要素
 
 ```go
 package main
