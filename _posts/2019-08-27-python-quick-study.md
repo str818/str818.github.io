@@ -10,6 +10,10 @@ toc: true
 show_subscribe: false
 ---
 
+## 数据类型
+
+Python 3 只有 int 和 float 类型，Python 2 除此之外还有 long 类型，使用 `type()` 函数能够查询对象所指向的对象类型，`isinstance(a, int)` 函数能够判断变量所指向的对象类型是否为某一特定类型。
+
 ## 字符串
 
 ### 1. 字符编码
@@ -33,6 +37,10 @@ Python 文件首行加入 `# -*- coding: utf-8 -*-` 是为了告诉 Python 解�
 ```python
 'Hello, {0}, 成绩提升了 {1:.1f}%'.format('小明', 17.125)
 ```
+
+### 3. 引号
+
+单引号和双引号都能够表示字符串，三引号包含的字符串可由多行组成。
 
 ## 容器
 
