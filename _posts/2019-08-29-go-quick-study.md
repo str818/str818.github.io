@@ -458,14 +458,13 @@ for、switch 或 select 语句都可以配合标签（label）形式的标识符
 
 ```go
 LABEL1:
-    for i := 0; i <= 5; i++ {
-        for j := 0; j <= 5; j++ {
-            if j == 4 {
-                continue LABEL1
-            }
-            fmt.Printf("i is: %d, and j is: %d\n", i, j)
-        }
-    }
+for i := 0; i <= 5; i++ {
+	for j := 0; j <= 5; j++ {
+		f j == 4 {
+			continue LABEL1
+		}
+			fmt.Printf("i is: %d, and j is: %d\n", i, j)
+		}
 }
 ```
 
@@ -490,10 +489,10 @@ func getX2AndX3(input int) (int, int) {
     return 2 * input, 3 * input
 }
 func getX2AndX3_2(input int) (x2 int, x3 int) {
-    x2 = 2 * input
-    x3 = 3 * input
-    // return x2, x3
-    return
+		x2 = 2 * input
+		x3 = 3 * input
+		// return x2, x3
+		return
 }
 ```
 
@@ -504,7 +503,7 @@ func getX2AndX3_2(input int) (x2 int, x3 int) {
 ```go
 i1, _, f1 = ThreeValues()
 func ThreeValues() (int, int, float32) {
-    return 5, 6, 7.5
+	return 5, 6, 7.5
 }
 ```
 
@@ -602,7 +601,7 @@ for i,_:= range arr1 {
 如果数组值已经提前知道了，可以通过数组常量的方式来初始化数组。
 
 ```go
-var arrAge = [10]int{18, 20, 15, 22, 16}							// 前 5 个元素被赋值，后 5 个元素默认为 0
-var arrLazy = [...]int{5, 6, 7, 8, 22}								// ...可以忽略
-var arrKeyValue = [5]string{3: "Chris", 4: "Ron"}			// key-value 语法，索引 3 和 4 位置被赋值
+var arrAge = [10]int{18, 20, 15, 22, 16}					// 前 5 个元素被赋值，后 5 个元素默认为 0
+var arrLazy = [...]int{5, 6, 7, 8, 22}						// ...可以忽略
+var arrKeyValue = [5]string{3: "Chris", 4: "Ron"}	// key-value 语法，索引 3 和 4 位置被赋值
 ```
