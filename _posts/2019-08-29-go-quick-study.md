@@ -551,10 +551,10 @@ func callback(y int, f func(int, int)) {
 func MakeAddSuffix(suffix string) func(string) string {
     return func(name string) string {
         if !strings.HasSuffix(name, suffix) {
-        return name + suffix
+          return name + suffix
+        }
+        eturn name
     }
-    return name
-	}
 }
 addBmp := MakeAddSuffix(".bmp")
 addJpeg := MakeAddSuffix(".jpeg")
@@ -572,8 +572,8 @@ addJpeg("file") // returns: file.jpeg
 声明格式：
 
 ```go
-var arr1 [5]int						// arr1 的类型为 [5]int
-var arr2 = new([5]int)		// arr2 的类型为 *[5]int
+var arr1 [5]int           // arr1 的类型为 [5]int
+var arr2 = new([5]int)    // arr2 的类型为 *[5]int
 ```
 
 数组赋值，进行了一次数组内存拷贝操作，修改 arr2 不会对 arr1 生效。
