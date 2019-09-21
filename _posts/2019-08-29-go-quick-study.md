@@ -10,19 +10,6 @@ toc: true
 show_subscribe: false
 ---
 
-## 一、环境变量
-
-`$GOROOT` 表示 Go 的安装位置，一般都都是 `$HOME/go`。
-
-`$GOPATH` 可以包含多个 Go 语言源码文件、包文件和可执行文件的路径，这些路径下必须分别包含三个规定的目录：`src`、`pkg`、`bin`，这三个目录分别用于存放源码文件、包文件和可执行文件。
-
-配置环境变量：
-
-```
-export GOROOT=$HOME/go
-export PATH=$PATH:$GOROOT/bin
-export GOPATH=$HOME/Applications/Go
-```
 
 在完成这些设置后，你需要在终端输入指令 `source .bashrc` 以使这些环境变量生效。然后重启终端，输入 `go env` 和 `env` 来检查环境变量是否设置正确。
 
@@ -489,10 +476,10 @@ func getX2AndX3(input int) (int, int) {
     return 2 * input, 3 * input
 }
 func getX2AndX3_2(input int) (x2 int, x3 int) {
-		x2 = 2 * input
-		x3 = 3 * input
-		// return x2, x3
-		return
+    x2 = 2 * input
+    x3 = 3 * input
+    // return x2, x3
+    return
 }
 ```
 
@@ -503,7 +490,7 @@ func getX2AndX3_2(input int) (x2 int, x3 int) {
 ```go
 i1, _, f1 = ThreeValues()
 func ThreeValues() (int, int, float32) {
-	  return 5, 6, 7.5
+    return 5, 6, 7.5
 }
 ```
 
@@ -547,11 +534,11 @@ func callback(y int, f func(int, int)) {
 
 ```go
 func MakeAddSuffix(suffix string) func(string) string {
-	return func(name string) string {
-		if !strings.HasSuffix(name, suffix) {
-			return name + suffix
-		}
-		return name
+    return func(name string) string {
+        if !strings.HasSuffix(name, suffix) {
+        return name + suffix
+    }
+    return name
 	}
 }
 addBmp := MakeAddSuffix(".bmp")
