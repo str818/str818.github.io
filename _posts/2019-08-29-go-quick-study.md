@@ -12,9 +12,9 @@ show_subscribe: false
 
 ## 一、环境变量
 
-**\$GOROOT** 表示 Go 的安装位置，一般都都是 `$HOME/go`。
+`$GOROOT` 表示 Go 的安装位置，一般都都是 `$HOME/go`。
 
-**\$GOPATH** 可以包含多个 Go 语言源码文件、包文件和可执行文件的路径，这些路径下必须分别包含三个规定的目录：`src`、`pkg`、`bin`，这三个目录分别用于存放源码文件、包文件和可执行文件。
+`$GOPATH` 可以包含多个 Go 语言源码文件、包文件和可执行文件的路径，这些路径下必须分别包含三个规定的目录：`src`、`pkg`、`bin`，这三个目录分别用于存放源码文件、包文件和可执行文件。
 
 配置环境变量：
 
@@ -36,7 +36,7 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("hello, world")
+    fmt.Println("hello, world")
 }
 ```
 
@@ -51,8 +51,8 @@ func main() {
 导入包：
 ```go
 import (
-   "fmt"
-   "os"
+    "fmt"
+    "os"
 )
 ```
 
@@ -100,7 +100,7 @@ b := int(a)
 package main
 
 import (
-   "fmt"
+    "fmt"
 )
 
 const c = "C"
@@ -113,18 +113,18 @@ func init() { // initialization of package
 }
 
 func main() {
-   var a int
-   Func1()
-   // ...
-   fmt.Println(a)
+    var a int
+    Func1()
+    // ...
+    fmt.Println(a)
 }
 
 func (t T) Method1() {
-   //...
+    //...
 }
 
 func Func1() { // exported function Func1
-   //...
+    //...
 }
 ```
 
@@ -143,9 +143,9 @@ func Func1() { // exported function Func1
 
 ```go
 const (
-	Unknown = 0
-	Female = 1
-	Male = 2
+    Unknown = 0
+    Female = 1
+    Male = 2
 )
 ```
 
@@ -165,9 +165,9 @@ var str string
 
 ```go
 var (
-	a int
-	b bool
-	str string
+    a int
+    b bool
+    str string
 )
 ```
 
@@ -211,7 +211,7 @@ a, b, c := 5, 7, "abc"
 
 Go 是强类型语言，不会进行隐式转换，任何不同类型之间的转换都必须显式说明。
 
-&& 和 || 是具有快捷性质的运算符，当运算符左边表达式的值已经能够决定整个表达式的值的时候（&& 左边的值为 false，|| 左边的值为 true），运算符右边的表达式将不会被执行。
+`&&` 和 `||` 是具有快捷性质的运算符，当运算符左边表达式的值已经能够决定整个表达式的值的时候（`&&` 左边的值为 false，`||` 左边的值为 true），运算符右边的表达式将不会被执行。
 
 - 整数：
 int8（-128 -> 127）
@@ -327,11 +327,11 @@ intP = &i1
 
 ```go
 if condition1 {
-	// do something	
+    // do something	
 } else if condition2 {
-	// do something else	
+    // do something else	
 } else {
-	// catch-all or default
+    // catch-all or default
 }
 ```
 
@@ -339,7 +339,7 @@ if 可以包含一个初始化语句：
 
 ```go
 if val := 10; val > max {
-	// do something
+    // do something
 }
 ```
 
@@ -349,8 +349,8 @@ if val := 10; val > max {
 anInt, _ = strconv.Atoi(origStr)
 value, err := pack1.Function1(param1)
 if err != nil {
-	fmt.Printf("An error occured in pack1.Function1 with parameter %v", param1)
-	return err
+    fmt.Printf("An error occured in pack1.Function1 with parameter %v", param1)
+    return err
 }
 ```
 
@@ -366,12 +366,12 @@ k, b := 3, 4
 
 ```go
 switch var1 {
-	case val1:
-		...
-	case val2:
-		...
-	default:
-		...
+    case val1:
+      ...
+    case val2:
+      ...
+    default:
+      ...
 }
 ```
 
@@ -383,9 +383,9 @@ switch var1 {
 
 ```go
 switch i {
-	case 0: fallthrough
-	case 1:
-		f()
+    case 0: fallthrough
+    case 1:
+      f()
 }
 ```
 
@@ -395,12 +395,12 @@ switch i {
 
 ```go
 switch {
-	case i < 0:
-		f1()
-	case i == 0:
-		f2()
-	case i > 0:
-		f3()
+    case i < 0:
+      f1()
+    case i == 0:
+      f2()
+    case i > 0:
+      f3()
 }
 ```
 
@@ -410,12 +410,12 @@ switch {
 
 ```go
 switch result := calculate() {
-	case result < 0:
-		...
-	case result > 0:
-		...
-	default:
-		// 0
+    case result < 0:
+      ...
+    case result > 0:
+      ...
+    default:
+      // 0
 }
 ```
 
@@ -459,12 +459,12 @@ for、switch 或 select 语句都可以配合标签（label）形式的标识符
 ```go
 LABEL1:
 for i := 0; i <= 5; i++ {
-	for j := 0; j <= 5; j++ {
-		f j == 4 {
-			continue LABEL1
-		}
-			fmt.Printf("i is: %d, and j is: %d\n", i, j)
-		}
+    for j := 0; j <= 5; j++ {
+        f j == 4 {
+            continue LABEL1
+        }
+            fmt.Printf("i is: %d, and j is: %d\n", i, j)
+        }
 }
 ```
 
@@ -503,7 +503,7 @@ func getX2AndX3_2(input int) (x2 int, x3 int) {
 ```go
 i1, _, f1 = ThreeValues()
 func ThreeValues() (int, int, float32) {
-	return 5, 6, 7.5
+	  return 5, 6, 7.5
 }
 ```
 
@@ -525,15 +525,15 @@ func myFunc(a, b, arg ...int) {}
 
 ```go
 func main() {
-	callback(1, Add)
+    callback(1, Add)
 }
 
 func Add(a, b int) {
-	fmt.Printf("The sum of %d and %d is: %d\n", a, b, a+b)
+    fmt.Printf("The sum of %d and %d is: %d\n", a, b, a+b)
 }
 
 func callback(y int, f func(int, int)) {
-	f(y, 2) // this becomes Add(1, 2)
+    f(y, 2) // this becomes Add(1, 2)
 }
 ```
 
@@ -587,7 +587,7 @@ arr2 := *arr1
 ```go
 // 普通 for 循环
 for i:=0; i < len(arr1); i++｛
-	arr1[i] = ...
+  arr1[i] = ...
 }
 
 // for-range 生成方式
@@ -601,7 +601,7 @@ for i,_:= range arr1 {
 如果数组值已经提前知道了，可以通过数组常量的方式来初始化数组。
 
 ```go
-var arrAge = [10]int{18, 20, 15, 22, 16}					// 前 5 个元素被赋值，后 5 个元素默认为 0
-var arrLazy = [...]int{5, 6, 7, 8, 22}						// ...可以忽略
-var arrKeyValue = [5]string{3: "Chris", 4: "Ron"}	// key-value 语法，索引 3 和 4 位置被赋值
+var arrAge = [10]int{18, 20, 15, 22, 16}          // 前 5 个元素被赋值，后 5 个元素默认为 0
+var arrLazy = [...]int{5, 6, 7, 8, 22}            // ...可以忽略
+var arrKeyValue = [5]string{3: "Chris", 4: "Ron"} // key-value 语法，索引 3 和 4 位置被赋值
 ```
