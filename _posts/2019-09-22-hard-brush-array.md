@@ -1,7 +1,7 @@
 ---
 layout: article
 title: 1 - 两数之和 (Tow Sum)
-tags: 刷穿 - 数组
+tags: 刷穿-数组
 
 lang: zh-Hans
 key: Hard_Brush_Array_1
