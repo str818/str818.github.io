@@ -10,7 +10,7 @@ toc: true
 show_subscribe: false
 ---
 
-## 闭包
+## 一、闭包
 
 简单理解，闭包就是一个定义在函数内部的函数，闭包使得变量即使脱离了该函数的作用域也依然能被访问到。
 
@@ -51,7 +51,7 @@ adder5(10)
 adder5(6)
 ```
 
-## Lambda 函数
+## 二、Lambda 函数
 
 Python 中定义函数有两种方法，一种是用常规方式 def 定义，函数要指定名字，第二种是用 lambda 定义，不需要指定名字，称为 Lambda 函数。
 
@@ -68,7 +68,99 @@ def add2(x, y):
     return x+y
 ```
 
+## 三、高阶函数
+
+### 1. map()
+
+```python
+map(func, iterable)
+```
+
+`map()` 需要两个必填参数，第一个参数是一个函数名，第二个参数是一个可迭代对象，如列表、元组等。
+
+`map()` 实现的功能很简单，就是将第二个参数（iterable）中的每一个元素分别传给第一个参数（func），依次执行函数得到结果，并将结果组成一个新的 list 对象后进行返回。返回结果永远都是一个 list。
+
+```python
+double_func = lambda s : s * 2
+map(double_func, [1,2,3,4,5]) # [2, 4, 6, 8, 10]
+```
+
+### 2. reduce()
+
+```python
+reduce(func, iterable[, initializer])
+```
+
+`reduce()` 函数的功能是对可迭代对象（iterable）中的元素从左到右进行累计运算，最终得到一个数值。第三个参数 initializer 是初始数值，可以空置，空置为 None 时就从可迭代对象（iterable）的第二个元素开始，并将第一个元素作为之前的结果。
+
+```python
+plus = lambda x, y : x + y
+reduce(plus, [1,2,3,4,5]) # 15
+reduce(plus, [1,2,3,4,5], 10) # 25
+```
+
+### 3. filter()
+
+```python
+filter(func, iterable)
+```
+
+`filter()` 函数的调用形式与 `map()` 比较相近，都是将第二个参数（iterable）中的每一个元素分别传给第一个参数（func），依次执行函数得到结果；差异在于，`filter()` 会判断每次执行结果的 bool 值，并只将 bool 值为 true 的筛选出来，组成一个新的列表并进行返回。
+
+## 四、装饰器
+
+装饰器本质上是一个 Python 函数或类，它可以让其它函数或类在不需要做任何代码修改的前提下增加额外功能，装饰器的返回值也是一个函数/类对象。它经常用于有切面需求的场景，比如：插入日志、性能测试、事物处理、缓存、权限校验等场景。概括的讲，装饰器的作用就是为已经存在的对象添加额外的功能。
+
+### 1. 简单装饰器
+
+```python
+def use_logging(func):
+
+    def wrapper():
+        logging.warn("%s is running" % func.__name__)
+        return func()   # 把 foo 当做参数传递进来时，执行func()就相当于执行foo()
+    return wrapper
+
+def foo():
+    print('i am foo')
+
+foo = use_logging(foo)  # 因为装饰器 use_logging(foo) 返回的时函数对象 wrapper，这条语句相当于  foo = wrapper
+foo()                   # 执行foo()就相当于执行 wrapper()
+```
+
+### 2. 语法糖
+
+能够省略最后一步再次赋值的操作。
+
+```python
+def use_logging(func):
+
+    def wrapper():
+        logging.warn("%s is running" % func.__name__)
+        return func()
+    return wrapper
+
+@use_logging
+def foo():
+    print("i am foo")
+
+foo()
+```
+
+### 3. *args 、 **kwargs
+
+如果业务逻辑函数需要参数时，可以指定参数。
+
+```python
+def wrapper(*args, **kwargs):
+        # args是一个数组，kwargs一个字典
+        logging.warn("%s is running" % func.__name__)
+        return func(*args, **kwargs)
+    return wrapper
+```
+
 ## 参考
 
 - [一步一步教你认识Python闭包](https://foofish.net/python-closure.html)
 - [什么时候使用Lambda函数？](https://foofish.net/lambda.html)
+- [Python 的函数式编程 -- 从入门到放弃](https://debugtalk.com/post/python-functional-programming-getting-started/)
