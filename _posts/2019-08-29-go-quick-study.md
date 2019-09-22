@@ -12,8 +12,6 @@ show_subscribe: false
 
 ## 一、环境变量
 
-`$GOROOT` 表示 Go 的安装位置，一般都是 `$HOME/go`。
-
 `$GOPATH` 可以包含多个 Go 语言源码文件、包文件和可执行文件的路径。
 
 这些路径下必须分别包含三个规定的目录：
@@ -21,6 +19,8 @@ show_subscribe: false
 - `src`：存放源码文件
 - `pkg`：包文件
 - `bin`：可执行文件。
+
+`$GOROOT` 表示 Go 的安装位置，一般都是 `$HOME/go`。
 
 配置环境变量：
 
