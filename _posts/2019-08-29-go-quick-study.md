@@ -16,10 +16,6 @@ show_subscribe: false
 
 这些路径下必须分别包含三个规定的目录：
 
-- `src`：存放源码文件
-- `pkg`：包文件
-- `bin`：可执行文件。
-
 `$GOROOT` 表示 Go 的安装位置，一般都是 `$HOME/go`。
 
 配置环境变量：
