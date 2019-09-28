@@ -2,7 +2,7 @@
 layout: article
 title: Go - 变量&常量
 tags: Go
-
+ 
 lang: zh-Hans
 key: Go_Variable_And_Constant
 pageview: true
