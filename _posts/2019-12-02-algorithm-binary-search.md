@@ -16,6 +16,10 @@ show_subscribe: false
 
 ## 标准二分查找
 
+### 模板
+
+[Leetcode 704 - Sqrt(x) (Easy)](https://leetcode.com/problems/sqrtx/)
+
 给定一个 `n` 个元素升序整型数组 `nums` 和一个目标值 `target`，写一个函数搜索 `nums` 中的 `target`，如果目标值存在则返回下标，否则返回 `-1`。
 
 示例 1：
@@ -50,6 +54,89 @@ public int search(int[] nums, int target) {
             right = mid - 1;
         } else {
             left = mid + 1;
+        }
+    }
+    return -1;
+}
+```
+
+### x 的平方根
+
+[Leetcode 69 - Sqrt(x) (Easy)](https://leetcode.com/problems/sqrtx/)
+
+实现 `int sqrt(int x)` 函数。
+
+计算并返回 x 的平方根，其中 x 是非负整数。
+
+由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去。
+
+示例 1:
+
+```
+输入: 4
+输出: 2
+```
+
+示例 2:
+
+```
+输入: 8
+输出: 2
+说明: 8 的平方根是 2.82842..., 由于返回类型是整数，小数部分将被舍去。
+```
+
+```java
+public int mySqrt(int x) {
+    // 考虑到 1， 把又边界设为 x / 2 + 1
+    long left = 0, right = x / 2 + 1;
+    while (left < right) {
+        // 一定取右中位数，否则会进入死循环
+        long mid = left + (right - left + 1) / 2;
+        long square = mid * mid;
+        if (square > x) {
+            right = mid - 1;
+        } else {
+            left = mid;
+        }
+    }
+    return (int)left;
+}
+```
+
+### 猜数字大小
+
+[Leetcode 374 - Guess Number Higher or Lower (Easy)](https://leetcode.com/problems/guess-number-higher-or-lower/)
+
+我们正在玩一个猜数字游戏。 游戏规则如下：
+我从 1 到 n 选择一个数字。 你需要猜我选择了哪个数字。
+每次你猜错了，我会告诉你这个数字是大了还是小了。
+你调用一个预先定义好的接口 guess(int num)，它会返回 3 个可能的结果（-1，1 或 0）：
+
+```
+-1 : 我的数字比较小
+ 1 : 我的数字比较大
+ 0 : 恭喜！你猜对了！
+```
+
+示例 :
+
+```
+输入: n = 10, pick = 6
+输出: 6
+```
+
+```java
+public int guessNumber(int n) {
+    int i = 1, j = n;
+    while (i <= j) {
+        int mid = i + (j - i) / 2;
+        int ans = guess(mid);
+        if (ans == 0) {
+            return mid;
+        } else if (ans == -1) {
+            j = mid - 1;
+        } else {
+            i = mid + 1;
         }
     }
     return -1;
