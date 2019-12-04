@@ -234,6 +234,8 @@ int binarySearch(int[] nums, int target) {
 
 ### 第一个错误版本
 
+[Leetcode 278 - First Bad Version (Easy)](https://leetcode.com/problems/first-bad-version/)
+
 你是产品经理，目前正在带领一个团队开发新的产品。不幸的是，你的产品的最新版本没有通过质量检测。由于每个版本都是基于之前的版本开发的，所以错误的版本之后的所有版本都是错的。
 
 假设你有 `n` 个版本 `[1, 2, ..., n]`，你想找出导致之后所有版本出错的第一个错误的版本。
@@ -264,5 +266,50 @@ public int firstBadVersion(int n) {
         }
     }
     return i;
+}
+```
+
+### 寻找峰值
+
+[Leetcode 162 - Find Peak Element (Medium)](https://leetcode.com/problems/find-peak-element/)
+
+峰值元素是指其值大于左右相邻值的元素。
+
+给定一个输入数组 `nums`，其中 `nums[i] ≠ nums[i+1]`，找到峰值元素并返回其索引。
+
+数组可能包含多个峰值，在这种情况下，返回任何一个峰值所在位置即可。
+
+你可以假设 `nums[-1] = nums[n] = -∞`。
+
+示例 1:
+
+```
+输入: nums = [1,2,3,1]
+输出: 2
+解释: 3 是峰值元素，你的函数应该返回其索引 2。
+示例 2:
+```
+
+```
+输入: nums = [1,2,1,3,5,6,4]
+输出: 1 或 5 
+解释: 你的函数可以返回索引 1，其峰值元素为 2；
+     或者返回索引 5， 其峰值元素为 6。
+```
+
+思路： 由 `nums[-1] = nums[n] = -∞` 可知，只要数组中存在一个元素比相邻元素大，那么沿着它一定可以找到一个峰值。利用二分法，根据左右指针计算中间位置 m，并比较 m 与 m+1 的值，如果 m 较大，则左侧存在峰值，r = m，如果 m + 1 较大，则右侧存在峰值，l = m + 1
+
+```java
+public int findPeakElement(int[] nums) {
+    int l = 0, h = nums.length - 1;
+    while (l < h) {
+        int mid = l + (h - l) / 2;
+        if (nums[mid] > nums[mid + 1]) {
+            h = mid;
+        } else {
+            l = mid + 1;
+        }
+    }
+    return l;
 }
 ```
