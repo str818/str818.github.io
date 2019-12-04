@@ -14,7 +14,7 @@ show_subscribe: false
 
 二分查找维护查找空间的左、右和中间指示符，并比较查找目标或将查找条件应用于集合的中间值；如果条件不满足或值不相等，则清除目标不可能存在的那一半，并在剩下的一半上继续查找，直到成功为止。如果查以空的一半结束，则无法满足条件，并且无法找到目标。
 
-## 标准二分查找
+## 1. 标准二分查找
 
 ### 模板
 
@@ -201,3 +201,34 @@ public int search(int[] nums, int target) {
     return -1;
 }
 ```
+
+
+## 2. 高级二分查找
+
+### 模板
+
+用于查找需要访问数组中农当前索引及其右邻居索引的元素或条件。
+
+```java
+int binarySearch(int[] nums, int target) {
+    if(nums == null || nums.length == 0) {
+        return -1;
+    }
+        
+    int left = 0, right = nums.length;
+    while(left < right){
+        int mid = left + (right - left) / 2;
+        if (nums[mid] == target) {
+            return mid;
+        } else if (nums[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+
+    if (left != nums.length && nums[left] == target) return left;
+    return -1;
+}
+```
+
