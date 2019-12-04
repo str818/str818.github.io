@@ -281,6 +281,8 @@ public int firstBadVersion(int n) {
 
 你可以假设 `nums[-1] = nums[n] = -∞`。
 
+要求时间复杂度为 `O(logN)`。
+
 示例 1:
 
 ```
