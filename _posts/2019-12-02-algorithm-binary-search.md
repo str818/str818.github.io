@@ -14,9 +14,7 @@ show_subscribe: false
 
 二分查找维护查找空间的左、右和中间指示符，并比较查找目标或将查找条件应用于集合的中间值；如果条件不满足或值不相等，则清除目标不可能存在的那一半，并在剩下的一半上继续查找，直到成功为止。如果查以空的一半结束，则无法满足条件，并且无法找到目标。
 
-## 1. 标准二分查找
-
-### 模板
+## 一、 模板 I
 
 [Leetcode 704 - Sqrt(x) (Easy)](https://leetcode.com/problems/sqrtx/)
 
@@ -203,9 +201,7 @@ public int search(int[] nums, int target) {
 ```
 
 
-## 2. 高级二分查找
-
-### 模板
+## 二、 模板 II
 
 用于查找需要访问数组中农当前索引及其右邻居索引的元素或条件。
 
@@ -347,5 +343,81 @@ public int findMin(int[] nums) {
         }
     }
     return nums[l];
+}
+```
+
+## 三、 模板 III
+
+用于搜索需要访问当前索引及其在数组中直接左右邻居索引的元素或条件。
+
+```java
+int binarySearch(int[] nums, int target) {
+    if (nums == null || nums.length == 0)
+        return -1;
+
+    int left = 0, right = nums.length - 1;
+    while (left + 1 < right){
+        int mid = left + (right - left) / 2;
+        if (nums[mid] == target) {
+            return mid;
+        } else if (nums[mid] < target) {
+            left = mid;
+        } else {
+            right = mid;
+        }
+    }
+
+    if(nums[left] == target) return left;
+    if(nums[right] == target) return right;
+    return -1;
+}
+```
+
+### 在排序数组中查找元素的第一个和最后一个位置
+
+给定一个按照升序排列的整数数组 `nums`，和一个目标值 `target`。找出给定目标值在数组中的开始位置和结束位置。
+
+你的算法时间复杂度必须是 `O(log n)` 级别。
+
+如果数组中不存在目标值，返回 `[-1, -1]`。
+
+示例 1:
+
+```
+输入: nums = [5,7,7,8,8,10], target = 8
+输出: [3,4]
+```
+
+示例 2:
+
+```
+输入: nums = [5,7,7,8,8,10], target = 6
+输出: [-1,-1]
+```
+
+```java
+public int[] searchRange(int[] nums, int target) {
+    int first = binarySearch(nums, target);
+    int last = binarySearch(nums, target + 1) - 1;
+    if (first == nums.length || nums[first] != target) {
+        return new int[]{-1, -1};
+    } else {
+        return new int[]{first, last};
+    }
+}
+
+// 寻找最左面的值
+public int binarySearch(int[] nums, int target) {
+    // 注意 h 初始值，表示有多少个数比当前值小
+    int l = 0, h = nums.length; 
+    while (l < h) {
+        int mid = l + (h - l) / 2;
+        if (nums[mid] >= target) {
+            h = mid;
+        } else {
+            l = mid + 1;
+        }
+    }
+    return l;
 }
 ```
