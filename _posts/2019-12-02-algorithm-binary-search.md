@@ -375,6 +375,8 @@ int binarySearch(int[] nums, int target) {
 
 ### 在排序数组中查找元素的第一个和最后一个位置
 
+[Leetcode 34 - Find First and Last Position of Element in Sorted Array (Medium)](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+
 给定一个按照升序排列的整数数组 `nums`，和一个目标值 `target`。找出给定目标值在数组中的开始位置和结束位置。
 
 你的算法时间复杂度必须是 `O(log n)` 级别。
@@ -419,5 +421,45 @@ public int binarySearch(int[] nums, int target) {
         }
     }
     return l;
+}
+```
+
+### 找到 K 个最接近的元素
+
+[Leetcode 658 - Find K Closest Elements (Medium)](https://leetcode.com/problems/find-k-closest-elements/)
+
+给定一个排序好的数组，两个整数 `k` 和 `x`，从数组中找到最靠近 `x`（两数之差最小）的 `k` 个数。返回的结果必须要是按升序排好的。如果有两个数与 `x` 的差值一样，优先选择数值较小的那个数。
+
+示例 1:
+
+```
+输入: [1,2,3,4,5], k=4, x=3
+输出: [1,2,3,4]
+```
+
+示例 2:
+
+```
+输入: [1,2,3,4,5], k=4, x=-1
+输出: [1,2,3,4]
+```
+
+```java
+public List<Integer> findClosestElements(int[] arr, int k, int x) {
+    int l = 0, r = arr.length - 1;
+    while (r - l >= k) {
+        // 相等一定是取小的数，注意顺序
+        if (Math.abs(arr[r] - x) < Math.abs(arr[l] - x)) {
+            l++;
+        } else {
+            r--;
+        }
+    }
+    
+    List<Integer> ans = new ArrayList<Integer>();
+    for (int i = l; i <= r; i++) {
+        ans.add(arr[i]);
+    }
+    return ans;
 }
 ```
