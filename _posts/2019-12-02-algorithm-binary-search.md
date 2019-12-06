@@ -16,7 +16,7 @@ show_subscribe: false
 
 ## 一、 模板 I
 
-[Leetcode 704 - Sqrt(x) (Easy)](https://leetcode.com/problems/sqrtx/)
+[Leetcode - 704 Binary Search (Easy)](https://leetcode.com/problems/binary-search/)
 
 给定一个 `n` 个元素升序整型数组 `nums` 和一个目标值 `target`，写一个函数搜索 `nums` 中的 `target`，如果目标值存在则返回下标，否则返回 `-1`。
 
@@ -60,7 +60,7 @@ public int search(int[] nums, int target) {
 
 ### x 的平方根
 
-[Leetcode 69 - Sqrt(x) (Easy)](https://leetcode.com/problems/sqrtx/)
+[Leetcode - 69 Sqrt(x) (Easy)](https://leetcode.com/problems/sqrtx/)
 
 实现 `int sqrt(int x)` 函数。
 
@@ -103,7 +103,7 @@ public int mySqrt(int x) {
 
 ### 猜数字大小
 
-[Leetcode 374 - Guess Number Higher or Lower (Easy)](https://leetcode.com/problems/guess-number-higher-or-lower/)
+[Leetcode - 374 Guess Number Higher or Lower (Easy)](https://leetcode.com/problems/guess-number-higher-or-lower/)
 
 我们正在玩一个猜数字游戏。 游戏规则如下：
 我从 1 到 n 选择一个数字。 你需要猜我选择了哪个数字。
@@ -143,7 +143,7 @@ public int guessNumber(int n) {
 
 ### 搜索旋转排序数组
 
-[Leetcode 33 - Search in Rotated Sorted Array (Medium)](https://leetcode.com/problems/search-in-rotated-sorted-array/)
+[Leetcode - 33 Search in Rotated Sorted Array (Medium)](https://leetcode.com/problems/search-in-rotated-sorted-array/)
 
 假设按照升序排序的数组在预先未知的某个点上进行了旋转。( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。
 
@@ -230,7 +230,7 @@ int binarySearch(int[] nums, int target) {
 
 ### 第一个错误版本
 
-[Leetcode 278 - First Bad Version (Easy)](https://leetcode.com/problems/first-bad-version/)
+[Leetcode - 278 First Bad Version (Easy)](https://leetcode.com/problems/first-bad-version/)
 
 你是产品经理，目前正在带领一个团队开发新的产品。不幸的是，你的产品的最新版本没有通过质量检测。由于每个版本都是基于之前的版本开发的，所以错误的版本之后的所有版本都是错的。
 
@@ -267,7 +267,7 @@ public int firstBadVersion(int n) {
 
 ### 寻找峰值
 
-[Leetcode 162 - Find Peak Element (Medium)](https://leetcode.com/problems/find-peak-element/)
+[Leetcode - 162 Find Peak Element (Medium)](https://leetcode.com/problems/find-peak-element/)
 
 峰值元素是指其值大于左右相邻值的元素。
 
@@ -375,7 +375,7 @@ int binarySearch(int[] nums, int target) {
 
 ### 在排序数组中查找元素的第一个和最后一个位置
 
-[Leetcode 34 - Find First and Last Position of Element in Sorted Array (Medium)](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+[Leetcode - 34 Find First and Last Position of Element in Sorted Array (Medium)](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 
 给定一个按照升序排列的整数数组 `nums`，和一个目标值 `target`。找出给定目标值在数组中的开始位置和结束位置。
 
@@ -426,7 +426,7 @@ public int binarySearch(int[] nums, int target) {
 
 ### 找到 K 个最接近的元素
 
-[Leetcode 658 - Find K Closest Elements (Medium)](https://leetcode.com/problems/find-k-closest-elements/)
+[Leetcode - 658 Find K Closest Elements (Medium)](https://leetcode.com/problems/find-k-closest-elements/)
 
 给定一个排序好的数组，两个整数 `k` 和 `x`，从数组中找到最靠近 `x`（两数之差最小）的 `k` 个数。返回的结果必须要是按升序排好的。如果有两个数与 `x` 的差值一样，优先选择数值较小的那个数。
 
