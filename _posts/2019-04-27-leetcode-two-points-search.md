@@ -10,6 +10,27 @@ toc: true
 show_subscribe: false
 ---
 
+## Pow(x, n)
+
+[Leetcode - 50 Pow(x, n) (Medium)](https://leetcode.com/problems/powx-n/)
+
+题目描述：实现 `pow(x, n)` ，即计算 x 的 n 次幂函数。
+
+```
+Input: 2.00000, 10
+Output: 1024.00000
+```
+
+```java
+public double myPow(double x, int n) {
+    double res = 1.0;
+    for (int i = n; i != 0; i /= 2) {
+        if (i % 2 != 0) res *= x;
+        x *= x;
+    }
+    return n < 0 ? 1 / res : res;
+}
+```
 
 ## 求开方
 
