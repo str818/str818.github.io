@@ -271,7 +271,7 @@ public int findPeakElement(int[] nums) {
 
 [Leetcode - 153 Find Minimum in Rotated Sorted Array (Medium)](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)
 
-题目描述：给定升序数组在某个点上进行的旋转，找出最小元素。
+给定升序数组在某个点上进行的旋转，找出最小元素，假设不存在重复元素。
 
 ```
 Input: [4,5,6,7,0,1,2]
@@ -292,6 +292,36 @@ public int findMin(int[] nums) {
     return nums[l];
 }
 ```
+
+## 寻找旋转排序数组中的最小值 II
+
+[Leetcode - 154. Find Minimum in Rotated Sorted Array II (Medium)](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/)
+
+给定升序数组在某个点上进行的旋转，找出最小元素，可能出现重复元素。
+
+```
+Input: [2,2,2,0,1]
+Output: 0
+```
+
+```java
+public int findMin(int[] nums) {
+    int l = 0, h = nums.length - 1;
+    while (l < h) {
+        int mid = l + (h - l) / 2;
+        if (nums[h] > nums[mid]) {
+            h = mid;
+        } else if (nums[h] < nums[mid]){
+            l = mid + 1;
+        } else {
+            // 相等就 h--
+            h--;
+        }
+    }
+    return nums[l];
+}
+```
+
 
 ## 寻找比目标字母大的最小字母
 
