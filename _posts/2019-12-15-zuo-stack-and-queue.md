@@ -122,3 +122,38 @@ public boolean empty() {
     return stackPush.isEmpty() && stackPop.isEmpty();
 }
 ```
+
+## 3. 如何仅用递归函数和栈操作逆序一个栈
+
+**题目**
+
+一个栈依次压入 `1、2、3、4、5`，那么从栈顶到栈底分别为 `5、4、3、2、1`。将这个栈转置后，从栈顶到栈底为 `1、2、3、4、5`，也就是实现栈中元素的逆序，但是只能用递归函数来实现，不能用其他数据结构。
+
+**思路**
+
+1. 将栈底元素返回并删除；
+2. 实现栈的逆序。
+
+```java
+
+// 返回栈底元素并返回
+public static int getAndRemoveLastElement(Stack<Integer> stack) {
+    int result = stack.pop();
+    if (stack.isEmpty()) {
+        return result;
+    } else {
+        int last = getAndRemoveLastElement(stack);
+        stack.push(result);
+        return last;
+    }
+}
+
+// 逆序栈
+public static void reverse(Stack<Integer> stack) {
+    if (stack.isEmpty()) return;
+    int i = getAndRemoveLastElement(stack);
+    reverse(stack);
+    stack.push(i);
+}
+
+```
