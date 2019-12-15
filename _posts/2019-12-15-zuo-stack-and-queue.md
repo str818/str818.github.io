@@ -135,7 +135,6 @@ public boolean empty() {
 2. 实现栈的逆序。
 
 ```java
-
 // 返回栈底元素并返回
 public static int getAndRemoveLastElement(Stack<Integer> stack) {
     int result = stack.pop();
@@ -155,5 +154,102 @@ public static void reverse(Stack<Integer> stack) {
     reverse(stack);
     stack.push(i);
 }
+```
 
+## 4. 猫狗队列
+
+**题目**
+
+实现一种宠物、猫、狗的队列结构，宠物与猫、狗是继承关系。
+
+1. 用户可以调用 add 方法将 cat 或者 dog 放入队列中
+2. 用户可以调用 pollAll 方法将队列中的 cat 和 dog 按照进队列的先后顺序依次弹出
+3. 用户可以调用 pollDog 方法将队列中的 dog 按照进队列的先后顺序依次弹出
+4. 用户可以调用 pollCat 方法将队列中的 cat 按照进队列的先后顺序依次弹出
+5. 用户可以调用 isEmpty 方法检查队列中是否还有 dog 或 cat
+6. 用户可以调用 isDogEmpty 方法检查队列中是否还有 dog
+7. 用户可以调用 isCatEmpty 方法检查队列中是否还有 cat
+
+**思路**
+
+构造新的 PetEnterQueue 类，其中 pet 是用户原有的实例，count 是这个实例的时间戳。
+
+```java
+public class PetEnterQueue {
+    private Pet pet;
+    private long count;
+
+    public PetEnterQueue (Pet pet, long count) {
+        this.pet = pet;
+        this.count = count;
+    }
+
+    public Pet getPet() {
+        return this.pet;
+    }
+
+    public long getCount() {
+        return this.count;
+    }
+
+    public String getEnterPetType() {
+        return this.pet.getPetType();
+    }
+}
+```
+
+我们需要构造的队列其实是 PetEnterQueue 类的实例。有一个不断累加的数据项用来表示实例进队列的时间；同时有两个队列，一个是只放 dog 类实例的队列 dogQ，另一个是只放 cat 类实例的队列 catQ，通过比较时间戳大小来依次弹出 pet。
+
+```java
+public class DogCatQueue {
+	private Queue<PetEnterQueue> dogQ;
+	private Queue<PetEnterQueue> catQ;
+	private long count;
+	
+	public DogCatQueue() {
+		dogQ = new LinkedList<>();
+		catQ = new LinkedList<>();
+		count = 0;
+	}
+	public void add(Pet pet) {
+		if (pet.getType().equals("dog"))
+			this.dogQ.add(new PetEnterQueue(pet,this.count++));
+		else if (pet.getType().equals("cat"))
+			this.catQ.add(new PetEnterQueue(pet,this.count++));
+		else
+			throw new RuntimeException("erro,no cat or dog");
+	}
+	public Pet pollAll(){
+		if (!this.dogQ.isEmpty() && !this.catQ.isEmpty()) {
+			if (this.dogQ.peek().getCount() < this.catQ.peek().getCount())
+				return this.dogQ.poll().getPet();
+			else
+				return this.catQ.poll().getPet();
+		}
+		else if (!this.dogQ.isEmpty())
+			return this.dogQ.poll().getPet();
+		else if (!this.catQ.isEmpty())
+			return this.catQ.poll().getPet();
+		else
+			throw new RuntimeException("erro,queue is empty");
+	}
+	public Dog pollDog() {
+		if (!this.isDogQueueEmpty())
+			return (Dog) this.dogQ.poll().getPet();
+		else
+			throw new RuntimeException("Dog quque is empty");
+	}
+	public Cat pollCat() {
+		if(!this.isCatQueueEmpty())
+			return (Cat)this.catQ.poll().getPet();
+		else
+			throw new RuntimeException("Cat queue is empty");
+	}
+	public boolean isDogQueueEmpty() {
+		return this.dogQ.isEmpty();
+	}
+	public boolean isCatQueueEmpty() {
+		return this.catQ.isEmpty();
+	}
+}
 ```
