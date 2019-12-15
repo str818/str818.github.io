@@ -81,3 +81,44 @@ public int getMin() {
     return min;
 }
 ```
+
+## 2. 由两个栈组成的队列
+
+**题目**
+
+编写一个类，用两个栈实现队列，支持队列的基本操作（add、pull、peek）。
+
+**思路**
+
+两个栈，push 进栈 1 中，弹出时将栈 1 全部元素导入到栈 2 中，再从栈 2 pop。
+
+```java
+private Stack<Integer> stackPush = new Stack<Integer>();
+private Stack<Integer> stackPop = new Stack<Integer>();
+
+private void pushToPop() {
+    if (stackPop.isEmpty()) {
+        while (!stackPush.isEmpty()) {
+            stackPop.push(stackPush.pop());
+        }
+    }
+}
+
+public void push(int x) {
+    stackPush.push(x);
+}
+
+public int pop() {
+    pushToPop();
+    return stackPop.pop();
+}
+
+public int peek() {
+    pushToPop();
+    return stackPop.peek();
+}
+
+public boolean empty() {
+    return stackPush.isEmpty() && stackPop.isEmpty();
+}
+```
