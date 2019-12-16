@@ -253,3 +253,32 @@ public class DogCatQueue {
 	}
 }
 ```
+
+## 用一个栈实现另一个栈的排序
+
+**题目**
+
+将一个栈中的元素从顶到底按从大到小排序，只允许申请一个栈，可以申请新的变量，但不能申请额外的数据结构。
+
+**思路**
+
+将要排序的栈记为 stack，辅助栈记为 help。在 stack 上执行 pop 操作，弹出的元素记为 cur。
+
+- 如果 cur 小于或等于 help 栈顶元素，则将 cur 直接压入 help；
+- 如果 cur 大于 help 的栈顶元素，则将 help 的元素逐一弹出，逐一压入 stack，直到 cur 小于或等于 help 的栈顶元素，再将 cur 压入 help。
+
+```java
+public static void sortStackByStack(Stack<Integer> stack){
+    Stack<Integer> help = new Stack<Integer>();
+    while (!stack.isEmpty()) {
+        int cur = stack.pop();
+        while (!help.isEmpty() && help.peek()<cur) {
+            stack.push(help.pop());
+        }
+        help.push(cur);
+    }
+    while (!help.isEmpty()) {
+        stack.push(help.pop());
+    }
+}
+```
