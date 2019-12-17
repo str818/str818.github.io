@@ -414,3 +414,78 @@ public static int[] getMaxWindow(int[] arr,int w){
     return res;
 }
 ```
+
+## 8. 单调栈结构
+
+**题目**
+
+给定一个不含有重复值的数组 arr，找到每一个 i 位置左边和右边离 i 位置最近且值比 arr[i] 小的位置，返回所有位置相应的信息，-1 表示不存在。
+
+**思路**
+
+维护一个单调栈，从栈顶到栈底单调递减，若当前遍历到的位置比栈顶元素小，则弹出栈顶元素 x，那么栈中 x 位置下面的位置就是 x 左边离 x 最近且值比 arr[x] 小的位置；当前遍历到的位置就是 x 位置右边离 x 位置最近且值比 arr[x] 小的位置。
+
+```java
+public int[][] getNearLessNoRepeat(int[] arr) {
+    int[][] res = new int[arr.length][2];
+    Stack<Integer> stack = new Stack<>();
+    for (int i = 0; i < arr.length; i++) {
+        while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
+            int popIndex = stack.pop();
+            int leftLessIndex = stack.isEmpty() ? -1 : stack.peek();
+            res[popIndex][0] = leftLessIndex;
+            res[popIndex][1] = i;
+        }
+        stack.push(i);
+    }
+    while (!stack.isEmpty()) {
+        int popIndex = stack.pop();
+        int leftLessIndex = stack.isEmpty() ? -1 : stack.peek();
+        res[popIndex][0] = leftLessIndex;
+        res[popIndex][1] = -1;
+    }
+    return res;6
+}
+```
+
+**问题进阶**
+
+数组 arr 可能有重复值。
+
+**思路**
+
+如果栈中相邻元素值相同，则压在一起，他们的结果相同。
+
+```java
+public int[][] getNearLess(int[] arr) {
+    int[][] res = new int[arr.length][2];
+    Stack<List<Integer>> stack = new Stack<>();
+    for (int i = 0; i < arr.length; i++) {
+        while (!stack.isEmpty() && arr[stack.peek().get(0)] > arr[i]) {
+            List<Integer> popIs = stack.pop();
+            // 取位于下面位置的列表中，最晚加入的那个
+            int leftLessIndex = stack.isEmpty() ? -1 : stack.peek().get(steeck.peek().size() - 1);
+            for (Integer popi : popIs) {
+                res[popi][0] = leftLessIndex;
+                res[popi][1] = i;
+            }
+        }
+        if (!stack.isEmpty() && arr[stack.peek().get(0)] == arr[i]) {
+            stack.peek().add(Integer.valueOf(i));
+        } else {
+            ArrayList<Integer> list = new ArrayList<>();
+            list.add(i);
+            stack.push(list);
+        }
+    }
+    while (!stack.isEmpty()) {
+        List<Integer> list = stack.pop();
+        int leftLessIndex = stack.isEmpty() ? -1 : stack.peek().get(steeck.peek().size() - 1);
+        for (Integer popi : popIs) {
+            res[popi][0] = leftLessIndex;
+            res[popi][1] = -1;
+        }
+    }
+    return res;
+}
+```
