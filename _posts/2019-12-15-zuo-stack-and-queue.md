@@ -373,4 +373,44 @@ public static int fStackToStack(Action[] record, Action preNoAct, Action nowAct,
 }
 ```
 
+## 7， 生成窗口最大值数组
 
+**题目**
+
+有一个整型数组 arr 和一个大小为 w 的窗口从数组的最左边滑到最右边，窗口每次向右滑一个位置。
+
+实现一个函数：
+
+- 输入：整型数组 arr，窗口大小为 w。
+- 输出：一个长度为 n-w+1 的数组 res，res[i] 表示每一种窗口状态下的最大值。
+
+**思路**
+
+使用双端队列实现窗口最大值的更新，双端队列中存放数组 arr 中的下标，在双端队列 qmax 的队头用来保存当前的最大值的坐标，当队头的下标等于 i-w 的时候，就过期，直接弹出。
+
+```java
+public static int[] getMaxWindow(int[] arr,int w){
+    if (arr == null || arr.length < w || w < 1){
+        return null;
+    }
+    LinkedList<Integer> qmax = new LinkedList<Integer>();   // 记录最大值的更新
+    int[] res = new int[arr.length-w+1];                    // 记录结果
+    int index = 0;
+    for (int i = 0; i < arr.length; i++) {
+        while (!qmax.isEmpty() && arr[qmax.peekLast()] <= arr[i]){
+            qmax.pollLast();
+        }
+        qmax.addLast(i);
+
+        // 过期计算
+        if (qmax.peekFirst() == i-w){
+            qmax.pollFirst();
+        }
+        // 记录res值
+        if (i >= w - 1){
+            res[index++]=arr[qmax.peekFirst()];
+        }
+    }
+    return res;
+}
+```
