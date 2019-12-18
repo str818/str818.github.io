@@ -551,3 +551,56 @@ public int maxRecFromBottom(int[] height) {
     return maxArea;
 }
 ```
+
+## 10. 最大值减去最小值小于或等于 num 的子数组数量
+
+#### 题目
+
+给定数组 arr 和整数 num，共返回有多少个子数组满足：`max(arr[i..j]) - min(arr[i..j]) <= num`，`max(arr[i..j])` 表示子数组 `arr[i..j]` 中的最大值，`min(arr[i..j])` 表示子数组 `arr[i..j]` 中的最小值。
+
+#### 思路
+
+维护两个最大与最小值更新的双端队列。
+
+关键结论：
+- 如果子数组 `arr[i..j]` 满足条件，即 `max(arr[i..j]) - min(arr[i..j]) <= num`，那么 `arr[i..j]` 中的每一个子数组都满足条件。
+- 如果子数组 `arr[i..j]` 不满足条件，那么所有包含 `arr[i..j]` 的子数组都不满足条件。
+
+```java
+public int getNum(int[] arr, int num) {
+    if (arr == null || arr.length == 0 || num < 0) {
+        return 0;
+    }
+    LinkedList<Integer> qmin = new LinkedList<Integer>();
+    LinkedList<Integer> qmax = new LinkedList<Integer>();
+
+    int i, j, res = 0;
+    while (i < arr.length) {
+        while (j < arr.length) {
+            if (qmin.isEmpty() || qmin.peekLast() != j) {
+                while (!qmin.isEmpty() && arr[qmin.peekLast()] >= arr[j]) {
+                    qmin.pollLast();
+                }
+                qmin.addLast(j);
+                while (!qmax.isEmpty() && arr[qmax.peekLast()] <= arr[j]) {
+                    qmax.pollLast();
+                }
+                qmax.addLast(j);
+            }
+            if (arr[qmax.getFirst()] - arr[qmin.getFirst()] > num) {
+                break;
+            }
+            j++;
+        }
+        res += j - i;
+        if (qmin.peekFirst() == i) {
+            qmin.poolFirst();
+        }
+        if (qmax.peekFirst() == i) {
+            qmax.poolFirst();
+        }
+        i++;
+    }
+    return res;
+}
+```
