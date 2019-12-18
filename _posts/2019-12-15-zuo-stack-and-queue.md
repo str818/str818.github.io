@@ -489,3 +489,65 @@ public int[][] getNearLess(int[] arr) {
     return res;
 }
 ```
+
+## 9. 求最大子矩阵的大小
+
+#### 题目
+
+给定一个整型矩阵 map，其中的值只有 0 和 1 两种，求其中全是 1 的所有矩形区域中，最大的矩形区域为 1 的数量。
+
+```
+Input:
+[
+  ["1","0","1","0","0"],
+  ["1","0","1","1","1"],
+  ["1","1","1","1","1"],
+  ["1","0","0","1","0"]
+]
+Output: 6
+```
+
+#### 思路
+
+以每一行做切割，统计以当前行作为底的情况下，每个位置往上 1 的数量，使用数组 height 表示，之后利用单调栈计算每一行 height 的最大矩形区域，最后求每一行的最大值即为最后结果。
+
+```java
+public int maxRecSize(int[][] map) {
+    if (map ==null || map.length == 0 || map[0].length == 0) {
+        return 0;
+    }
+    int maxArea = 0;
+    int[] height = new int[map[0].length];
+    for (int i = 0; i < map.length; i++) {
+        for (int j = 0; j < map[0].length; j++) {
+            height[j] = map[i][j] == 0 ? 0 : height[j] + 1;
+        }
+        maxArea = Math.max(maxRecFromBottom(height), maxArea);
+    }
+    return maxArea;
+}
+
+public int maxRecFromBottom(int[] height) {
+    if (height == null || height.length == 0) {
+        return 0;
+    }
+    int maxArea = 0;
+    Stack<Integer> stack = new Stack<Integer>();
+    for (int i = 0; i < height.length; i++) {
+        while (!stack.isEmpty() && height[i] <= height[stack.peek()]) {
+            int j = stack.pop();
+            int k = stack.isEmpty() ? -1 : stack.peek();
+            int curArea = (i - k - 1) * height[j];
+            maxArea = Math.max(maxArea, curArea);
+        }
+        stack.push(i);
+    }
+    while (!stack.isEmpty()) {
+        int j = stack.pop();
+        int k = stack.isEmpty() ? -1 : stack.peek();
+        int curArea = (height.length - k - 1) * height[j];
+        maxArea = Math.max(maxArea, curArea);
+    }
+    return maxArea;
+}
+```
