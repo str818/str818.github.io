@@ -16,7 +16,7 @@ API Gateway 是微服务架构体系中的一类型特殊服务，它是所有�
 
 一个系统可以有一个或多个 API Gateway，例如
 
-<div align="center"> <img src="../img/micro_service_api_gateway_1.png" width="100%"/> </div>
+<div align="center"> <img src="https://s2.ax1x.com/2020/01/29/1QHXDg.png" width="70%"/> </div>
 
 ## Gateway 的指责
 
