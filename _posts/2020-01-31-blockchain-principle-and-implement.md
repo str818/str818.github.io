@@ -109,6 +109,7 @@ class BlockChain:
         )
         return self.last_lock['index'] + 1
 
+    # 计算 hash 值
     @staticmethod
     def hash(block):
         block_string = json.dumps(block, sort_keys=True).encode()
@@ -138,7 +139,7 @@ blockchain = BlockChain()
 
 node_identifier = str(uuid4()).replace('-', '')
 
-
+# 创建新交易
 @app.route('/transactions/new', methods=['POST'])
 def new_transaction():
     values = request.get_json()
@@ -153,7 +154,7 @@ def new_transaction():
     response = {"message": f'Transcation will be added to Block {index}'}
     return jsonify(response), 201
 
-
+# 挖矿
 @app.route('/mine', methods=['GET'])
 def mine():
     last_block = blockchain.last_lock
@@ -175,7 +176,7 @@ def mine():
 
     return jsonify(response), 200
 
-
+# 获取整个区块链
 @app.route('/chain', methods=['GET'])
 def full_chain():
 
@@ -185,7 +186,7 @@ def full_chain():
     }
     return jsonify(response), 200
 
-
+# 注册节点
 # {"nodes": ["http://127.0.0.1:5001"]}
 @app.route('/nodes/register', methods=['POST'])
 def register_nodes():
@@ -206,7 +207,7 @@ def register_nodes():
 
     return jsonify(response), 201
 
-# 解决冲突
+# 解决冲突，切换到最长的链
 @app.route('/nodes/resolve', methods=['GET'])
 def consensus():
     replaced = blockchain.resolve_conflicts()
