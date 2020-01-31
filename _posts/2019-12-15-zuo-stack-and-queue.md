@@ -300,6 +300,7 @@ public int hanoiProbleml(int num, String left, String mid, String right) {
 }
 
 public int process(int num, String left, String mid, String right, String form, String to) {
+    // 只有最上层的塔需要移动
     if (num == 1) {
         if (form.equals(mid) || to.equals(mid)) {
             System.out.println("Move 1 from" + form + "to" + mid);
@@ -311,19 +312,29 @@ public int process(int num, String left, String mid, String right, String form, 
         }
     }
     if (form.equals(mid) || to.equals(mid)) {
+        // 将塔左->中/中->左/中->右/右->中(eg：左->中)：
         String another = (form.equals(left) || to.equals(left)) ? right : left;
+        // 1. 将 1~n-1 层从左移动到右面
         int part1 = process(num - 1, left, mid, right, form, another);
+        // 2. 将第 n 层从左移动到中间
         int part2 = 1;
         System.out.println("Move" + num + "form" + form + "to" + to);
+        // 3. 将 1~n-1 层从右移动到左面
         int part3 = process(num - 1, left, mid, right, another, to);
         return part1 + part2 + part3;
     } else {
+        // 将塔从左移动到右：
+        // 1. 将 1~n-1 层从左移动到右面
         int part1 = process(num - 1, left, mid, right, form, to);
+        // 2. 将第 n 层从左移动到中间
         int part2 = 1;
         System.out.println("Move" + num + "form" + form + "to" + mid);
+        // 3. 将 1~n-1 层从右移动到左面
         int part3 = process(num - 1, left, mid, right, to, form);
+        // 4. 将第 n 层从中间移动到右面
         int part4 = 1;
         System.out.println("Move" + num + "form" + mid + "to" + to);
+        // 5. 将 1～n-1 层从左移动到右面
         int part5 = process(num - 1, left, mid, right, form, to);
         return part1 + part2 + part3 + part4 + part5;
     }
@@ -333,7 +344,7 @@ public int process(int num, String left, String mid, String right, String form, 
 #### 栈解法
 
 - 小压大原则
-- 相邻不可逆原则
+- 相邻不可逆原则：如果想走出最少步数，那么任何两个相邻的动作都是不互为可逆过程。
 
 ```java
 public enum Action {
