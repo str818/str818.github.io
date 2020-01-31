@@ -10,7 +10,7 @@ toc: true
 show_subscribe: false
 ---
 
-```python3
+```python
 import hashlib
 import json
 from uuid import uuid4
