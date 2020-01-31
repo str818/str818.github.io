@@ -455,7 +455,7 @@ public int[][] getNearLessNoRepeat(int[] arr) {
         res[popIndex][0] = leftLessIndex;
         res[popIndex][1] = -1;
     }
-    return res;6
+    return res;
 }
 ```
 
