@@ -538,6 +538,7 @@ public int maxRecSize(int[][] map) {
     return maxArea;
 }
 
+// 求每个元素左右的最小值相乘
 public int maxRecFromBottom(int[] height) {
     if (height == null || height.length == 0) {
         return 0;
@@ -615,5 +616,3 @@ public int getNum(int[] arr, int num) {
     return res;
 }
 ```
-
-、
