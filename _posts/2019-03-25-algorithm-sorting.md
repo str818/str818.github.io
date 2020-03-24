@@ -20,7 +20,7 @@ show_subscribe: false
 
 #### 2. 图解过程
 
-<div align="center">  <img src="/img/algorithmic_selection_sort.png" width="80%"/> </div><br>
+<div align="center">  <img src="https://s1.ax1x.com/2020/03/24/8Ol1fg.png" width="80%"/> </div><br>
 
 #### 3. 核心代码
 
@@ -67,11 +67,11 @@ public static void selectionSort(int[] arr) {
 
 #### 2. 图解过程
 
-<div align="center">  <img src="/img/algorithmic_bubble_sort.png" width="80%"/> </div><br>
+<div align="center">  <img src="https://s1.ax1x.com/2020/03/24/8O1AEV.png" width="80%"/> </div><br>
 
 冒泡排序升序排列的整个过程如下图，数组共包含 6 个元素，第一轮将 6 个元素中最大的元素「11」交换至数组的最后；第二轮将剩下 5 个元素中的最大元素「8」交换至「11」的前面。依次执行，直到所有的元素比较完成。总的来说，冒泡排序升序排列就是不断将最大的元素移动到后面的过程。
 
-<div align="center">  <img src="/img/algorithmic_bubble_sort_1.gif" width="60%"/> </div><br>
+<div align="center">  <img src="https://s1.ax1x.com/2020/03/24/8O3AsA.gif" width="60%"/> </div><br>
 
 #### 3. 核心代码
 
@@ -116,7 +116,7 @@ public static void bubbleSort(int[] arr){
 
 #### 2. 图解过程
 
-<div align="center">  <img src="/img/algorithmic_insertion_sort.png" width="80%"/> </div><br>
+<div align="center">  <img src="https://s1.ax1x.com/2020/03/24/8O3aJU.png" width="80%"/> </div><br>
 
 #### 3. 核心代码
 
@@ -161,7 +161,7 @@ public static void insertionSort(int[] arr){
 
 #### 2. 图解过程
 
-<div align="center">  <img src="/img/algorithmic_shell_sort.png" width="80%"/> </div><br>
+<div align="center">  <img src="https://s1.ax1x.com/2020/03/24/8O3RJO.png" width="80%"/> </div><br>
 
 间隔 D 有很多中选择，此处使用的是希尔增量 D = n/2, n/4 ,..., 1。
 
@@ -176,7 +176,6 @@ public static void shellSort(int[] arr){
         for(int i = D; i < arr.length; i++){
             int j = i;
             int temp = number[j];//要插入的值
-            int insert_position = j;
 
             while(j - D >= 0 && temp < arr[j - D]){
                 arr[j] = arr[j - D];
@@ -215,13 +214,13 @@ public static void shellSort(int[] arr){
 
 #### 2. 图解过程
 
-<div align="center">  <img src="/img/algorithmic_merge_sort.png" width="90%"/> </div><br>
+<div align="center">  <img src="https://s1.ax1x.com/2020/03/24/8O3LY8.png" width="90%"/> </div><br>
 
 #### 3. 核心代码
 
 ```java
 // 分治
-public static void mergeSort(int[] arr, int l, int r){
+public static void mergeSort(int[] arr, int l, int r) {
     if(l == r) return;
     int mid = l + ((r - l) >> 1);
     mergeSort(arr, l, mid);
@@ -229,7 +228,7 @@ public static void mergeSort(int[] arr, int l, int r){
     merge(arr, l, mid, r);
 }
 // 合并
-public static void merge(int[] arr, int l, int m, int r{
+public static void merge(int[] arr, int l, int m, int r) {
     int[] help = new int[r - l + 1];
     int i = 0;
     int p1 = l;
