@@ -274,7 +274,7 @@ public static void merge(int[] arr, int l, int m, int r) {
 
 #### 2. 图解过程
 
-<div align="center">  <img src="/img/algorithmic_quick_sort.png" width="90%"/> </div><br>
+<div align="center">  <img src="https://s1.ax1x.com/2020/03/25/8OXYB6.png" width="90%"/> </div><br>
 
 #### 3. 核心代码
 
@@ -335,7 +335,7 @@ public static int[] partition(int[] arr, int l, int r){
 
 在学习堆排序之前，先了解一下什么是堆。堆是一个数组，可以被看成一个近似的完全二叉树，如下图所示，树上的每一个结点对应数组中的一个元素。除了最底层外，该树是完全充满的，而且是从左到右填充。在不越界的情况下，任何一个节点的左叶子节点在数组中的下标为 2i+1 ，右叶子节点在数组中的下标为 2i+2 ，父节点在数组中的下标为 (i-1)/2 。
 
-<div align="center">  <img src="/img/algorithmic_heap_sort_0.png" width="50%"/> </div><br>
+<div align="center">  <img src="https://s1.ax1x.com/2020/03/25/8OXaND.png" width="50%"/> </div><br>
 
 堆可以分为两种形式：最大堆和最小堆。
 
@@ -351,15 +351,15 @@ public static int[] partition(int[] arr, int l, int r){
 
 首先，我们有一个待排序数组，如何把这一数组调整成最大堆的形式呢？这个过程就是建立最大堆的过程。例如，数组 [ 3 6 2 1 0 4 ]，可以先将第一个元素 3 看成一个堆，之后将第二个元素 6 加入堆中，将其与父节点 3 进行比较，若比父节点 3 大，则与之交换，一直向上比较直到到达根节点或不比父节点大为止。这样的一轮操作，就将元素 6 插入到了堆中，之后又调整成了最大堆。以此类推，不断将后面的元素插入到堆中，并调整成最大堆，直到数组中的元素都插入到了堆，整个数组就成为了最大堆的排序形式。
 
-<div align="center">  <img src="/img/algorithmic_heap_sort_1.png" width="85%"/> </div><br>
+<div align="center">  <img src="https://s1.ax1x.com/2020/03/25/8OXcHf.png" width="85%"/> </div><br>
 
-<div align="center">  <img src="/img/algorithmic_heap_sort_2.png" width="85%"/> </div><br>
+<div align="center">  <img src="https://s1.ax1x.com/2020/03/25/8OXIvn.png" width="85%"/> </div><br>
 
 ###### Ⅱ. 下沉元素
 
 将待排序数组建立成最大堆顺序后，最大堆的根节点即为数组中的最大元素。这时，将根节点与堆的最后一个节点进行交换，也就是将最大元素放到数组的最后，再将 0 到 n-2 重新调整为最大堆，也就是将新的根节点下沉到正确的位置。重复上述步骤，将最大的元素沉到数组的后面，最后，就得到了一个升序排列的数组。
 
-<div align="center">  <img src="/img/algorithmic_heap_sort_3.png" width="85%"/> </div><br>
+<div align="center">  <img src="https://s1.ax1x.com/2020/03/25/8OXO5F.png" width="85%"/> </div><br>
 
 #### 3. 核心代码
 
@@ -432,7 +432,7 @@ public static void heapify(int[] arr, int index, int size) {
 
 #### 2. 图解过程
 
-<div align="center">  <img src="/img/algorithmic_counting_sort.png" width="80%"/> </div><br>
+<div align="center">  <img src="https://s1.ax1x.com/2020/03/25/8OXzvR.png" width="80%"/> </div><br>
 
 #### 3. 核心代码
 
@@ -499,7 +499,7 @@ public static void countingSort(int[] arr){
 
 #### 2. 图解过程
 
-<div align="center">  <img src="/img/algorithmic_bucket_sort.png" width="80%"/> </div><br>
+<div align="center">  <img src="https://s1.ax1x.com/2020/03/25/8Ojk5D.png" width="80%"/> </div><br>
 
 #### 3. 核心代码
 
@@ -576,7 +576,7 @@ O(N + M)
 
 #### 2. 图解过程
 
-<div align="center">  <img src="/img/algorithmic_radix_sort.png" width="100%"/> </div><br>
+<div align="center">  <img src="https://s1.ax1x.com/2020/03/25/8Ojurt.png" width="100%"/> </div><br>
 
 #### 3. 核心代码
 
