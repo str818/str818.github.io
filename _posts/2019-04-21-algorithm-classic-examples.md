@@ -25,7 +25,14 @@ show_subscribe: false
 
 ### 1. 反转链表
 
-[Leetcode - 206 Reverse Linked List (Easy)](https://leetcode.com/problems/reverse-linked-list/)
+[Leetcode - 206 Reverse Linked List (Easy)](https://leetcode-cn.com/problems/reverse-linked-list/)
+
+反转一个单链表。
+
+```
+输入: 1->2->3->4->5->NULL
+输出: 5->4->3->2->1->NULL
+```
 
 解法一：遍历
 
@@ -56,7 +63,13 @@ public ListNode reverseList(ListNode head) {
 
 ### 2. 成对交换节点
 
-[Leetcode - 24 Swap Nodes in Pairs (Medium)](https://leetcode.com/problems/swap-nodes-in-pairs/)
+[Leetcode - 24 Swap Nodes in Pairs (Medium)](https://leetcode-cn.com/problems/swap-nodes-in-pairs/)
+
+给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。
+
+```
+给定 1->2->3->4, 应该返回 2->1->4->3.
+```
 
 解法一：遍历
 
@@ -91,7 +104,9 @@ public ListNode swapPairs(ListNode head) {
 
 ### 3. 单链表中的环
 
-[Leetcode - 141 Linked List Cycle (Easy)](https://leetcode.com/problems/linked-list-cycle/)
+[Leetcode - 141 Linked List Cycle (Easy)](https://leetcode-cn.com/problems/linked-list-cycle/)
+
+给定一个链表，判断链表中是否有环。
 
 ```java
 public boolean hasCycle(ListNode head) {
@@ -108,7 +123,7 @@ public boolean hasCycle(ListNode head) {
 
 ### 4. 单链表中的环 II
 
-[Leetcode - 142 Linked List Cycle II (Medium)](https://leetcode.com/problems/linked-list-cycle-ii/)
+[Leetcode - 142 Linked List Cycle II (Medium)](https://leetcode-cn.com/problems/linked-list-cycle-ii/)
 
 题目描述：找到环的入口位置。
 
@@ -134,7 +149,7 @@ public ListNode detectCycle(ListNode head) {
 
 ### 5. 每 K 个一组反转链表
 
-[Leetcode - 25 Reverse Nodes in k-Group (Hard)](https://leetcode.com/problems/reverse-nodes-in-k-group/)
+[Leetcode - 25 Reverse Nodes in k-Group (Hard)](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/)
 
 解法一：遍历
 
@@ -193,7 +208,7 @@ public ListNode reverseKGroup(ListNode head, int k) {
 
 ### 1. 有效括号
 
-[Leetcode - 20 Valid Parentheses (Easy)](https://leetcode.com/problems/valid-parentheses/)
+[Leetcode - 20 Valid Parentheses (Easy)](https://leetcode-cn.com/problems/valid-parentheses/)
 
 ```java
 public boolean isValid(String s) {
@@ -215,7 +230,7 @@ public boolean isValid(String s) {
 
 ### 2. 使用栈实现队列
 
-[Leetcode - 232 Implement Queue using Stacks (Easy)](https://leetcode.com/problems/implement-queue-using-stacks/)
+[Leetcode - 232 Implement Queue using Stacks (Easy)](https://leetcode-cn.com/problems/implement-queue-using-stacks/)
 
 把第一个入队列的元素放入栈 1，其他的放入栈 2，只有在将队首元素推出之后，才将栈 2 的元素推入栈 1，这样就 peek() 时就不需要交换元素了。
 
@@ -232,7 +247,6 @@ public void push(int x) {
 }
 public int pop() {
     int pop = mainStack.pop();
-    
     if (mainStack.isEmpty()) {
         while (!secStack.isEmpty()) {
             mainStack.push(secStack.pop());
@@ -250,7 +264,7 @@ public boolean empty() {
 
 ### 3. 使用队列实现栈
 
-[Leetcode - 225 Implement Stack using Queues (Easy)](https://leetcode.com/problems/implement-stack-using-queues/)
+[Leetcode - 225 Implement Stack using Queues (Easy)](https://leetcode-cn.com/problems/implement-stack-using-queues/)
 
 ```java
 Queue<Integer> queue;
@@ -280,7 +294,7 @@ public boolean empty() {
 
 ### 1. 数据流中第 k 大的元素
 
-[Leetcode - 703 Kth Largest Element in a Stream (Easy)](https://leetcode.com/problems/kth-largest-element-in-a-stream/)
+[Leetcode - 703 Kth Largest Element in a Stream (Easy)](https://leetcode-cn.com/problems/kth-largest-element-in-a-stream/)
 
 ```java
 final PriorityQueue<Integer> q;
@@ -306,7 +320,7 @@ public int add(int val) {
 
 ### 2. 滑动窗口的最大值
 
-[Leetcode - 239 Sliding Window Maximum (Hard)](https://leetcode.com/problems/sliding-window-maximum/)
+[Leetcode - 239 Sliding Window Maximum (Hard)](https://leetcode-cn.com/problems/sliding-window-maximum/)
 
 ```java
 public int[] maxSlidingWindow(int[] nums, int k) {
@@ -337,7 +351,7 @@ public int[] maxSlidingWindow(int[] nums, int k) {
 
 ### 1. 验证变位词
 
-[Leetcode - 242 Valid Anagram (Easy)](https://leetcode.com/problems/valid-anagram/)
+[Leetcode - 242 Valid Anagram (Easy)](https://leetcode-cn.com/problems/valid-anagram/)
 
 ```java
 public boolean isAnagram(String s, String t) {
@@ -351,7 +365,7 @@ public boolean isAnagram(String s, String t) {
 
 ### 2. 两数之和
 
-[Leetcode - 1 Two Sum (Easy)](https://leetcode.com/problems/two-sum/)
+[Leetcode - 1 Two Sum (Easy)](https://leetcode-cn.com/problems/two-sum/)
 
 ```java
 public int[] twoSum(int[] nums, int target) {
@@ -369,7 +383,7 @@ public int[] twoSum(int[] nums, int target) {
 
 ### 3. 三数之和
 
-[Leetcode - 15 3Sum (Medium)](https://leetcode.com/problems/3sum/)
+[Leetcode - 15 3Sum (Medium)](https://leetcode-cn.com/problems/3sum/)
 
 使用排序后的双指针代替 Set。
 
@@ -400,7 +414,7 @@ public List<List<Integer>> threeSum(int[] nums) {
 
 ### 4. 四数之和
 
-[Leetcode - 18 4Sum (Medium)](https://leetcode.com/problems/4sum/)
+[Leetcode - 18 4Sum (Medium)](https://leetcode-cn.com/problems/4sum/)
 
 ```java
 public List<List<Integer>> fourSum(int[] nums, int target) {
@@ -434,7 +448,7 @@ public List<List<Integer>> fourSum(int[] nums, int target) {
 
 ### 1. 验证二叉搜索树
 
-[Leetcode - 98 Validate Binary Search Tree (Medium)](https://leetcode.com/problems/validate-binary-search-tree/)
+[Leetcode - 98 Validate Binary Search Tree (Medium)](https://leetcode-cn.com/problems/validate-binary-search-tree/)
 
 ```java
 public boolean isValidBST(TreeNode root) {
@@ -449,7 +463,7 @@ public boolean backtrack(TreeNode root, long max, long min){
 
 ### 2. 二叉树的最小公共祖先
 
-[Leetcode - 236 Lowest Common Ancestor of a Binary Tree (Medium)](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)
+[Leetcode - 236 Lowest Common Ancestor of a Binary Tree (Medium)](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/)
 
 ```java
 public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -462,7 +476,7 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 ### 3. 二叉搜索树的最小公共祖先
 
-[Leetcode - 235 Lowest Common Ancestor of a Binary Search Tree (Easy)](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/)
+[Leetcode - 235 Lowest Common Ancestor of a Binary Search Tree (Easy)](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-search-tree/)
 
 解法一：遍历
 
@@ -497,7 +511,7 @@ public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
 ### 4. 先序遍历
 
-[Leetcode - 144 Binary Tree Preorder Traversal (Medium)](https://leetcode.com/problems/binary-tree-preorder-traversal/)
+[Leetcode - 144 Binary Tree Preorder Traversal (Medium)](https://leetcode-cn.com/problems/binary-tree-preorder-traversal/)
 
 解法一：递归
 
@@ -536,7 +550,7 @@ List<Integer> res = new LinkedList<Integer>();
 
 ### 5. 中序遍历
 
-[Leetcode - 94 Binary Tree Inorder Traversal (Medium)](https://leetcode.com/problems/binary-tree-inorder-traversal/)
+[Leetcode - 94 Binary Tree Inorder Traversal (Medium)](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/)
 
 解法一：递归
 
@@ -575,7 +589,7 @@ public List<Integer> inorderTraversal(TreeNode root) {
 
 ### 6. 后序遍历
 
-[Leetcode - 145 Binary Tree Postorder Traversal (Hard)](https://leetcode.com/problems/binary-tree-postorder-traversal/)
+[Leetcode - 145 Binary Tree Postorder Traversal (Hard)](https://leetcode-cn.com/problems/binary-tree-postorder-traversal/)
 
 解法一：递归
 
@@ -621,7 +635,7 @@ public List<Integer> postorderTraversal(TreeNode root) {
 
 ### 1. x 的 n 次方
 
-[Leetcode - 50 Pow(x,n) (Medium)](https://leetcode.com/problems/powx-n/)
+[Leetcode - 50 Pow(x,n) (Medium)](https://leetcode-cn.com/problems/powx-n/)
 
 解法一：递归
 
@@ -658,7 +672,7 @@ public double myPow(double x, int n) {
 
 ### 2. 多数元素
 
-[Leetcode - 169 Majority Element (Easy)](https://leetcode.com/problems/majority-element/submissions/)
+[Leetcode - 169 Majority Element (Easy)](https://leetcode-cn.com/problems/majority-element/submissions/)
 
 题目描述：题目描述：找出数组中出现次数超过 ⌊ n/2 ⌋ 次的元素，假设这个元素一定存在。
 
@@ -686,7 +700,7 @@ public int majorityElement(int[] nums) {
 
 ### 1. 买卖股票的最佳时间 II
 
-[Leetcode - 122 Best Time to Buy and Sell Stock II (Easy)](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)
+[Leetcode - 122 Best Time to Buy and Sell Stock II (Easy)](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/)
 
 题目描述：给定每日股票的价格，每日可以进行无数次买卖交易，但最多同时只能持有一只股票。
 
@@ -708,7 +722,7 @@ public int maxProfit(int[] prices) {
 
 ### 1. 二叉树的层次遍历
 
-[Leetcode - 102 Binary Tree Level Order Traversal (Medium)](https://leetcode.com/problems/binary-tree-level-order-traversal/)
+[Leetcode - 102 Binary Tree Level Order Traversal (Medium)](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/)
 
 解法一：BFS
 
@@ -753,7 +767,7 @@ public void backtrack(List<List<Integer>> ans, TreeNode curNode, int level){
 
 ### 2. 二叉树的最大深度
 
-[Leetcode - 104 Maximum Depth of Binary Tree (Easy)](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
+[Leetcode - 104 Maximum Depth of Binary Tree (Easy)](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)
 
 ```java
 public int maxDepth(TreeNode root) {
@@ -764,7 +778,7 @@ public int maxDepth(TreeNode root) {
 
 ### 3. 二叉树的最小深度
 
-[Leetcode - 111 Minimum Depth of Binary Tree (Easy)](https://leetcode.com/problems/minimum-depth-of-binary-tree/)
+[Leetcode - 111 Minimum Depth of Binary Tree (Easy)](https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/)
 
 ```java
 public int minDepth(TreeNode root) {
@@ -777,7 +791,7 @@ public int minDepth(TreeNode root) {
 
 ### 4. 生成括号
 
-[Leetcode - 22 Generate Parentheses (Medium)](https://leetcode.com/problems/generate-parentheses/)
+[Leetcode - 22 Generate Parentheses (Medium)](https://leetcode-cn.com/problems/generate-parentheses/)
 
 题目描述：给定整数 n，生成包含 n 个括号合法字符串的所有组合。
 
@@ -808,7 +822,7 @@ public void helper(List<String> res, String curString, int openCount, int closeC
 
 ### 1. N 皇后
 
-[Leetcode - 51 N-Queens (Hard)](https://leetcode.com/problems/n-queens/)
+[Leetcode - 51 N-Queens (Hard)](https://leetcode-cn.com/problems/n-queens/)
 
 题目描述：找到 N 皇后的所有情况。
 
@@ -858,7 +872,7 @@ public boolean validate(char[][] board, int row, int col) {
 
 ### 2. N 皇后 II
 
-[Leetcode - 52 N-Queens II (Hard)](https://leetcode.com/problems/n-queens-ii/)
+[Leetcode - 52 N-Queens II (Hard)](https://leetcode-cn.com/problems/n-queens-ii/)
 
 题目描述：求出 N 皇后的摆放数量。
 
@@ -891,7 +905,7 @@ public void backtracking(int row, boolean[] cols, boolean[] d1, boolean []d2, in
 
 ### 3. 有效数独
 
-[Leetcode - 36 Valid Sudoku (Medium)](https://leetcode.com/problems/valid-sudoku/)
+[Leetcode - 36 Valid Sudoku (Medium)](https://leetcode-cn.com/problems/valid-sudoku/)
 
 题目描述：给定一个 9 × 9 的不完整数独数组，判定是否合法。
 
@@ -922,7 +936,7 @@ public boolean isValidSudoku(char[][] board) {
 
 ### 4. 求解数独
 
-[Leetcode - 37 Sudoku Solver (Hard)](https://leetcode.com/problems/sudoku-solver/)
+[Leetcode - 37 Sudoku Solver (Hard)](https://leetcode-cn.com/problems/sudoku-solver/)
 
 ```java
 public void solveSudoku(char[][] board) {
@@ -963,7 +977,7 @@ public boolean validate(char[][] b, int x, int y) {
 
 ### 1. 求开方
 
-[Leetcode - 69 Sqrt(x) (Easy)](https://leetcode.com/problems/sqrtx/)
+[Leetcode - 69 Sqrt(x) (Easy)](https://leetcode-cn.com/problems/sqrtx/)
 
 题目描述：输入一个整数，求该整数的开方，去除结果的小数位，返回整数。
 
@@ -991,7 +1005,7 @@ public int mySqrt(int x) {
 
 ### 1. 实现字典树（Trie）
 
-[Leetcode - 208 Implement Trie (Prefix Tree) (Medium)](https://leetcode.com/problems/implement-trie-prefix-tree/)
+[Leetcode - 208 Implement Trie (Prefix Tree) (Medium)](https://leetcode-cn.com/problems/implement-trie-prefix-tree/)
 
 ```java
 class TrieNode{
@@ -1052,7 +1066,7 @@ class Trie {
 
 ### 2. 单词搜索 II
 
-[Leetcode - 212 Word Search II (Hard)](https://leetcode.com/problems/word-search-ii/)
+[Leetcode - 212 Word Search II (Hard)](https://leetcode-cn.com/problems/word-search-ii/)
 
 题目描述：搜索在字符矩阵中的字符串。
 
