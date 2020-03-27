@@ -674,7 +674,7 @@ public double myPow(double x, int n) {
 
 [Leetcode - 169 Majority Element (Easy)](https://leetcode-cn.com/problems/majority-element/submissions/)
 
-题目描述：题目描述：找出数组中出现次数超过 ⌊ n/2 ⌋ 次的元素，假设这个元素一定存在。
+题目描述：找出数组中出现次数超过 ⌊ n/2 ⌋ 次的元素，假设这个元素一定存在。
 
 解题思路：利用了摩尔投票算法的思想，每次从序列里选择两个不相同的数字删除掉（抵消），最后剩下一个数字或几个相同的数字，就是出现次数大于总数一半的那个。
 当然，既然放在了分治的目录下，也可以使用分治的方法解题，解题方法不止一种。
@@ -785,7 +785,7 @@ public int minDepth(TreeNode root) {
     if(root == null) return 0;
     int left = minDepth(root.left);
     int right = minDepth(root.right);
-    return (left == 0 || right == 0) ? left + right + 1: Math.mi(left,right) + 1;
+    return (left == 0 || right == 0) ? left + right + 1: Math.min(left, right) + 1;
 }
 ```
 
@@ -798,7 +798,7 @@ public int minDepth(TreeNode root) {
 ```java
 public List<String> generateParenthesis(int n) {
     List<String> res = new ArrayList<String>();
-    helper(res, "", 0, 0, n);
+    helper(res, "", 0, 0, n/2);
     return res;
 }
 
