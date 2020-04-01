@@ -423,7 +423,7 @@ private void dfs(boolean[][] marked, int r, int c) {
     
     marked[r][c] = true;
     if (digitSum[r][c] > threshold) return;
-        count++;
+    count++;
     for (int[] n : next) {
         dfs(marked, r + n[0], c + n[1]);
     }
@@ -448,9 +448,6 @@ private void initStatus(int rows, int cols) {
     }
 }
 ```
-[Online Programming Link](https://www.nowcoder.com/practice/623a5ac0ea5b4e5f95552655361ae0a8?tpId=13&tqId=11203&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
-
-
 
 
 ## 14. 剪绳子
