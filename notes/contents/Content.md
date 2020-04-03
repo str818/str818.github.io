@@ -51,6 +51,12 @@ key: notes-content
 - [MySQL - 索引](https://str818.github.io/2019/07/09/mysql-index-bak.html)
 - [MySQL - 存储引擎](https://str818.github.io/2019/07/09/mysql-storage-engine.html)
 
+## Redis
+
+- [Redis - 概述](https://str818.github.io/2020/03/17/redis-overview.html)
+- [Redis - 五种常用数据类型](https://str818.github.io/2020/04/01/redis-common-data-types.html)
+- [Redis - 文章投票系统](https://str818.github.io/2019/11/14/redis-article-system.html)
+
 ## Web
 
 - [弄懂 Cookie、Session 和 Token](https://str818.github.io/2019/07/08/web-cookie-session-token.html)
