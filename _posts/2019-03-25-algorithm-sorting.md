@@ -30,7 +30,8 @@ public static void selectionSort(int[] arr) {
     if (arr == null || arr.length < 2) return;
   
     for (int i = 0; i < arr.length - 1; i++) {
-        int minIndex = i；//寻找当前循环最小元素的下标
+        // 寻找当前循环最小元素的下标
+        int minIndex = i;
         for (int j = i + 1; j < arr.length; j++) {
             minIndex = arr[j] < arr[minIndex] ? j : minIndex;
         }
@@ -76,15 +77,18 @@ public static void selectionSort(int[] arr) {
 #### 3. 核心代码
 
 ```java
-public static void bubbleSort(int[] arr){
+public static void bubbleSort(int[] arr) {
   
-    if(arr == null || arr.length < 2) return;
+    if (arr == null || arr.length < 2) return;
   
-    for(int e = arr.length - 1; e > 0; e--){
-        for(int i = 0; i < e; i++){
-            if(arr[i] > arr[i + 1]){
-                swap(arr, i, i + 1);
-}}}}
+    for (int i = arr.length - 1; i > 0; i--) {
+        for (int j = 0; j < i; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(arr, j, j + 1);
+            }
+        }
+    }
+}
 ```
 
 从上面的动图可以看出，当将最大的两个元素交换到正确位置时，前面的4个元素已经排序完成，为了减少不必要的比较，可以增加一个标志位，判断排序的结果，只要有一个轮次没有发生交换，表示数组已经排序完成，不再执行下面的轮次。
@@ -121,15 +125,16 @@ public static void bubbleSort(int[] arr){
 #### 3. 核心代码
 
 ```java
-public static void insertionSort(int[] arr){
+public static void insertionSort(int[] arr) {
   
-    if(arr == null || arr.length < 2) return;
+    if (arr == null || arr.length < 2) return;
   
-    for(int i = 1; i < arr.length; i++){
-        for(int j = i - 1; j >= 0 && arr[j] > arr[j + 1]; j--){
-            swap(arr, j, j + 1);
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = i + 1; j > 0 && arr[j] < arr[j - 1]; j--) {
+                swap(arr, j, j - 1);
+            }
+        }
     }
-  }
 }
 ```
 
@@ -172,12 +177,12 @@ public static void shellSort(int[] arr){
     
     if(arr == null || arr.length < 2) return;
 
-    for(int D = arr.length / 2; D >= 1; D = D / 2){
-        for(int i = D; i < arr.length; i++){
+    for (int D = arr.length / 2; D >= 1; D /= 2) {
+        for (int i = D; i < arr.length; i++) {
             int j = i;
-            int temp = number[j];//要插入的值
+            int temp = arr[j]; // 要插入的值
 
-            while(j - D >= 0 && temp < arr[j - D]){
+            while (j - D >= 0 && temp < arr[j - D]) {
                 arr[j] = arr[j - D];
                 j -= D;
             }
@@ -219,31 +224,40 @@ public static void shellSort(int[] arr){
 #### 3. 核心代码
 
 ```java
+public static void mergeSort(int[] arr) {
+    if (arr == null || arr.length < 2) {
+        return;
+    }
+    separate(arr, 0, arr.length - 1);
+}
+
 // 分治
-public static void mergeSort(int[] arr, int l, int r) {
-    if(l == r) return;
-    int mid = l + ((r - l) >> 1);
-    mergeSort(arr, l, mid);
-    mergeSort(arr, mid + 1, r);
+public static void separate(int[] arr, int l, int r) {
+    if (l == r) return;
+    int mid = l + (r - l) / 2;
+    separate(arr, l, mid);
+    separate(arr, mid + 1, r);
     merge(arr, l, mid, r);
 }
+
 // 合并
-public static void merge(int[] arr, int l, int m, int r) {
-    int[] help = new int[r - l + 1];
-    int i = 0;
+public static void merge(int[] arr, int l, int mid, int r) {
+    int[] helper = new int[r - l + 1];
+    int index = 0;
     int p1 = l;
-    int p2 = m + 1;
-    while(p1 <= m && p2 <= r){
-        help[i++] = arr[p1] < arr[p2] ? arr[p1++] : arr[p2++];
+    int p2 = mid + 1;
+
+    while (p1 <= mid && p2 <= r) {
+        helper[index++] = arr[p1] > arr[p2] ? arr[p2++] : arr[p1++];
     }
-    while (p1 <= m) {
-        help[i++] = arr[p1++];
+    while (p1 <= mid) {
+        helper[index++] = arr[p1++];
     }
     while (p2 <= r) {
-        help[i++] = arr[p2++];
+        helper[index++] = arr[p2++];
     }
-    for (i = 0; i < help.length; i++) {
-        arr[l + i] = help[i];
+    for (int i = 0; i < helper.length; i++) {
+        arr[l + i] = helper[i];
     }
 }
 ```
@@ -279,29 +293,37 @@ public static void merge(int[] arr, int l, int m, int r) {
 #### 3. 核心代码
 
 ```java
-public static void quickSort(int[] arr, int l, int r){
-    if(l < r){
-        swap(arr, l + (int)(Math.random() * (r - l + 1))， r);  //随机选取一个基准数
-        int[] p = partition(arr, l, r);                         //小于区域[0,p[0]] 大于区域[p[1],r]
-        quickSort(arr, l, p[0] - 1);
-        quickSort(arr, p[1] + 1, r);
+public static void sort(int[] arr) {
+    if (arr == null || arr.length < 2) {
+        return;
+    }
+    quickSort(arr, 0, arr.length - 1);
+}
+public static void quickSort(int[] arr, int l, int r) {
+    if (l < r) {
+        // 随机选取一个基准数
+        Main.swap(arr, l + (int)(Math.random() * (r - l + 1)), r);
+        // 小于区域[0,p[0]) 大于区域(p[1],r]
+        int[] partition = partition(arr, l, r);
+        quickSort(arr, l, partition[0] - 1);
+        quickSort(arr, partition[1] + 1, r);
     }
 }
 // 以基准数为界，大的在右边，小的在左边   基准数放置在数组的最后一位
-public static int[] partition(int[] arr, int l, int r){
+public static int[] partition(int[] arr, int l, int r) {
     int less = l - 1;
     int more = r;
-    while(l < more){
-        if(arr[l] < arr[r]){
+    while (l < more) {
+        if (arr[l] < arr[r]) {
             swap(arr, ++less, l++);
-        }else if(arr[l] > arr[r]){
+        } else if (arr[l] > arr[r]) {
             swap(arr, --more, l);
-        }else{
+        } else {
             l++;
         }
     }
-    swap(arr, more, r);
-    //返回值分别为小于序列与大于序列的分界线
+    Main.swap(arr, more, r);
+    // 返回值分别为小于序列与大于序列的分界线
     return new int[]{less + 1, more};
 }
 ```
@@ -333,7 +355,7 @@ public static int[] partition(int[] arr, int l, int r){
 
 **通过建立最大/小堆 + 下沉元素找到最值。**
 
-在学习堆排序之前，先了解一下什么是堆。堆是一个数组，可以被看成一个近似的完全二叉树，如下图所示，树上的每一个结点对应数组中的一个元素。除了最底层外，该树是完全充满的，而且是从左到右填充。在不越界的情况下，任何一个节点的左叶子节点在数组中的下标为 2i+1 ，右叶子节点在数组中的下标为 2i+2 ，父节点在数组中的下标为 (i-1)/2 。
+在学习堆排序之前，先了解一下什么是堆。堆是一个数组，可以被看成一个近似的完全二叉树，如下图所示，树上的每一个结点对应数组中的一个元素。除了最底层外，该树是完全充满的，而且是从左到右填充。在不越界的情况下，任何一个节点的左叶子节点在数组中的下标为 `2i+1` ，右叶子节点在数组中的下标为 `2i+2` ，父节点在数组中的下标为 `(i-1)/2` 。
 
 <div align="center">  <img src="https://s1.ax1x.com/2020/03/25/8OXaND.png" width="50%"/> </div><br>
 
@@ -349,7 +371,7 @@ public static int[] partition(int[] arr, int l, int r){
 
 ###### Ⅰ. 建立最大堆
 
-首先，我们有一个待排序数组，如何把这一数组调整成最大堆的形式呢？这个过程就是建立最大堆的过程。例如，数组 [ 3 6 2 1 0 4 ]，可以先将第一个元素 3 看成一个堆，之后将第二个元素 6 加入堆中，将其与父节点 3 进行比较，若比父节点 3 大，则与之交换，一直向上比较直到到达根节点或不比父节点大为止。这样的一轮操作，就将元素 6 插入到了堆中，之后又调整成了最大堆。以此类推，不断将后面的元素插入到堆中，并调整成最大堆，直到数组中的元素都插入到了堆，整个数组就成为了最大堆的排序形式。
+首先，我们有一个待排序数组，如何把这一数组调整成最大堆的形式呢？这个过程就是建立最大堆的过程。例如，数组 `[ 3 6 2 1 0 4 ]`，可以先将第一个元素 3 看成一个堆，之后将第二个元素 6 加入堆中，将其与父节点 3 进行比较，若比父节点 3 大，则与之交换，一直向上比较直到到达根节点或不比父节点大为止。这样的一轮操作，就将元素 6 插入到了堆中，之后又调整成了最大堆。以此类推，不断将后面的元素插入到堆中，并调整成最大堆，直到数组中的元素都插入到了堆，整个数组就成为了最大堆的排序形式。
 
 <div align="center">  <img src="https://s1.ax1x.com/2020/03/25/8OXcHf.png" width="85%"/> </div><br>
 
@@ -364,7 +386,7 @@ public static int[] partition(int[] arr, int l, int r){
 #### 3. 核心代码
 
 ```java
-public static void heapSort(int[] arr){
+public static void heapSort(int[] arr) {
     if(arr == null || arr.length < 2) return null;
     //建立最大堆
     for (int i = 0; i < arr.length; i++) {
