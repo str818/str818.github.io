@@ -12,69 +12,39 @@ show_subscribe: false
 
 ## 3. 数组中重复的数字
 
-### I. 找出数组中的重复数字
+[Code It Now !!!](https://leetcode-cn.com/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/)
 
-题目描述：在一个长度为 n 的数组里，所有的数字都在 0 ~ n-1 的范围内。数组中某些数字是重复的，找出数组中任意一个重复的数字。
+**题目描述**：在一个长度为 `n` 的数组里，所有的数字都在 `0 ~ n-1` 的范围内。数组中某些数字是重复的，找出数组中任意一个重复的数字。
 
-解题思路：首先可以考虑排序，时间复杂度 O(nlogn)；其次哈希表也能够解决，时间复杂度 O(n)，额外空间复杂度 O(n);最优的解法时间复杂度 O(n)，额外空间复杂度 O(1)。
+```
+输入：[2, 3, 1, 0, 2, 5, 3]
+输出：2 或 3 
+```
 
-数组中的数字都在 0 ~ n-1 的范围内，如果数组中没有重复的数字，那么当数组排序后数字 i 将都会出现在下标为 i 的位置。如果有重复数字，就不出现不止一个数字 i 出现在下标为 i 的位置，利用这一原理可以求解。
+**解题思路**：首先可以考虑排序，时间复杂度 $O(nlogn)$；其次哈希表也能够解决，时间复杂度 $O(n)$，额外空间复杂度 $O(n)$；最优的解法时间复杂度 $O(n)$，额外空间复杂度 $O(1)$。
+
+数组中的数字都在 `0 ~ n-1` 的范围内，如果数组中没有重复的数字，那么当数组排序后数字 `i` 将都会出现在下标为 `i` 的位置。如果有重复数字，就不出现不止一个数字 `i` 出现在下标为 `i` 的位置，利用这一原理可以求解。
 
 ```java
-public boolean duplicate(int[] nums, int length,int[] duplication) {
-    if (nums == null || length <= 0)
-        return false;
-    for (int i = 0; i < length; i++) {
+public static int findRepeatNumber(int[] nums) {
+    if (nums == null || nums.length == 0) {
+        return -1;
+    }
+    for (int i = 0; i < nums.length; i++) {
         while (nums[i] != i && nums[nums[i]] != nums[i]) {
             swap(nums, i, nums[i]);
         }
         if (nums[i] != i) {
-            duplication[0] = nums[i];
-            return true;
+            return nums[i];
         }
     }
-    return false;
-}
-private void swap(int[] nums, int a, int b) {
-    int tmp = nums[a];
-    nums[a] = nums[b];
-    nums[b] = tmp;
-}
-```
-
-### II. 不修改数组找出重复的数字
-
-解题思路：可以开辟一个数组，依次将原数组中的元素放入对应的位置，判断是否重复，额外空间复杂度 O(n)；还有一种额外空间复杂度 O(1) 的方法，利用二分的思想，把从 1 ~ n 的数字从中间的数字 m 分为两部分，前面一半为 1 ~ m，后面一半为 m + 1 ~ n。如果 1 ~ m 的数字数目超过 m，那么这一版的区间一定包含重复的数字。
-
-```java
-public int getDuplication(int[] nums, int length){
-    if(nums == null || length <= 0) return -1;
-    int start = 1;
-    int end = length - 1;
-    while(end >= start){
-        int mid = start + ((end - start) >> 1);
-        int count = countRange(nums, length, start, middle);
-        if(end == start){
-            if(count > 1) return start;
-            else break;
-        }
-        if(count > (middle - start + 1)){
-            end = middle;
-        }else{
-            start = middle;
-        }
-    }
+    return -1;
 }
 
-public int countRange(int[] nums, int length, int start, int end){
-    if(nums == null) return 0;
-    int count = 0;
-    for(int i = 0; i < length; i++){
-        if(nums[i] >= start && numbers[i] <= end){
-            ++count;
-        }
-    }
-    return count;
+public static void swap(int[] nums, int i, int j) {
+    int temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
 }
 ```
 
