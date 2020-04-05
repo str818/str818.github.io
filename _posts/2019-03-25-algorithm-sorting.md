@@ -129,10 +129,9 @@ public static void insertionSort(int[] arr) {
   
     if (arr == null || arr.length < 2) return;
   
-        for (int i = 0; i < arr.length - 1; i++) {
-            for (int j = i + 1; j > 0 && arr[j] < arr[j - 1]; j--) {
+    for (int i = 0; i < arr.length - 1; i++) {
+        for (int j = i + 1; j > 0 && arr[j] < arr[j - 1]; j--) {
                 swap(arr, j, j - 1);
-            }
         }
     }
 }
@@ -299,6 +298,7 @@ public static void sort(int[] arr) {
     }
     quickSort(arr, 0, arr.length - 1);
 }
+
 public static void quickSort(int[] arr, int l, int r) {
     if (l < r) {
         // 随机选取一个基准数
@@ -309,6 +309,7 @@ public static void quickSort(int[] arr, int l, int r) {
         quickSort(arr, partition[1] + 1, r);
     }
 }
+
 // 以基准数为界，大的在右边，小的在左边   基准数放置在数组的最后一位
 public static int[] partition(int[] arr, int l, int r) {
     int less = l - 1;
@@ -400,6 +401,7 @@ public static void heapSort(int[] arr) {
         swap(arr, 0, --size);
     }
 }
+
 // 将 index 位置的元素插入最大堆，并调整最大堆
 public static void heapInsert(int[] arr, int index) {
     while (arr[index] > arr[(index - 1) / 2]) {
@@ -407,6 +409,7 @@ public static void heapInsert(int[] arr, int index) {
         index = (index - 1) / 2;
     }
 }
+
 // 下沉元素
 public static void heapify(int[] arr, int index, int size) {
     int left = index * 2 + 1;
@@ -459,33 +462,37 @@ public static void heapify(int[] arr, int index, int size) {
 #### 3. 核心代码
 
 ```java
-public static void countingSort(int[] arr){
+public static void countingSort(int[] arr) {
 
     if(arr == null || arr.length < 2) return;
 
+    // 找出最大值与最小值
     int maxValue = Integer.MIN_VALUE;
     int minValue = Integer.MAX_VALUE;
-    // 找出最大值与最小值
-    for(int i = 0; i < arr.length; i++){
-        if(arr[i] > maxValue) maxValue = arr[i];
-        else if(arr[i] < minValue) minValue = arr[i];
+    for (int value : arr) {
+        maxValue = Math.max(value, maxValue);
+        minValue = Math.min(value, minValue);
     }
+
     // 初始化计数数组
     int[] counter = new int[maxValue - minValue + 1];
     for(int i = 0; i < arr.length; i++){
         counter[arr[i] - minValue]++;
     }
+
     // 计算每个元素的位置
-    for(int i = 0; i < counter.length - 1; i++){
+    for(int i = 0; i < counter.length - 1; i++) {
         counter[i + 1] += counter[i];
     }
+
     // 初始化一个新的数组存放排序后的元素
     int[] ans = new int[arr.length];
     for(int i = arr.length - 1; i >= 0; i--) {
         ans[counter[arr[i] - minValue] - 1] = arr[i];
         counter[arr[i] - minValue]--;
     }
-    //将排序结果赋值到原始数组中
+
+    // 将排序结果赋值到原始数组中
     for(int i = 0; i < arr.length; i++){
         arr[i] = ans[i];
     }
@@ -526,41 +533,43 @@ public static void countingSort(int[] arr){
 #### 3. 核心代码
 
 ```java
-public static void bucketSort(int[] arr){
+public static void bucketSort(int[] arr) {
     
+    if (arr == null || arr.length < 2) return;
+
     // 计算最大值与最小值
     int max = Integer.MIN_VALUE;
     int min = Integer.MAX_VALUE;
-    for(int i = 0; i < arr.length; i++){
-        max = Math.max(max, arr[i]);
-        min = Math.min(min, arr[i]);
+    for (int value : arr) {
+        max = Math.max(max, value);
+        min = Math.min(min, value);
     }
-    
+
     // 计算桶的数量
     int bucketNum = (max - min) / arr.length + 1;
     ArrayList<ArrayList<Integer>> bucketArr = new ArrayList<>(bucketNum);
     for(int i = 0; i < bucketNum; i++){
-        bucketArr.add(new ArrayList<Integer>());
+        bucketArr.add(new ArrayList<>());
     }
-    
+
     // 将每个元素放入桶
-    for(int i = 0; i < arr.length; i++){
-        int num = (arr[i] - min) / (arr.length);
-        bucketArr.get(num).add(arr[i]);
+    for (int value : arr) {
+        int num = (value - min) / (arr.length);
+        bucketArr.get(num).add(value);
     }
-    
+
     // 对每个桶进行排序
-    for(int i = 0; i < bucketArr.size(); i++){
-        Collections.sort(bucketArr.get(i));
+    for (ArrayList<Integer> integers : bucketArr) {
+        Collections.sort(integers);
     }
-    
+
     // 将桶中的元素赋值到原序列
     int index = 0;
-    for(int i = 0; i < bucketArr.size(); i++){
-        for(int j = 0; j < bucketArr.get(i).size(); j++){
-            arr[index++] = bucketArr.get(i).get(j);
+    for (ArrayList<Integer> integers : bucketArr) {
+        for (Integer integer : integers) {
+            arr[index++] = integer;
         }
-    }  
+    }
 }
 ```
 
@@ -568,7 +577,7 @@ public static void bucketSort(int[] arr){
 
 ###### Ⅰ. 时间复杂度
 
-O(N + C)
+$O(N + C)$
 
 对于待排序序列大小为 N，共分为 M 个桶，主要步骤有：
 
@@ -584,7 +593,7 @@ $O(N)+O(M*(N/Mlog(N/M)))=O(N(log(N/M)+1))$
 
 ###### Ⅱ. 额外空间复杂度
 
-O(N + M)
+$O(N + M)$
 
 ###### Ⅲ. 稳定性
 
@@ -593,6 +602,8 @@ O(N + M)
 ## 十、基数排序
 
 #### 1. 思想
+
+**从最低位向最高位依次排序。**
 
 基数排序可以看成是桶排序的扩展，以整数排序为例，主要思想是将整数按位数划分，准备 10 个桶，代表 0 - 9，根据整数个位数字的数值将元素放入对应的桶中，之后按照输入赋值到原序列中，依次对十位、百位等进行同样的操作，最终就完成了排序的操作。
 
@@ -603,23 +614,9 @@ O(N + M)
 #### 3. 核心代码
 
 ```java
-public static void radixSort(int[] arr){
+public static void sort(int[] arr) {
     if(arr == null || arr.length < 2) return;
-    radixSort(arr, 0, arr.length - 1, maxbit(arr));
-}
-
-// 计算最大位数
-public static int maxbits(int[] arr){
-    int max = Integer.MIN_VALUE;
-    for (int i = 0; i < arr.length; i++) {
-        max = Math.max(max, arr[i]);
-    }
-    int res = 0;
-    while (max != 0) {
-        res++;
-      max /= 10;
-    }
-    return res;
+    radixSort(arr, 0, arr.length - 1, maxBits(arr));
 }
 
 // 基数排序
@@ -633,18 +630,18 @@ public static void radixSort(int[] arr, int begin, int end, int digit) {
         for (i = 0; i < radix; i++) {
             count[i] = 0;
         }
-			
+
         // 统计数量
         for (i = begin; i <= end; i++) {
             j = getDigit(arr[i], d);
             count[j]++;
         }
-          
+
         // 计算位置
         for (i = 1; i < radix; i++) {
             count[i] = count[i] + count[i - 1];
         }
-          
+
         // 记录到对应位置
         for (i = end; i >= begin; i--) {
             j = getDigit(arr[i], d);
@@ -655,6 +652,20 @@ public static void radixSort(int[] arr, int begin, int end, int digit) {
             arr[i] = bucket[j];
         }
     }
+}
+
+// 计算最大位数
+public static int maxBits(int[] arr) {
+    int max = Integer.MIN_VALUE;
+    for (int value : arr) {
+        max = Math.max(max, value);
+    }
+    int res = 0;
+    while (max != 0) {
+        res++;
+        max /= 10;
+    }
+    return res;
 }
 
 // 获取位数数值
@@ -669,11 +680,11 @@ public static int getDigit(int x, int d) {
 
 k 为关键字个数，本文的上述距离关键字为 2 个，分别是个位和十位；m 为 关键字的取值范围，本文的举例关键字取值范围 m 为 10（0 - 9）；n 为待排序序列的元素数量。
 
-总共遍历 k 遍，每一遍包含：将每个元素放进桶中（n） 与 将桶中元素收回到原序列中（m），所以时间复杂度为 O(k*(n+m))。
+总共遍历 k 遍，每一遍包含：将每个元素放进桶中（n） 与 将桶中元素收回到原序列中（m），所以时间复杂度为 $O(k*(n+m))$。
 
 ###### Ⅱ. 额外空间复杂度
 
-m 个桶与存放 n 个元素的空间，O(n + m)。
+m 个桶与存放 n 个元素的空间，$O(n + m)$。
 
 ###### Ⅲ. 稳定性
 
