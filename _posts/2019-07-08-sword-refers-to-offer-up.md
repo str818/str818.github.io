@@ -50,25 +50,35 @@ public static void swap(int[] nums, int i, int j) {
 
 ## 4. 二维数组中的查找
 
-[Online Programming Link](https://www.nowcoder.com/practice/abc3fe2ce8e146608e868a70efebf62e?tpId=13&tqId=11154&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/)
 
-题目描述：一个二维数组的每一行从左到右递增，每一列从上到下递增，判断数组中是否包含一个整数。
+**题目描述**：一个二维数组的每一行从左到右递增，每一列从上到下递增，判断数组中是否包含一个整数。
 
-解题思路：从右上角开始找。
+```
+[
+  [1,   4,  7, 11, 15],
+  [2,   5,  8, 12, 19],
+  [3,   6,  9, 16, 22],
+  [10, 13, 14, 17, 24],
+  [18, 21, 23, 26, 30]
+]
+给定 target = 5，返回 true
+```
+
+**解题思路**：从右上角开始找，利用「从上到下递增、从左到右递增」的特点。
 
 ```java
-public boolean Find(int target, int[][] array) {
-    if (array == null || array.length == 0 || array[0].length == 0)
-        return false;
-    int i = 0, j = array[0].length - 1;
-    while (i < array.length && j >= 0) {
-        if (array[i][j] == target) {
+public boolean findNumberIn2DArray(int[][] matrix, int target) {
+    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return false;
+    int i = 0, j = matrix[0].length - 1;
+    while (i < matrix.length && j >= 0) {
+        if (matrix[i][j] == target) {
             return true;
         }
-        if (array[i][j] > target) {
-            j--;
-        } else {
+        if (target > matrix[i][j]) {
             i++;
+        } else {
+            j--;
         }
     }
     return false;
@@ -77,92 +87,128 @@ public boolean Find(int target, int[][] array) {
 
 ## 5. 替换空格
 
-[Online Programming Link](https://www.nowcoder.com/practice/4060ac7e3e404ad1a894ef3e17650423?tpId=13&tqId=11155&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/ti-huan-kong-ge-lcof/)
 
-题目描述：将字符串中的空格替换成"%20"。
+**题目描述**：将字符串中的空格替换成"%20"。
 
-解题思路：如果从前向后替换的话，需要不断将后面的字符后移，所以可以先遍历字符串将需要添加的字符数量扩充到字符串的后面，从后向前依次替换。
+```
+输入：s = "We are happy."
+输出："We%20are%20happy."
+```
+
+**解题思路**：如果从前向后替换的话，需要不断将后面的字符后移，所以可以先遍历字符串将需要添加的字符数量扩充到字符串的后面，从后向前依次替换。
 
 ```java
-public String replaceSpace(StringBuffer str) {
-    int p1 = str.length() - 1;
-    for(int i = 0; i <= p1; i++){
-        if(str.charAt(i) == ' '){
-            str.append("  ");
+public String replaceSpace(String s) {
+
+    StringBuilder sb = new StringBuilder(s);
+    int p1 = sb.length() - 1;
+    for (int i = 0; i <= p1; i++) {
+        if (sb.charAt(i) == ' ') {
+            sb.append("  ");
         }
     }
-    int p2 = str.length() - 1;
-    while(p1 >= 0 && p2 > p1){
-        char c = str.charAt(p1--);
-        if(c == ' '){
-            str.setCharAt(p2--, '0');
-            str.setCharAt(p2--, '2');
-            str.setCharAt(p2--, '%');
-        }else{
-            str.setCharAt(p2--, c);
+
+    int p2 = sb.length() - 1;
+    while (p1 >= 0 && p2 > p1) {
+        char c = sb.charAt(p1--);
+        if (c == ' ') {
+            sb.setCharAt(p2--, '0');
+            sb.setCharAt(p2--, '2');
+            sb.setCharAt(p2--, '%');
+        } else {
+            sb.setCharAt(p2--, c);
         }
     }
-    return str.toString();
+
+    return sb.toString();
 }
 ```
 
 ## 6. 从尾到头打印链表
 
-[Online Programming Link](https://www.nowcoder.com/practice/d0267f7f55b3412ba93bd35cfa8e8035?tpId=13&tqId=11156&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/cong-wei-dao-tou-da-yin-lian-biao-lcof/)
 
-解法一：递归
+**题目描述**：输入一个链表的头节点，从尾到头反过来返回每个节点的值（用数组返回）。
+
+```
+输入：head = [1,3,2]
+输出：[2,3,1]
+```
+
+**解法一**：递归
 
 ```java
-private ArrayList<Integer> res = new ArrayList<>();
-public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
-    helper(listNode);
-    return res;
+ArrayList<Integer> res = new ArrayList<>();
+public int[] reversePrint(ListNode head) {
+    helper(head);
+    int[] ans = new int[res.size()];
+    for (int i = 0; i < res.size(); i++) {
+        ans[i] = res.get(i);
+    }
+    return ans;
 }
-public void helper(ListNode node) {
-    if (node == null) return;
-    helper(node.next);
-    res.add(node.val);
+public void helper(ListNode cur) {
+    if (cur == null) return;
+    helper(cur.next);
+    res.add(cur.val);
 }
 ```
 
-解法二：栈
+**解法二**：栈
 
 ```java
-public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
-    Stack<Integer> stack = new Stack<>();
-    while (listNode != null) {
-        stack.add(listNode.val);
-        listNode = listNode.next;
+Stack<Integer> stack = new Stack<>();
+public int[] reversePrint(ListNode head) {
+    ListNode cur = head;
+    while(cur != null) {
+        stack.push(cur.val);
+        cur = cur.next;
     }
-    ArrayList<Integer> list = new ArrayList<>();
-    while (!stack.isEmpty())
-        list.add(stack.pop());
-    return list;
+    int[] res = new int[stack.size()];
+    int index = 0;
+    while(!stack.isEmpty()) {
+        res[index++] = stack.pop();
+    }
+    return res;
 }
 ```
 
 ## 7. 重建二叉树
 
-[Online Programming Link](https://www.nowcoder.com/practice/8a19cbe657394eeaac2f6ea9b0f6fcf6?tpId=13&tqId=11157&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/zhong-jian-er-cha-shu-lcof/)
 
-题目描述：给定二叉树的先序与中序遍历，重建二叉树。
+**题目描述**：给定二叉树的先序与中序遍历，重建二叉树。
 
-解题思路：二叉树先序遍历的第一个结点是根节点，找到其在中序遍历里的位置，二分。
+```
+前序遍历 preorder = [3,9,20,15,7]
+中序遍历 inorder = [9,3,15,20,7]
+```
+
+```
+    3
+   / \
+  9  20
+    /  \
+   15   7
+```
+
+**解题思路**：二叉树先序遍历的第一个结点是根节点，找到其在中序遍历里的位置，二分。
 
 ```java
-public TreeNode reConstructBinaryTree(int[] pre,int[] in) {
-    return reConstructBinaryTree(pre, 0, in, 0, in.length);
+public TreeNode buildTree(int[] preorder, int[] inorder) {
+    return helper(preorder, 0, inorder, 0, inorder.length);
 }
-private TreeNode reConstructBinaryTree(int[] pre, int preIndex, int[] in, int inL, int inR) {
-    
-    if (preIndex >= pre.length || inL == inR)
+
+public TreeNode helper(int[] preorder, int preIndex, int[] inorder, int inLeft, int inRight) {
+    if (preIndex >= preorder.length || inLeft == inRight) {
         return null;
-    
-    TreeNode root = new TreeNode(pre[preIndex]);
-    for (int i = inL; i < inR; i++) {
-        if (in[i] == pre[preIndex]) {
-            root.left = reConstructBinaryTree(pre, preIndex + 1, in, inL, i);
-            root.right = reConstructBinaryTree(pre, preIndex + i - inL + 1, in, i + 1, inR);
+    }
+    TreeNode root = new TreeNode(preorder[preIndex]);
+    for (int i = inLeft; i < inRight; i++) {
+        if (inorder[i] == preorder[preIndex]) {
+            root.left = helper(preorder, preIndex + 1, inorder, inLeft, i);
+            root.right = helper(preorder, preIndex + i - inLeft + 1, inorder, i + 1, inRight);
         }
     }
     return root;
@@ -171,11 +217,11 @@ private TreeNode reConstructBinaryTree(int[] pre, int preIndex, int[] in, int in
 
 ## 8. 二叉树的下一个结点
 
-[Online Programming Link](https://www.nowcoder.com/practice/9023a0c988684a53960365b889ceaf5e?tpId=13&tqId=11210&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://www.nowcoder.com/practice/9023a0c988684a53960365b889ceaf5e?tpId=13&tqId=11210&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
-题目描述：给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
+**题目描述**：给定一个二叉树和其中的一个结点，找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
 
-解题思路：如果右结点不为空，则为右子树的最左结点；否则，为当前树的根结点，前提是当前结点为该左子树中的结点。
+**解题思路**：如果右结点不为空，则为右子树的最左结点；否则，为当前树的根结点，前提是当前结点为该左子树中的结点。
 
 ```java
 public TreeLinkNode GetNext(TreeLinkNode pNode) {
@@ -199,7 +245,9 @@ public TreeLinkNode GetNext(TreeLinkNode pNode) {
 
 ## 9. 用两个栈实现队列
 
-[Online Programming Link](https://www.nowcoder.com/practice/54275ddae22f475981afa2244dd448c6?tpId=13&tqId=11158&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/)
+
+**解题思路**：维护两个栈，每次入队列都存到 in 栈中，出队列从 out 栈出。
 
 ```java
 Stack<Integer> in = new Stack<Integer>();
@@ -223,16 +271,21 @@ public int pop() throws Exception {
 
 ## 10.1 斐波那契数列
 
-[Online Programming Link](https://www.nowcoder.com/practice/c6c7742f5ba7442aada113136ddea0c3?tpId=13&tqId=11160&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof/)
+
+```
+F(0) = 0,   F(1) = 1
+F(N) = F(N - 1) + F(N - 2), 其中 N > 1.
+```
 
 ```java
-public int Fibonacci(int n) {
-    if (n <= 1) return n;
+public int fib(int n) {
+    if (n < 2) return n;
     int a = 0, b = 1;
     for (int i = 2; i <= n; i++) {
-        int tmp = b;
-        b = a + b;
-        a = tmp;
+        int sum = a + b;
+        a = b;
+        b = sum;
     }
     return b;
 }
@@ -240,18 +293,20 @@ public int Fibonacci(int n) {
 
 ## 10.2 矩形覆盖
 
-[Online Programming Link](https://www.nowcoder.com/practice/72a5a919508a4251859fb2cfb987a0e6?tpId=13&tqId=11163&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://www.nowcoder.com/practice/72a5a919508a4251859fb2cfb987a0e6?tpId=13&tqId=11163&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
-题目描述：我们可以用 `2*1` 的小矩形横着或者竖着去覆盖更大的矩形。请问用 n 个 `2*1` 的小矩形无重叠地覆盖一个 `2*n` 的大矩形，总共有多少种方法？
+**题目描述**：我们可以用 `2*1` 的小矩形横着或者竖着去覆盖更大的矩形。请问用 n 个 `2*1` 的小矩形无重叠地覆盖一个 `2*n` 的大矩形，总共有多少种方法？
+
+**解题思路**：归纳法能看出符合斐波那契数列。
 
 ```java
 public int RectCover(int target) {
     if (target <= 2) return target;
     int a = 1, b = 2;
     for (int i = 3; i <= target; i++) {
-        int tmp = b;
-        b += a;
-        a = tmp;
+        int sum = a + b;
+        a = b;
+        b = sum;
     }
     return b;
 }
@@ -259,18 +314,21 @@ public int RectCover(int target) {
 
 ## 10.3 跳台阶
 
-[Online Programming Link](https://www.nowcoder.com/practice/8c82a5b80378478f9484d87d1c5f12a4?tpId=13&tqId=11161&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/qing-wa-tiao-tai-jie-wen-ti-lcof/)
 
-题目描述：一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
+**题目描述**：一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
+
+**解题思路**：符合斐波那契数列。
 
 ```java
-public int JumpFloor(int target) {
-    if (target <= 2) return target;
+public int numWays(int n) {
+    if (n == 0) return 1;
+    if (n <= 2) return n;
     int a = 1, b = 2;
-    for (int i = 3; i <= target; i++) {
-        int tmp = b;
-        b += a;
-        a = tmp;
+    for (int i = 3; i <= n; i++) {
+        int sum = a + b;
+        a = b;
+        b = sum;
     }
     return b;
 }
