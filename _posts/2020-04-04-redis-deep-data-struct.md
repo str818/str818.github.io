@@ -18,6 +18,8 @@ Redis 没有直接使用 C 语言传统的字符串表示，而是自己构建�
 
 SDS 字符串可以看做是对 C 字符串的进一步封装，但是内部实现十分巧妙，有效避免了内存溢出、申请销毁开销过大等问题。
 
+<div align="center"> <img src="https://s1.ax1x.com/2020/04/05/GDYxER.png" width="70%"/> </div> 
+
 ```c
 struct __attribute__ ((__packed__)) sdshdrX { // X 代表 bit 长度
     uintX_t len; 					// 字符串的实际长度
@@ -68,3 +70,217 @@ Redis 作为数据库，经常被用于速度要求严苛、数据被品牌修�
 ### 5. 二进制安全
 
 C 字符串中的字符必须符合某种编码，并且除了字符串的末尾之外，字符串里面不能包含空字符，这些限制使得 C 字符串只能保存文本数据，而不能保存像图片、音频、视频、压缩文件这样的二进制数据。而 SDS 会以处理二进制的方式来处理 SDS 存放在 buf 数组里的数据，程序不会对其中的数据做任何限制或过滤。
+
+## 二、链表
+
+链表是一种常见的数据结构，在 Redis 中使用非常广泛，列表对象的底层实现之一就是链表。Redis 链表使用双向无环链表，提供了高效的节点重排能力和节点访问方式，并且可以通过左/右增删来灵活的调整链表的长度。
+
+### 1. 数据结构
+
+链表节点使用 `listNode` 数据结构表示：
+
+```C
+typedef struct listNode {
+    struct listNode *prev; // 前置节点指针
+    struct listNode *next; // 后置节点指针
+    void *value;           // 该节点值指针
+} listNode;
+```
+
+Redis 为了方便的操作链表，提供了一个 list 结构体来持有链表节点:
+
+```c
+typedef struct list {
+    listNode *head; // 表头节点指针
+    listNode *tail; // 表尾节点指针
+    void *(*dup)(void *ptr); // 节点值复制函数
+    void (*free)(void *ptr); // 节点值释放函数
+    int (*match)(void *ptr, void *key); // 节点值比较函数
+    unsigned long len; // 链表包含的节点数量
+} list;
+```
+
+### 2. 特点
+
+从上面链表的数据结构可以看出，Redis 中的链表有如下特点：
+
+- **双端**：链表节点带有 prev 和 next 指针，获取某个节点的前置和后置节点的复杂度都是 $O(1)$
+- **无环**：表头节点的 prev 指针和表尾节点的 next 指针都指向 NULL，对链表的访问以 NULL 尾终点
+- **表头和表尾指针**：通过 list 结构的 head 和 tail 指针，获取表头和表尾节点的复杂度均为 $O(1)$
+
+- **链表长度**：通过 list 中的 len，获取链表长度复杂度 $O(1)$
+
+- **多态**：链表节点使用 `void*` 指针保存节点值，可以用于保存各种不同类型的值
+
+## 三、压缩列表
+
+压缩列表（ziplist）是列表和哈希对象的底层实现之一，它是为了尽可能地节约内存而设计的特殊编码双端链表，可以储存字符串值和整数值。
+
+### 1. 数据结构
+
+<div align="center"> <img src="https://s1.ax1x.com/2020/04/06/GyRMPx.png" width="80%"/> </div>
+
+- zlbytes：记录整个压缩列表的内存字节数
+- zltail：记录压缩列表表尾节点距离压缩列表的起始地址有多少字节
+- zllen：压缩列表包含节点的数量
+- entry：压缩列表包含的各个节点
+- zlend：用户标记压缩列表的末端
+
+每个压缩列表节点可以保存一个字节数组或者一个整数值，该节点由 `previous_entry_length`、`encoding`、`content` 三个部分组成。
+
+- previous_entry_length：保存着前置节点长度，可以利用指针运算计算出前置节点的起始位置
+- encoding：保存者当前节点值的数据类型与长度，编码方式取决于存储的值
+- content：保存着该节点的实际值
+
+### 2. 内存重分配
+
+压缩链表的实质是将数据按照一定规则存储在一块连续的内存区域中，以达到节省内存的目的。**但这种数据结构并不擅长做修改操作，一旦数据大小发生变化，就会触发`realloc`进行内存分配**，可能发生的情况有三种：
+
+- 由于内存区域是连续的，如果后面的空余内存空间足够大，那么直接在后面扩展内存空间；
+- 如果剩余空间不足，将会从堆中寻找一块新的内存区域，将旧数据拷贝过去并写入新数据；
+- 由于节点中存在 `previous_entry_length` 结构，保存着前置节点的长度，如果该值由小于 254 增加至大于 254，那么 `previous_entry_length` 所占据的内存空间也将发生变化，从而引发连锁更新。
+
+## 四、跳跃表
+
+跳跃表（skiplist）是一种有序数据结构，它通过在每个节点中维持多个指向其他节点的指针，从而达到快速访问节点的目的。
+
+在一个链表中，如果要查找某个数据，需要从头开始逐个进行比较，知道找到数据的那个节点，也就是说，时间复杂度 $O(n)$。假如，我们在一些节点中增加额外的指针，指向更后面的节点，这样在查找的过程中就不需要逐个与每个节点比较了。
+
+例如，我们想在下图中找到 22 这个节点，首先从最上层开始查找，找到了值为 19 的节点，19 比 22 要小，这样只需要在 19 节点之后查找就可以了，直接跳过了 19 前面的所有节点；之后从第二层查找，发现 19 在第二层的下一个节点为 26，比 22 要大，这时就需要再往下走一层，第三层找到了值为 22 的节点。
+
+<div align="center"> <img src="https://s1.ax1x.com/2020/04/06/GyHfHK.png" width="90%"/> </div>
+
+理想的情况是上一层链表的个数是下一层链表个数的一半，这样查找过程就相当于二分查找，使得查找的时间复杂度可以降低到 $O(logn)$，但是如果在插入节点的过程中，严格的保证这种 2:1 的关系，就需要把新插入节点后面的所有节点都进行调整，显然成本太大了。
+
+那么 Redis 是怎么处理这一问题的呢？skiplist 为每个节点随机出一个层数，也就是说新插入一个节点不会影响其它节点的层数。这让它在插入性能上明显优于平衡数的方案。
+
+### 1. 数据结构
+
+- 跳跃表节点
+
+```c
+typedef struct zskiplistNode {
+    // 成员对象
+    sds ele;
+    // 成员分值
+    double score;
+    // 后退指针
+    struct zskiplistNode *backward;
+    // 层结构体
+    struct zskiplistLevel {
+        // 前进指针，表示该节点第 x 层的下一个节点
+        struct zskiplistNode *forward;
+        // 跨度，表示从该节点到第 x 层的下一个节点跳跃了多少节点
+        unsigned long span;
+    } level[];
+} zskiplistNode;
+```
+
+- 跳跃表
+
+```c
+typedef struct zskiplist {
+    // 指向表头节点和表尾节点
+    struct zskiplistNode *header, *tail;
+    // 节点的数量，不包含表头节点
+    unsigned long length;
+    // 节点的最大层数，不包含表头节点
+    int level;
+} zskiplist;
+```
+
+### 2. 随机层数算法
+
+跳跃表节点的层高由随机数函数 `zslRandomLevel()` 决定：
+
+```c
+int zslRandomLevel(void) {
+    int level = 1;
+    while ((random()&0xFFFF) < (ZSKIPLIST_P * 0xFFFF))
+        level += 1;
+    return (level<ZSKIPLIST_MAXLEVEL) ? level : ZSKIPLIST_MAXLEVEL;
+}
+```
+
+初始层高均为 1，`random()`函数返回一个[0…1)的随机数，如果该随机数小于`ZSKIPLIST_P = 0.25`，那么将 level 值加一，并一直循环执行，直到不满足该条件或达到最大层级数`ZSKIPLIST_MAXLEVEL = 32`。可以看出，节点层数的计算不依赖于其它节点，而且生成越高的节点层数的概率越低。
+
+### 3. 为什么使用跳跃表
+
+首先，因为 zset 要支持随机的插入和删除，所以不适合使用数组来实现。关于排序的问题，我们也很容易想到 **红黑树/平衡树** 这样的树形结构，为什么 Redis 不适用这样的一些数据结构呢？
+
+- **性能考虑**：在高并发的情况下，树形结构需要执行一些类似于 rebalance 这样可能涉及整棵树的操作，相对来说，跳跃表的变化只涉及局部。
+
+- **实现考虑**：在复杂度与红黑树相同的情况下，跳跃表实现起来更简单，看起来也更直观。
+
+## 五、字典
+
+字典（dict）是哈希表的底层实现之一，当一个哈希表包含的键值对比较多，或者键值对中的元素都是比较长的字符串时，Redis 将会使用字典作为哈希键的底层实现。
+
+### 1. 数据结构
+
+Redis 的字典使用哈希表（hashtable）作为底层实现：
+
+```c
+typedef struct dictht {
+    // 哈希表数组
+    dictEntry **table;
+    // 哈希表大小
+    unsigned long size;
+    // 哈希表大小掩码，用于计算索引值，总是等于 size - 1
+    unsigned long sizemask;
+    // 该哈希表已有节点的数量
+    unsigned long used;
+} dictht;
+```
+
+二级指针 table 指向一个`dictEntry`结构体数组，每个 `dictEntry` 结构都保存着一个键值对：
+
+```c
+typedef struct dictEntry {
+    // 键
+    void *key;
+    // 值可以是：
+    union {
+        // 一个指针
+        void *val;
+        // uint64
+        uint64_t u64;
+        // int64
+        int64_t s64;
+        // 浮点数
+        double d;
+    } v;
+    // 指向下个哈希表节点，形成链表,用来解决哈希冲突（链地址法）
+    struct dictEntry *next;
+} dictEntry;
+```
+
+所以一个大小为 4 个哈希表结构如下所示：
+
+<div align="center"> <img src="https://s1.ax1x.com/2020/04/06/G6MDat.png" width="90%"/> </div>
+
+而一个字典的数据结构如下：
+
+```c
+typedef struct dict {
+    // 类型特定函数
+    dictType *type;
+    // 私有数据
+    void *privdata;
+    // 哈希表
+    dictht ht[2];
+    // rehash 索引，当 rehash 不在进行时，值为 -1
+    long rehashidx;
+    // 字典标记，目前正在运行的安全迭代器的数量
+    unsigned long iterators;
+} dict;
+```
+
+`ht` 属性是一个两元数组，数组中的每个项都是一个 `dictht` 哈希表，一般情况下，字典中的数都存储在 ht[0] 哈希表，ht[1] 哈希表只由在对 ht[0] 哈希表进行 rehash 时使用。
+
+## 参考
+
+- 《Redis 设计与实现》
+- [Redis 数据结构的设计与实现](https://www.wingsxdu.com/post/database/redis/struct/)
+
+- [Redis(2)——跳跃表](https://www.javazhiyin.com/60006.html)
