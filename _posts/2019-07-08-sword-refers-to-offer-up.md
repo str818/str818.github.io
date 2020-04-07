@@ -336,12 +336,23 @@ public int numWays(int n) {
 
 ## 10.4 变态跳台阶
 
-[Online Programming Link](https://www.nowcoder.com/practice/22243d016f6b47f2a6928b4313c85387?tpId=13&tqId=11162&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://www.nowcoder.com/practice/22243d016f6b47f2a6928b4313c85387?tpId=13&tqId=11162&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
-题目描述：一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级……它也可以跳上 n 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
+**题目描述**：一只青蛙一次可以跳上 1 级台阶，也可以跳上 2 级……它也可以跳上 n 级。求该青蛙跳上一个 n 级的台阶总共有多少种跳法。
+
+**解法一**：每个台阶可以看做一块木板，让青蛙跳上去，`n` 个台阶就有 `n` 块木板，最后一块木板是青蛙达到的目的地，必须存在，其他 `n-1` 块木板可以任意选择是否存在，即每个木板有存在和不存在两种选择，`n-1` 块木板就有 $2^{n-1}$ 种跳法。
 
 ```java
-public int JumpFloorII(int target) {
+public int jumpFloor(int target) {
+    if (target <= 0) return 0;
+		return (int) Math.pow(2, target -1);
+}
+```
+
+**解法二**：动态规划，上一题普通跳台阶种，跳到台阶 `n` 的跳法为跳到 `n-1` 和 `n-2` 两个台阶跳法之和，而本题没有限制青蛙最多能向上跳几阶台阶，所以跳到台阶 `n` 的跳法为前面所有跳法之和。 
+
+```java
+public int JumpFloor(int target) {
     int[] dp = new int[target];
     Arrays.fill(dp, 1);
     for (int i = 1; i < target; i++) {
@@ -357,89 +368,89 @@ public int JumpFloorII(int target) {
 
 [Online Programming Link](https://www.nowcoder.com/practice/9f3231a991af4f55b95579b44b7a01ba?tpId=13&tqId=11159&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
-题目描述：把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。
+**题目描述**：把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。
+
+```
+输入：[3,4,5,1,2]
+输出：1
+```
+
+**解题思路**：二分查找，如果找数组中的最小数字，只需要遍历一下数组就可以了，但是这道题我们要利用上旋转数组这一条件。数组在没有旋转之前是一个递增数组，也就是下标小的元素一定小于或等于下标大的元素，那数组旋转之后就打破了这一特性，可以利用二分查找寻找哪一边不符合左边的元素小于右边的元素，那最小数字一定在那一边，如果不确定在哪一边，就将有临界向左挪一位。
 
 ```java
-public int minNumberInRotateArray(int [] array) {
-    int l = 0, r = array.length - 1;
-    while (l < r) {
-        int mid = l + (r - l) / 2;
-        if (array[r] >= array[mid]) {
-            r = mid;
+public int minArray(int[] numbers) {
+    int left = 0, right = numbers.length - 1;
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        if (numbers[mid] > numbers[right]) {
+            left = mid + 1;
+        } else if (numbers[mid] < numbers[right]) {
+            right = mid;
         } else {
-            l = mid + 1;
+            right--;
         }
     }
-    return array[l];
+    return numbers[left];
 }
 ```
 
 ## 12. 矩阵中的路径
 
-[Online Programming Link](https://www.nowcoder.com/practice/c61c6999eecb4b8f88a98f66b273a3cc?tpId=13&tqId=11218&tPage=4&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/ju-zhen-zhong-de-lu-jing-lcof/)
 
-题目描述：判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向上下左右移动一个格子。如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。
+**题目描述**：判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向上下左右移动一个格子。如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。
+
+**解题思路**：深度优先搜索。
 
 ```java
-private static final int[][] next = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
-private int cols;
-private int rows;
-public boolean hasPath(char[] array, int rows, int cols, char[] str) {
-    this.cols = cols;
-    this.rows = rows;
-    boolean[][] marked = new boolean[rows][cols];
-    char[][] matrix = buildMatrix(array);
-    
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            if (backtrack(matrix, marked, str, 0, i, j)) return true;
+int[][] directions = { {0, 1}, {0, -1}, {1, 0}, {-1, 0} };
+public boolean exist(char[][] board, String word) {
+    for (int i = 0; i < board.length; i++) {
+        for (int j = 0; j < board[0].length; j++) {
+            boolean flag = backtrack(board, word, 0, i, j, new boolean[board.length][board[0].length]);
+            if (flag) return true;
         }
     }
     return false;
 }
 
-private boolean backtrack(char[][] matrix, boolean[][] marked, char[] str, int pathLen, int r, int c) {
-    
-    if (str.length == pathLen) return true;
-    if (r < 0 || r >= rows || c < 0 || c >= cols || marked[r][c]
-        || matrix[r][c] != str[pathLen]) return false;
-    
-    marked[r][c] = true;
-    for (int i = 0; i < next.length; i++) {
-        if (backtrack(matrix, marked, str, pathLen + 1, r + next[i][0], c + next[i][1])) {
-            return true;
-        }
+public boolean backtrack(char[][] board, String word, int index, int r, int c, boolean[][] marked) {
+
+    if (index == word.length()) {
+        return true;
+    }
+
+    if (r < 0 || c < 0 || r >= board.length || c >= board[0].length || marked[r][c] || word.charAt(index) != board[r][c]) {
+        return false;
+    }
+
+    marked[r][c] = true;    
+    for (int[] direction: directions) {
+        boolean flag = backtrack(board, word, index + 1, r + direction[0], c + direction[1], marked);
+        if (flag) return true;
     }
     marked[r][c] = false;
     return false;
-}
-
-private char[][] buildMatrix(char[] array) {
-    char[][] matrix = new char[rows][cols];
-    for (int i = 0, idx = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            matrix[i][j] = array[idx++];
-        }
-    }
-    return matrix;
 }
 ```
 
 ## 13. 机器人的运动范围
 
-[Online Programming Link](https://www.nowcoder.com/practice/6e5207314b5241fb83f2329e89fdecc8?tpId=13&tqId=11219&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/ji-qi-ren-de-yun-dong-fan-wei-lcof/)
 
-题目描述：地上有一个 m 行和 n 列的方格。一个机器人从坐标 [0,0] 的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于 k 的格子。 例如，当 k 为 18 时，机器人能够进入方格 [35,37]，因为 3+5+3+7 = 18。但是，它不能进入方格 [35,38]，因为 3+5+3+8 = 19。请问该机器人能够达到多少个格子？
+**题目描述**：地上有一个 m 行和 n 列的方格。一个机器人从坐标 [0,0] 的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于 k 的格子。 例如，当 k 为 18 时，机器人能够进入方格 [35,37]，因为 `3+5+3+7=18`。但是，它不能进入方格 [35,38]，因为 `3+5+3+8=19`。请问该机器人能够达到多少个格子？
+
+**解题思路**：深度优先搜索。
 
 ```java
-private static final int[][] next = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
-private int[][] digitSum;
-private int count = 0;
-private int rows, cols, threshold;
-public int movingCount(int threshold, int rows, int cols) {
-    this.rows = rows;
-    this.cols = cols;
-    this.threshold = threshold;
+int[][] next = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
+int[][] digitSum;
+int count = 0;
+int rows, cols, threshold;
+public int movingCount(int m, int n, int k) {
+    this.rows = m;
+    this.cols = n;
+    this.threshold = k;
     initStatus(rows, cols);
     boolean[][] marked = new boolean[rows][cols];
     dfs(marked, 0, 0);
@@ -448,7 +459,7 @@ public int movingCount(int threshold, int rows, int cols) {
 
 private void dfs(boolean[][] marked, int r, int c) {
     if (r < 0 || r >= rows || c < 0 || c >= cols || marked[r][c]) return;
-    
+
     marked[r][c] = true;
     if (digitSum[r][c] > threshold) return;
     count++;
@@ -467,7 +478,7 @@ private void initStatus(int rows, int cols) {
             tmp /= 10;
         }
     }
-    
+
     this.digitSum = new int[rows][cols];
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
@@ -480,12 +491,25 @@ private void initStatus(int rows, int cols) {
 
 ## 14. 剪绳子
 
-[Online Programming Link](https://leetcode.com/problems/integer-break)
+[Code It Now!!!](https://leetcode-cn.com/problems/jian-sheng-zi-lcof/)
 
-题目描述：把一根绳子剪成多段，并且使得每段的长度乘积最大。
+**题目描述**：把一根绳子剪成多段，并且使得每段的长度乘积最大。
+
+```
+输入: 10
+输出: 36
+解释: 10 = 3 + 3 + 4, 3 × 3 × 4 = 36
+```
+
+**解题思路**：动态规划
+
+- 边界条件：`dp[1] = 1`，表示长度为 `2` 的绳子最大乘积为 `1`
+- 状态转移方程：
+
+<div align="center"> <img src="https://s1.ax1x.com/2020/04/07/GckLoF.jpg" width="90%"/> </div>
 
 ```java
-public int integerBreak(int n) {
+public int cuttingRope(int n) {
     int[] dp = new int[n + 1];
     dp[1] = 1;
     for (int i = 2; i <= n; i++)
