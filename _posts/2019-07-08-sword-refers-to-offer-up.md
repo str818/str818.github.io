@@ -489,7 +489,7 @@ private void initStatus(int rows, int cols) {
 ```
 
 
-## 14. 剪绳子
+## 14.1 剪绳子 I
 
 [Code It Now!!!](https://leetcode-cn.com/problems/jian-sheng-zi-lcof/)
 
@@ -516,6 +516,31 @@ public int cuttingRope(int n) {
         for (int j = 1; j < i; j++)
             dp[i] = Math.max(dp[i], Math.max(j * (i - j), dp[j] * (i - j)));
     return dp[n];
+}
+```
+
+## 14.2 剪绳子 II
+
+[Code It Now!!!](https://leetcode-cn.com/problems/jian-sheng-zi-ii-lcof/)
+
+**题目描述**：在上一题的基础上扩大了范围，答案需要取模 `1e9+7 (1000000007)`。
+
+**解题思路**：本题如果使用 DP 难度就增大了，因为 `long` 已经不足以去存储中间结果的状态，因此只能使用 `BigInteger` 的方式去做。而此题更适合使用贪心算法去解决。
+
+通过数学归纳可知，只有长度为 2 和 3 的绳子不应再切分，且 3 比 2 更优。
+
+```java
+public int cuttingRope(int n) {
+    if(n == 2) return 1;
+    if(n == 3) return 2;
+    int mod = (int)1e9 + 7;
+    long res = 1;
+    while(n > 4) {
+        res *= 3;
+        res %= mod;
+        n -= 3;
+    }
+    return (int)(res * n % mod);
 }
 ```
 
