@@ -366,7 +366,7 @@ public int JumpFloor(int target) {
 
 ## 11. 旋转数组的最小数字
 
-[Online Programming Link](https://www.nowcoder.com/practice/9f3231a991af4f55b95579b44b7a01ba?tpId=13&tqId=11159&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/)
 
 **题目描述**：把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。
 
@@ -546,41 +546,60 @@ public int cuttingRope(int n) {
 
 ## 15. 二进制中 1 的个数
 
-[Online Programming Link](https://www.nowcoder.com/practice/8ee967e43c2c4ec193b040ea7fbb10b8?tpId=13&tqId=11164&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/)
 
-题目描述：输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。
+**题目描述**：输入一个整数，输出该数二进制表示中 `1` 的个数。其中负数用补码表示。
+
+```
+输入：00000000000000000000000000001011
+输出：3
+```
+
+**解题思路**：利用 `n & (n - 1)` 操作的特性，将最右边的 `1` 变为 `0`。
+
+- `(n−1)` ： 二进制数字 `n` 最右边的 `1` 变成 `0` ，此 `1` 右边的 `0` 都变成 `1 `。
+- `n & (n - 1)` ： 二进制数字 `n` 最右边的 `1` 变成 `0` ，其余不变。
 
 ```java
-public int NumberOf1(int n) {
-    int cnt = 0;
+public int hammingWeight(int n) {
+    int count = 0;
     while (n != 0) {
-        cnt++;
-        n &= (n - 1);
+        n = n & (n - 1);
+        count++;
     }
-    return cnt;
+    return count;
 }
 ```
 
 ## 16. 数值的整数次方 
 
-[Online Programming Link](https://www.nowcoder.com/practice/8ee967e43c2c4ec193b040ea7fbb10b8?tpId=13&tqId=11164&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/shu-zhi-de-zheng-shu-ci-fang-lcof/)
 
-题目描述：给定一个 double 类型的浮点数 base 和 int 类型的整数 exponent，求 base 的 exponent 次方。
+**题目描述**：给定一个 double 类型的浮点数 base 和 int 类型的整数 exponent，求 base 的 exponent 次方。
+
+```
+输入: 2.00000, 10
+输出: 1024.00000
+```
+
+**解题思路**：经典位运算快速幂算法。
 
 ```java
-public double Power(double base, int exponent) {
-    if (exponent == 1) return base;
-    if (exponent == 0) return 1;
-    boolean isNegative = false;
-    if (exponent < 0) {
-        isNegative = true;
-        exponent = -exponent;
+public double myPow(double x, int n) {
+    if (x == 0) return 0;
+    if (n < 0) {
+        x = 1 / x;
+        n = -n;
     }
-    double pow = Power(base * base, exponent / 2);
-    if (exponent % 2 == 1) {
-        pow *= base;
+    double res = 1;
+    while (n != 0) {
+        if ((n & 1) == 1) {
+            res *= x;
+        }
+        x *= x;
+        n /= 2;
     }
-    return isNegative ? 1 / pow : pow;
+    return res;
 }
 ```
 
