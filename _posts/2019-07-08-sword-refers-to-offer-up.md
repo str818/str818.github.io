@@ -605,7 +605,11 @@ public double myPow(double x, int n) {
 
 ## 17. 打印从 1 到最大的 n 位数
 
-题目描述：输入数字 n，按顺序打印出从 1 到最大的 n 位十进制数。比如输入 3，则打印出 1、2、3 一直到最大的 3 位数即 999。
+[Code It Now!!!](https://leetcode-cn.com/problems/da-yin-cong-1dao-zui-da-de-nwei-shu-lcof/)
+
+**题目描述**：输入数字 `n`，按顺序打印出从 `1` 到最大的 `n` 位十进制数。比如输入 `3`，则打印出 `1、2、3` 一直到最大的 `3` 位数即 `999`。
+
+**解题思路**：题目没有说明数据位数范围，应按照大数问题（超出编程语言自带的数据结构表示范围）处理。
 
 ```java
 public void print1ToMaxOfNDigits(int n) {
@@ -638,7 +642,16 @@ private void printNumber(char[] number) {
 
 ## 18.1 在 O(1) 时间内删除链表节点
 
-解题思路：如果该节点不是尾节点，那么可以直接将下一个节点的值赋给该节点，然后令该节点指向下下个节点，再删除下一个节点，时间复杂度为 O(1)；否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向 null，时间复杂度为 O(N)。
+[Code It Now!!!](https://leetcode-cn.com/problems/shan-chu-lian-biao-de-jie-dian-lcof/)
+
+**题目描述**：给定单向链表的头指针和一个要删除的节点的值，定义一个函数删除该节点。
+
+```java
+输入: head = [4,5,1,9], val = 5
+输出: [4,1,9]
+```
+
+**解题思路**：如果该节点不是尾节点，那么可以直接将下一个节点的值赋给该节点，然后令该节点指向下下个节点，再删除下一个节点，时间复杂度为 $O(1)$；否则，就需要先遍历链表，找到节点的前一个节点，然后让前一个节点指向 `null`，时间复杂度为 $O(N)$。
 
 ```java
 public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
@@ -666,7 +679,11 @@ public ListNode deleteNode(ListNode head, ListNode tobeDelete) {
 
 ## 18.2 删除链表中重复的结点
 
-[Online Programming Link](https://www.nowcoder.com/practice/fc533c45b73a41b0b44ccba763f866ef?tpId=13&tqId=11209&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://www.nowcoder.com/practice/fc533c45b73a41b0b44ccba763f866ef?tpId=13&tqId=11209&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+**题目描述**：在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。
+
+**解题思路**：递归的思想，每次删除一个重复的节点。
 
 ```java
 public ListNode deleteDuplication(ListNode pHead) {
