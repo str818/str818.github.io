@@ -703,33 +703,52 @@ public ListNode deleteDuplication(ListNode pHead) {
 
 ## 19. 正则表达式匹配
 
-[Online Programming Link](https://www.nowcoder.com/practice/45327ae22b7b413ea21df13ee7d6429c?tpId=13&tqId=11205&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/zheng-ze-biao-da-shi-pi-pei-lcof/)
 
-题目描述：请实现一个函数用来匹配包括 `.` 和 `*` 的正则表达式。模式中的字符 `.` 表示任意一个字符，而 `*` 表示它前面的字符可以出现任意次（包含 0 次）。
+**题目描述**：请实现一个函数用来匹配包括 `.` 和 `*` 的正则表达式。模式中的字符 `.` 表示任意一个字符，而 `*` 表示它前面的字符可以出现任意次（包含 0 次）。
+
+```
+输入:
+s = "aa"
+p = "a*"
+输出: true
+```
+
+**解题思路**：动态规划
+
+- 定义状态 `dp[i][j]` ：`s` 的前 `i` 个字符能够匹配 `p` 的前 `j` 个字符，注意这里的范围是 `(]` 的，即 `(0, i]` 与 `(0, j]`。
+
+- 转移方程：
+  - 若主串字符与正则串字符相等，或者正则串的字符为 `.`，则 $dp[i][j] = dp[i - 1][j - 1]$
+  - 若正则串字符为 `*`，可能有两种情况：
+    - 正则串表示 `0` 个字符，直接砍掉正则串的后面两个， $dp[i][j] = dp[i][j-2]$
+    - 正则串表示当前字符出现多次，正则串不动，主串向前移动一位，$dp[i][j] = dp[i-1][j]$
 
 ```java
-public boolean match(char[] str, char[] pattern) {
-    int m = str.length, n = pattern.length;
+public boolean isMatch(String s, String p) {
+    int m = s.length, n = p.length;
     boolean[][] dp = new boolean[m + 1][n + 1];
     
+    // 空主串与空模式串匹配
     dp[0][0] = true;
+    // 空主串与非空模式串
     for (int i = 1; i <= n; i++) {
-        if (pattern[i - 1] == '*') {
+        if (p.charAt(i - ) == '*') {
             dp[0][i] = dp[0][i - 2];
         }
     }
     
     for (int i = 1; i <= m; i++) {
         for (int j = 1; j <= n; j++) {
-            if (str[i - 1] == pattern[j - 1] || pattern[j - 1] == '.') {
+            // 字符相等
+            if (s.charAt(i - 1) == p.charAt(j - 1) || p.charAt(j - 1) == '.') {
                 dp[i][j] = dp[i - 1][j - 1];
-            } else if (pattern[j - 1] == '*') {
-                if (pattern[j - 2] == str[i - 1] || pattern[j - 2] == '.') {
-                    dp[i][j] |= dp[i][j - 1]; // a* counts as single a
-                    dp[i][j] |= dp[i - 1][j]; // a* counts as multiple a
-                    dp[i][j] |= dp[i][j - 2]; // a* counts as empty
+            } else if (p.charAt(j - 1) == '*') {
+                if (p.charAt(j - 2) == s.charAt(i - 1) || p.charAt(j - 2) == '.') {
+                    dp[i][j] |= dp[i - 1][j]; // a* 表示出现多次
+                    dp[i][j] |= dp[i][j - 2]; // a* 表示出现 0 次
                 } else {
-                    dp[i][j] = dp[i][j - 2]; // a* only counts as empty
+                    dp[i][j] = dp[i][j - 2];  // a* 表示出现 0 次
                 }
             }
         }
@@ -740,25 +759,68 @@ public boolean match(char[] str, char[] pattern) {
 
 ## 20. 表示数值的字符串
 
-[Online Programming Link](https://www.nowcoder.com/practice/6f8c901d091949a5837e24bb82a731f2?tpId=13&tqId=11206&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/biao-shi-shu-zhi-de-zi-fu-chuan-lcof/)
 
-题目描述：实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串"+100","5e2","-123","3.1416"和"-1E-16"都表示数值。 但是"12e","1a3.14","1.2.3","+-5"和"12e+4.3"都不是。
+**题目描述**：实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串 `+100`、`5e2`、`-123`、`3.1416` 和 `-1E-16` 都表示数值。 但是 `12e`、`1a3.14`、`1.2.3`、`+-5` 和 `12e+4.3` 都不是。
+
+
+**解法一**：正则表达式
 
 ```java
-public boolean isNumeric(char[] str) {
-    if (str == null || str.length == 0) return false;
-    return new String(str).matches("[+-]?\\d*(\\.\\d+)?([eE][+-]?\\d+)?");
+public boolean isNumber(String s) {
+    if (s == null || s.length() == 0) return false;
+    return s.trim().matches("[+-]?([0-9]+(\\.[0-9]*)?|\\.[0-9]+)(e[+-]?[0-9]+)?");
+}
+```
+
+**解法二**：条件判断
+```java
+public boolean isNumber(String s) {
+    if(s == null || s.length() == 0) return false;
+    // 标记是否遇到相应情况
+    boolean numSeen = false;
+    boolean dotSeen = false;
+    boolean eSeen = false;
+    char[] str = s.trim().toCharArray();
+    for(int i = 0;i < str.length; i++) {
+        if(str[i] >= '0' && str[i] <= '9'){
+            numSeen = true;
+        } else if(str[i] == '.'){
+            // .之前不能出现.或者e
+            if(dotSeen || eSeen){
+                return false;
+            }
+            dotSeen = true;
+        } else if(str[i] == 'e' || str[i] == 'E') {
+            // e之前不能出现e，必须出现数
+            if(eSeen || !numSeen){
+                return false;
+            }
+            eSeen = true;
+            numSeen = false;// 重置numSeen，排除123e或者123e+的情况,确保e之后也出现数
+        } else if(str[i] == '-' || str[i] == '+') {
+            // +-出现在0位置或者e/E的后面第一个位置才是合法的
+            if(i != 0 && str[i-1] != 'e' && str[i-1] != 'E'){
+                return false;
+            }
+        } else{// 其他不合法字符
+            return false;
+        }
+    }
+    return numSeen;
 }
 ```
 
 ## 21. 调整数组顺序使奇数位于偶数前面
 
-[Online Programming Link](https://www.nowcoder.com/practice/beb5aa231adc45b2a5dcc5b62c93f593?tpId=13&tqId=11166&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/diao-zheng-shu-zu-shun-xu-shi-qi-shu-wei-yu-ou-shu-qian-mian-lcof/)
 
-题目描述：需要保证奇数和奇数，偶数和偶数之间的相对位置不变。
+**题目描述**：需要保证奇数和奇数、偶数和偶数之间的相对位置不变。
+
+**解题思路**：Leetcode 上的题目没有要求相对顺序不变，可以用双指针解决，双指针的基本操作。
 
 ```java
-public void reOrderArray(int[] nums) {
+public int[] exchange(int[] nums) {
     int oddCount = 0;
     for (int x : nums) {
         if (x % 2 == 1) oddCount++;
@@ -769,6 +831,7 @@ public void reOrderArray(int[] nums) {
         if (x % 2 == 1) nums[i++] = x;
         else nums[j++] = x;
     }
+    return nums; 
 }
 ```
 
