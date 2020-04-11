@@ -864,7 +864,13 @@ public ListNode getKthFromEnd(ListNode head, int k) {
 
 ## 23. 链表中环的入口结点
 
-[Online Programming Link](https://www.nowcoder.com/practice/253d2c59ec3e4bc68da16833f79a38e4?tpId=13&tqId=11208&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://www.nowcoder.com/practice/253d2c59ec3e4bc68da16833f79a38e4?tpId=13&tqId=11208&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+**题目描述**：给一个链表，若其中包含环，请找出该链表的环的入口结点。
+
+**解题思路**：假设链表头是 `X`，环的第一个节点是 `Y`，`slow` 和 `fast` 第一次的交点是 Z。各段的长度分别是 `a,b,c`。`slow` 每次向前走一个节点，`fast` 每次向前走两个结点，第一次相遇时 `slow` 走过的距离为 `a+b`，`fast `走过的距离为 `a+b+c+b`，因为` fast` 的速度是 `slow` 的两倍，所以 `fas`t 走的距离是 `slow` 的两倍，由 `2(a+b) = a+b+c+b` 可得 `a = c`。这时，让两个指针分别从 `X` 和 `Z `开始走，每次都走一步，那么正好会在 `Y `相遇，也就是环的第一个节点。
+
+<div align="center"> <img src="https://s1.ax1x.com/2020/04/11/G7bBO1.png" width="40%"/> </div>
 
 ```java
 public ListNode EntryNodeOfLoop(ListNode pHead) {
@@ -886,25 +892,27 @@ public ListNode EntryNodeOfLoop(ListNode pHead) {
 
 ## 24. 反转链表
 
-[Online Programming Link](https://www.nowcoder.com/practice/75e878df47f24fdc9dc3e400ec6058ca?tpId=13&tqId=11168&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/fan-zhuan-lian-biao-lcof/)
 
-方法一：递归
+**题目描述**：定义一个函数，输入一个链表的头节点，反转该链表并输出反转后链表的头节点。
+
+**方法一**：递归
 
 ```java
-public ListNode ReverseList(ListNode head) {
+public ListNode reverseList(ListNode head) {
     if (head == null || head.next == null) return head;
     ListNode next = head.next;
     head.next = null;
-    ListNode newHead = ReverseList(next);
+    ListNode newHead = reverseList(next);
     next.next = head;
     return newHead;
 }
 ```
 
-方法二：头插法
+**方法二**：头插法
 
 ```java
-public ListNode ReverseList(ListNode head) {
+public ListNode reverseList(ListNode head) {
     ListNode newList = new ListNode(-1);
     while (head != null) {
         ListNode next = head.next;
@@ -918,19 +926,26 @@ public ListNode ReverseList(ListNode head) {
 
 ## 25. 合并两个排序的链表
 
-[Online Programming Link](https://www.nowcoder.com/practice/d8b6b4358f774294a89de2a6ac4d9337?tpId=13&tqId=11169&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/he-bing-liang-ge-pai-xu-de-lian-biao-lcof/)
+
+**题目描述**：输入两个递增排序的链表，合并这两个链表并使新链表中的节点仍然是递增排序的。
 
 ```java
-public ListNode Merge(ListNode list1,ListNode list2) {
-    if (list1 == null) return list2;
-    if (list2 == null) return list1;
-    if (list1.val > list2.val) {
-        list2.next = Merge(list1, list2.next);
-        return list2;
-    } else {
-        list1.next = Merge(list1.next, list2);
-        return list1;
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    ListNode dummyNode = new ListNode(-1);
+    ListNode cur = dummyNode;
+    while (l1 != null && l2 != null) {
+        if (l1.val > l2.val) {
+            cur.next = l2;
+            l2 = l2.next;
+        } else {
+            cur.next = l1;
+            l1 = l1.next;
+        }
+        cur = cur.next;
     }
+    cur.next = l1 != null ? l1 : l2;
+    return dummyNode.next;
 }
 ```
 
