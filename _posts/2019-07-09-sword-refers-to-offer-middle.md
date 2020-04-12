@@ -12,89 +12,114 @@ show_subscribe: false
 
 ## 26. 树的子结构
 
-[Online Programming Link](https://www.nowcoder.com/practice/6e196c44c7004d15b1610b9afca8bd88?tpId=13&tqId=11170&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/shu-de-zi-jie-gou-lcof/)
 
-题目描述：判断二叉树 B 是不是二叉树 A 的子结构，空树不是任何树的子结构。
+**题目描述**：输入两棵二叉树 A 和 B，判断 B 是不是 A 的子结构。(约定空树不是任意一个树的子结构)
+
+**解题思路**：先序遍历，包含判断。
 
 ```java
-public boolean HasSubtree(TreeNode root1, TreeNode root2) {
-    if (root1 == null || root2 == null)
-        return false;
-    return isSubtreeWithRoot(root1, root2) || HasSubtree(root1.left, root2) || HasSubtree(root1.right, root2);
+public boolean isSubStructure(TreeNode A, TreeNode B) {
+    if (A == null || B == null) return false;
+    return isSameTree(A, B) || isSubStructure(A.left, B) || isSubStructure(A.right, B);
 }
-private boolean isSubtreeWithRoot(TreeNode root1, TreeNode root2) {
-    if (root2 == null) return true;
-    if (root1 == null) return false;
-    if (root1.val != root2.val) return false;
-    return isSubtreeWithRoot(root1.left, root2.left) && isSubtreeWithRoot(root1.right, root2.right);
+public boolean isSameTree(TreeNode A, TreeNode B) {
+    if (B == null) return true;
+    if (A == null) return false;
+    if (A.val != B.val) return false;
+    return isSameTree(A.left, B.left) && isSameTree(A.right, B.right);
 }
 ```
 
 ## 27. 二叉树的镜像
 
-[Online Programming Link](https://www.nowcoder.com/practice/564f4c26aa584921bc75623e48ca3011?tpId=13&tqId=11171&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/er-cha-shu-de-jing-xiang-lcof/)
+
+**题目描述**：完成一个函数，输入一个二叉树，该函数输出它的镜像。
+
+例如输入：
+
+```
+		 4
+   /   \
+  2     7
+ / \   / \
+1   3 6   9
+```
+
+镜像输出：
+
+```
+     4
+   /   \
+  7     2
+ / \   / \
+9   6 3   1
+```
 
 ```java
-public void Mirror(TreeNode root) {
-    if (root == null) return;
-    TreeNode tmp = root.left;
-    root.left = root.right;
-    root.right = tmp;
-    Mirror(root.left);
-    Mirror(root.right);
+public TreeNode mirrorTree(TreeNode root) {
+    if (root == null) return null;
+    TreeNode temp = root.left;
+    root.left = mirrorTree(root.right);
+    root.right = mirrorTree(temp);
+    return root;
 }
 ```
 
 ## 28. 对称的二叉树
 
-[Online Programming Link](https://www.nowcoder.com/practice/ff05d44dfdb04e1d83bdbdab320efbcb?tpId=13&tqId=11211&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/dui-cheng-de-er-cha-shu-lcof/)
 
-题目描述：如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的。
+**题目描述**：如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的。
 
 ```java
-public boolean isSymmetrical(TreeNode pRoot) {
-    if (pRoot == null) return true;
-    return isSymmetrical(pRoot.left, pRoot.right);
+public boolean isSymmetric(TreeNode root) {
+    if (root == null) return true;
+    return isSame(root.left, root.right);
 }
-private boolean isSymmetrical(TreeNode root1, TreeNode root2) {
-    if (root1 == null && root2 == null)
-        return true;
-    if (root1 == null || root2 == null)
-        return false;
-    if (root1.val != root2.val)
-        return false;
-    return isSymmetrical(root1.left, root2.right) && isSymmetrical(root1.right, root2.left);
+public boolean isSame(TreeNode A, TreeNode B) {
+    if (A == null && B == null) return true;
+    if (A == null || B == null || A.val != B.val) return false;
+    return isSame(A.right, B.left) && isSame(A.left, B.right);
 }
 ```
 
 ## 29. 顺时针打印矩阵
 
-[Online Programming Link](https://www.nowcoder.com/practice/9b4c81a02cd34f76be2659fa0d54342a?tpId=13&tqId=11172&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/)
+
+**题目描述**：输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字。
+
+**解题思路**：模拟、设定边界。
 
 ```java
-public ArrayList<Integer> printMatrix(int [][] matrix) {
-    ArrayList<Integer> res = new ArrayList<>();
+public int[] spiralOrder(int[][] matrix) {
+    if (matrix.length == 0) return new int[0];
+    int m = matrix.length, n = matrix[0].length;
+    int[] ans = new int[m * n];
     int r1 = 0, r2 = matrix.length - 1, c1 = 0, c2 = matrix[0].length - 1;
+    int index = 0;
     while (r1 <= r2 && c1 <= c2) {
         for (int i = c1; i <= c2; i++) {
-            res.add(matrix[r1][i]);
+            ans[index++] = matrix[r1][i];
         }
         for (int i = r1 + 1; i <= r2; i++) {
-            res.add(matrix[i][c2]);
+            ans[index++] = matrix[i][c2];
         }
         if (r1 != r2) {
             for (int i = c2 - 1; i >= c1; i--) {
-                res.add(matrix[r2][i]);
+                ans[index++] = matrix[r2][i];
             }
         }
         if (c1 != c2) {
             for (int i = r2 - 1; i > r1; i--) {
-                res.add(matrix[i][c1]);
+                ans[index++] = matrix[i][c1];
             }
         }
         r1++; r2--; c1++; c2--;
     }
-    return res;
+    return ans;
 }
 ```
 
