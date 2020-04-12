@@ -125,26 +125,32 @@ public int[] spiralOrder(int[][] matrix) {
 
 ## 30. 包含 min 函数的栈
 
-[Online Programming Link](https://www.nowcoder.com/practice/4c776177d2c04c2494f2555c9fcc1e49?tpId=13&tqId=11173&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/bao-han-minhan-shu-de-zhan-lcof/)
 
-题目描述：定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。
+**题目描述**：定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为$O(1)$）。
+
+**解题思路**：定义一个存储栈中当前最小元素的辅助栈。
 
 ```java
-private Stack<Integer> dataStack = new Stack<>();
-private Stack<Integer> minStack = new Stack<>();
+Stack<Integer> mainStack;
+Stack<Integer> minStack;
+public MinStack() {
+    mainStack = new Stack<>();
+    minStack = new Stack<>();
+}
 
-public void push(int node) {
-    dataStack.push(node);
-    minStack.push(minStack.isEmpty() ? node : Math.min(minStack.peek(), node));
+public void push(int x) {
+    mainStack.push(x);
+    minStack.push(minStack.isEmpty() ? x : Math.min(minStack.peek(), x));
 }
 
 public void pop() {
-    dataStack.pop();
+    mainStack.pop();
     minStack.pop();
 }
 
 public int top() {
-    return dataStack.peek();
+    return mainStack.peek();
 }
 
 public int min() {
