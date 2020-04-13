@@ -268,91 +268,88 @@ public List<List<Integer>> levelOrder(TreeNode root) {
 
 ## 33. 二叉搜索树的后续遍历序列
 
-[Online Programming Link](https://www.nowcoder.com/practice/a861533d45854474ac791d90e447bafd?tpId=13&tqId=11176&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/)
 
-题目描述：输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。假设输入的数组的任意两个数字都互不相同。
+**题目描述**：输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。假设输入的数组的任意两个数字都互不相同。
+
+**解题思路**：根据二叉搜索树的定义，可以通过递归，判断所有子树的 正确性 （即其后序遍历是否满足二叉搜索树的定义） ，若所有子树都正确，则此序列为二叉搜索树的后序遍历。最后一个节点为根节点，遍历数组从前向后找到第一个大于根节点的节点，如果该节点后面的所有节点均大于根节点，根节点满足二叉搜索树的定义，接着判断左子树与右子树是否满足条件。
 
 ```java
-public boolean VerifySquenceOfBST(int[] sequence) {
-    if (sequence == null || sequence.length == 0)
-        return false;
-    return verify(sequence, 0, sequence.length - 1);
+public boolean verifyPostorder(int[] postorder) {
+    return recur(postorder, 0, postorder.length - 1);
 }
-public boolean verify(int[] nums, int l, int r) {
-    if (r - l <= 1)
-        return true;
-    int root = nums[r];
-    int first = l;
-    while(first < r && nums[first] < root) {
-        first++;
-    }
-    for (int i = first; i < r; i++) {
-        if (nums[i] < root) return false;
-    }
-    return verify(nums, l, first - 1) && verify(nums, first, r - 1);
+boolean recur(int[] postorder, int i, int j) {
+    if(i >= j) return true;
+    int p = i;
+    while(postorder[p] < postorder[j]) p++;
+    int m = p;
+    while(postorder[p] > postorder[j]) p++;
+    return p == j && recur(postorder, i, m - 1) && recur(postorder, m, j - 1);
 }
 ```
 
 ## 34. 二叉树中和为某一值的路径
 
-[Online Programming Link](https://www.nowcoder.com/practice/b736e784e3e34731af99065031301bca?tpId=13&tqId=11177&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/)
 
-题目描述：输入一颗二叉树的根节点和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。
+**题目描述**：输入一颗二叉树的根节点和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。
+
+**解题思路**：典型的二叉树方案搜索问题，使用回溯法解决，其包含 先序遍历 + 路径记录 两部分。
 
 ```java
-private ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
-
-public ArrayList<ArrayList<Integer>> FindPath(TreeNode root, int target) {
-    backtracking(root, target, new ArrayList<>());
-    return ret;
+LinkedList<List<Integer>> res = new LinkedList<>();
+LinkedList<Integer> path = new LinkedList<>(); 
+public List<List<Integer>> pathSum(TreeNode root, int sum) {
+    recur(root, sum);
+    return res;
 }
-
-private void backtracking(TreeNode node, int target, ArrayList<Integer> path) {
-    if (node == null)
-        return;
-    path.add(node.val);
-    target -= node.val;
-    if (target == 0 && node.left == null && node.right == null) {
-        ret.add(new ArrayList<>(path));
-    } else {
-        backtracking(node.left, target, path);
-        backtracking(node.right, target, path);
-    }
-    path.remove(path.size() - 1);
+void recur(TreeNode root, int tar) {
+    if(root == null) return;
+    path.add(root.val);
+    tar -= root.val;
+    if(tar == 0 && root.left == null && root.right == null)
+        res.add(new LinkedList(path));
+    recur(root.left, tar);
+    recur(root.right, tar);
+    path.removeLast();
 }
 ```
 
 ## 35. 复杂链表的复制
 
-[Online Programming Link](https://www.nowcoder.com/practice/f836b2c43afc4b35ad6adc41ec941dba?tpId=13&tqId=11178&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/fu-za-lian-biao-de-fu-zhi-lcof/)
 
-题目描述：输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的 head。
+**题目描述**：输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的 head。
+
+**解题思路**：将复制过程拆分为三个步骤：
+1. 复制每一个节点，使得复制后的节点都在当前节点的下一个节点
+2. 原生链表的节点的指向任意节点，使复制的节点也都指向某一任意节点
+3. 重新连接节点，把原生节点重新连接起来，把克隆后的节点连接起来
 
 ```java
-public RandomListNode Clone(RandomListNode pHead) {
-    if (pHead == null)
-        return null;
+public Node copyRandomList(Node head) {
+    if (head == null) return null;
     // 插入新节点
-    RandomListNode cur = pHead;
+    Node cur = head;
     while (cur != null) {
-        RandomListNode clone = new RandomListNode(cur.label);
+        Node clone = new Node(cur.val);
         clone.next = cur.next;
         cur.next = clone;
         cur = clone.next;
     }
     // 建立 random 链接
-    cur = pHead;
+    cur = head;
     while (cur != null) {
-        RandomListNode clone = cur.next;
+        Node clone = cur.next;
         if (cur.random != null)
             clone.random = cur.random.next;
         cur = clone.next;
     }
     // 拆分
-    cur = pHead;
-    RandomListNode pCloneHead = pHead.next;
+    cur = head;
+    Node pCloneHead = head.next;
     while (cur.next != null) {
-        RandomListNode next = cur.next;
+        Node next = cur.next;
         cur.next = next.next;
         cur = next;
     }
