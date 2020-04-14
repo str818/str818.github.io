@@ -397,173 +397,170 @@ public void recur(Node root) {
 
 ## 37. 序列化二叉树
 
-[Online Programming Link](https://www.nowcoder.com/practice/cf7e25aa97c04cc1a68c8f040e71fb84?tpId=13&tqId=11214&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/xu-lie-hua-er-cha-shu-lcof/)
 
-题目描述：请实现两个函数，分别用来序列化和反序列化二叉树。
+**题目描述**：请实现两个函数，分别用来序列化和反序列化二叉树。
 
-解题思路：前序遍历。
+**解题思路**：前序遍历，使用空格分隔节点，用 `#` 表示空节点。
 
 ```java
-private String deserializeStr;
-
-public String Serialize(TreeNode root) {
-    if (root == null)
-        return "#";
-    return root.val + " " + Serialize(root.left) + " " + Serialize(root.right);
+String deserializeStr;
+public String serialize(TreeNode root) {
+    if (root == null) return "#";
+    return root.val + " " + serialize(root.left) + " " + serialize(root.right);
 }
 
-public TreeNode Deserialize(String str) {
-    deserializeStr = str;
-    return Deserialize();
+public TreeNode deserialize(String data) {
+    deserializeStr = data;
+    return deserialize();
 }
 
-private TreeNode Deserialize() {
-    if (deserializeStr.length() == 0)
-        return null;
+public TreeNode deserialize() {
+    if (deserializeStr.length() == 0) return null;
     int index = deserializeStr.indexOf(" ");
     String node = index == -1 ? deserializeStr : deserializeStr.substring(0, index);
     deserializeStr = index == -1 ? "" : deserializeStr.substring(index + 1);
-    if (node.equals("#"))
-        return null;
-    int val = Integer.valueOf(node);
+    if (node.equals("#")) return null;
+    int val = Integer.parseInt(node);
     TreeNode t = new TreeNode(val);
-    t.left = Deserialize();
-    t.right = Deserialize();
+    t.left = deserialize();
+    t.right = deserialize();
     return t;
 }
 ```
 
 ## 38. 字符串的排列
 
-[Online Programming Link](https://www.nowcoder.com/practice/fe6b651b66ae47d7acce78ffdd9a96c7?tpId=13&tqId=11180&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/)
 
-题目描述：输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串 abc,则打印出由字符 a,b,c 所能排列出来的所有字符串 abc,acb,bac,bca,cab 和 cba。输入一个字符串,长度不超过9(可能有字符重复),字符只包括大小写字母。
+**题目描述**：输入一个字符串，打印出该字符串中字符的所有排列。
 
-解题思路：注意可能有重复。
+```
+输入：s = "abc"
+输出：["abc","acb","bac","bca","cab","cba"]
+```
+
+**解题思路**：回溯法，注意可能有重复，需要去重。
 
 ```java
-private ArrayList<String> res = new ArrayList<>();
-public ArrayList<String> Permutation(String str) {
-    if (str.length() == 0) 
-        return res;
-    char[] c = str.toCharArray();
-    Arrays.sort(c);
-    backtracking(c, new boolean[c.length], new StringBuilder());
-    return res;
+List<String> res = new LinkedList<>();
+char[] c;
+public String[] permutation(String s) {
+    c = s.toCharArray();
+    dfs(0);
+    return res.toArray(new String[res.size()]);
 }
-
-public void backtracking(char[] c, boolean[] hasUsed, StringBuilder s) {
-    if (s.length() == c.length) {
-        res.add(s.toString());
+void dfs(int x) {
+    if(x == c.length - 1) {
+        res.add(String.valueOf(c)); // 添加排列方案
         return;
     }
-    for (int i = 0; i < c.length; i++) {
-        if (hasUsed[i])
-            continue;
-        if (i != 0 && c[i] == c[i - 1] && !hasUsed[i - 1])
-            continue;
-        hasUsed[i] = true;
-        s.append(c[i]);
-        backtracking(c, hasUsed, s);
-        s.deleteCharAt(s.length() - 1);
-        hasUsed[i] = false;
+    HashSet<Character> set = new HashSet<>();
+    for(int i = x; i < c.length; i++) {
+        if(set.contains(c[i])) continue; // 重复，因此剪枝
+        set.add(c[i]);
+        swap(c, i, x);  // 交换，固定此位为 c[i] 
+        dfs(x + 1);     // 开启固定第 x + 1 位字符
+        swap(c, i, x);  // 恢复交换
     }
 }
 ```
 
 ## 39. 数组中出现次数超过一半的数字
 
-[Online Programming Link](https://www.nowcoder.com/practice/e8a1b01a2df14cb2b228b30ee6a92163?tpId=13&tqId=11181&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof/)
 
-题目描述：数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
+**题目描述**：数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
 
-解题思路：将数组中出现次数超过一半的数字与其他数字抵消。
+```
+输入: [1, 2, 3, 2, 2, 2, 5, 4, 2]
+输出: 2
+```
+
+**解题思路**：摩尔投票法，正负抵消，将数组中出现次数超过一半的数字与其他数字抵消。
 
 ```java
-public int MoreThanHalfNum_Solution(int [] array) {
-    if (array == null || array.length == 0)
-        return 0;
-    int major = array[0];
-    for (int i = 1, cnt = 1; i < array.length; i++) {
-        if (cnt == 0) {
-            major = array[i];
-            cnt = 1;
-        } else {
-            cnt = array[i] == major ? cnt + 1 : cnt - 1;
-        }
+public int majorityElement(int[] nums) {
+    int x = 0, votes = 0;
+    for(int num : nums){
+        if(votes == 0) x = num;
+        votes += num == x ? 1 : -1;
     }
-    
-    int cnt = 0;
-    for (int x : array) {
-        if (x == major)
-            cnt++;
-    }
-    return cnt > array.length / 2 ? major : 0;
+    return x;
 }
 ```
 
 ## 40. 最小的 K 个数
 
-[Online Programming Link](https://www.nowcoder.com/practice/6a296eb82cf844ca8539b57c23e6e9bf?tpId=13&tqId=11182&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/)
 
-解法一：快速选择。
+**题目描述**：输入整数数组 `arr` ，找出其中最小的 `k` 个数。
+
+```
+输入：arr = [3,2,1], k = 2
+输出：[1,2] 或者 [2,1]
+```
+
+**解法一**：快排。
 
 ```java
-public ArrayList<Integer> GetLeastNumbers_Solution(int [] input, int k) {
-    ArrayList<Integer> res = new ArrayList<>();
-    if (k > input.length || k <= 0)
-        return res;
-    findKthSamllest(input, k - 1);
-    for (int i = 0; i < k; i++) {
-        res.add(input[i]);
+public int[] getLeastNumbers(int[] arr, int k) {
+    if (k == 0 || arr.length == 0) {
+        return new int[0];
     }
-    return res;
+    // 最后一个参数表示我们要找的是下标为k-1的数
+    return quickSearch(arr, 0, arr.length - 1, k - 1);
 }
-public void findKthSamllest(int[] nums, int k) {
-    int l = 0, h = nums.length - 1;
-    while (l < h) {
-        int j = partition(nums, l, h);
-        if (j == k)
-            break;
-        if (j > k)
-            h = j - 1;
-        else
-            l = j + 1;
+
+private int[] quickSearch(int[] nums, int lo, int hi, int k) {
+    // 每快排切分1次，找到排序后下标为j的元素，如果j恰好等于k就返回j以及j左边所有的数；
+    int j = partition(nums, lo, hi);
+    if (j == k) {
+        return Arrays.copyOf(nums, j + 1);
     }
+    // 否则根据下标j与k的大小关系来决定继续切分左段还是右段。
+    return j > k? quickSearch(nums, lo, j - 1, k): quickSearch(nums, j + 1, hi, k);
 }
-private int partition(int[] nums, int l, int h) {
-    int p = nums[l];
-    int i = l, j = h + 1;
+
+// 快排切分，返回下标j，使得比nums[j]小的数都在j的左边，比nums[j]大的数都在j的右边。
+private int partition(int[] nums, int lo, int hi) {
+    int v = nums[lo];
+    int i = lo, j = hi + 1;
     while (true) {
-        while (i != h && nums[++i] < p);
-        while (j != l && nums[--j] > p);
-        if (i >= j)
+        while (++i <= hi && nums[i] < v);
+        while (--j >= lo && nums[j] > v);
+        if (i >= j) {
             break;
-        swap(nums, i, j);
+        }
+        int t = nums[j];
+        nums[j] = nums[i];
+        nums[i] = t;
     }
-    swap(nums, l, j);
+    nums[lo] = nums[j];
+    nums[j] = v;
     return j;
-}
-private void swap(int[] nums, int i, int j) {
-    int t = nums[i];
-    nums[i] = nums[j];
-    nums[j] = t;
 }
 ```
 
-解法二：最大堆。
+**解法二**：最大堆。
 
 ```java
-public ArrayList<Integer> GetLeastNumbers_Solution(int [] nums, int k) {
-    if (k > nums.length || k < 0)
-        return new ArrayList<>();
+public int[] getLeastNumbers(int [] nums, int k) {
+    if (k > nums.length || k < 0) return new int[0];
     PriorityQueue<Integer> maxHeap = new PriorityQueue<>((o1, o2) -> o2 - o1);
     for (int num : nums) {
         maxHeap.add(num);
         if (maxHeap.size() > k)
             maxHeap.poll();
     }
-    return new ArrayList<>(maxHeap);
+
+    // 返回堆中的元素
+    int[] res = new int[maxHeap.size()];
+    int idx = 0;
+    for(int num: maxHeap) {
+        res[idx++] = num;
+    }
+    return res;
 }
 ```
 
