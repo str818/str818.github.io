@@ -357,34 +357,41 @@ public Node copyRandomList(Node head) {
 }
 ```
 
-## 36. 二叉树与双向链表
+## 36. 二叉搜索树与双向链表
 
-[Online Programming Link](https://www.nowcoder.com/practice/947f6eb80d944a84850b0538bf0ec3a5?tpId=13&tqId=11179&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/er-cha-sou-suo-shu-yu-shuang-xiang-lian-biao-lcof/)
 
-题目描述：输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。
+**题目描述**：输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。要求不能创建任何新的节点，只能调整树中节点指针的指向。
 
-解题思路：中序遍历。
+**解题思路**：将 二叉搜索树 转换成一个 “排序的循环双向链表” ，其中包含三个要素：
+
+1. **排序链表：** 节点应从小到大排序，因此应使用 **中序遍历** “从小到大”访问树的节点；
+2. **双向链表**： 在构建相邻节点（设前驱节点 `pre` ，当前节点 `cur` ）关系时，不仅应 `pre.right = cur` ，也应 `cur.left = pre`；
+3. **循环链表**：设链表头节点 `head` 和尾节点 `tail` ，则应构建 `head.left = tail` 和 `tail.right = head`。
+
+<div align="center"> <img src="https://s1.ax1x.com/2020/04/14/Gx3fVx.png" width="55%"/> </div>
 
 ```java
-private TreeNode pre = null;
-private TreeNode head = null;
-public TreeNode Convert(TreeNode pRootOfTree) {
-    inOrder(pRootOfTree);
+Node head, pre;
+public Node treeToDoublyList(Node root) {
+    if (root == null) return null;
+    recur(root);
+    pre.right = head;
+    head.left = pre;
     return head;
 }
-public void inOrder(TreeNode node) {
-    if (node == null) 
-        return;
-    inOrder(node.left);
-    node.left = pre;
+
+public void recur(Node root) {
+    if (root == null) return;
+    recur(root.left);
+    root.left = pre;
     if (pre != null) {
-        pre.right = node;
+        pre.right = root;
+    } else {
+        head = root;
     }
-    pre = node;
-    if (head == null) {
-        head = node;
-    }
-    inOrder(node.right);
+    pre = root;
+    recur(root.right);
 }
 ```
 
