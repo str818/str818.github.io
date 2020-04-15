@@ -568,9 +568,9 @@ public int[] getLeastNumbers(int [] nums, int k) {
 
 [Online Programming Link](https://www.nowcoder.com/practice/9be0172896bd43948f8a32fb954e1be1?tpId=13&tqId=11216&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
-题目描述：如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。
+**题目描述**：如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。
 
-解题思路：大顶推存储左面的元素，小顶堆存储右面的元素。
+**解题思路**：大顶推存储左面的元素，小顶堆存储右面的元素。
 
 ```java
 private PriorityQueue<Integer> left = new PriorityQueue<>((o1, o2) -> o2 - o1);
