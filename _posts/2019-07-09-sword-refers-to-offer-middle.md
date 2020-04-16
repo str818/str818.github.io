@@ -566,17 +566,18 @@ public int[] getLeastNumbers(int [] nums, int k) {
 
 ## 41.1 数据流中的中位数
 
-[Online Programming Link](https://www.nowcoder.com/practice/9be0172896bd43948f8a32fb954e1be1?tpId=13&tqId=11216&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/shu-ju-liu-zhong-de-zhong-wei-shu-lcof/)
 
 **题目描述**：如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。
 
-**解题思路**：大顶推存储左面的元素，小顶堆存储右面的元素。
+**解题思路**：大顶推存储左面的元素，小顶堆存储右面的元素，这样就可以在 $O(1)$ 的时间找到中位数。
 
 ```java
-private PriorityQueue<Integer> left = new PriorityQueue<>((o1, o2) -> o2 - o1);
-private PriorityQueue<Integer> right = new PriorityQueue<>();
-private int N = 0;
-public void Insert(Integer num) {
+PriorityQueue<Integer> left = new PriorityQueue<>((o1, o2) -> o2 - o1);
+PriorityQueue<Integer> right = new PriorityQueue<>();
+int N = 0;
+
+public void addNum(int num) {
     if (N % 2 == 0) {
         left.add(num);
         right.add(left.poll());
@@ -586,7 +587,8 @@ public void Insert(Integer num) {
     }
     N++;
 }
-public Double GetMedian() {
+
+public double findMedian() {
     if (N % 2 == 0)
         return (left.peek() + right.peek()) / 2.0;
     else
@@ -596,61 +598,84 @@ public Double GetMedian() {
 
 ## 41.2 字符流中第一个不重复的字符
 
-[Online Programming Link](https://www.nowcoder.com/practice/00de97733b8e4f97a3fb5c680ee10720?tpId=13&tqId=11207&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://www.nowcoder.com/practice/00de97733b8e4f97a3fb5c680ee10720?tpId=13&tqId=11207&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
-题目描述：请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符 "go" 时，第一个只出现一次的字符是 "g"。当从该字符流中读出前六个字符“google" 时，第一个只出现一次的字符是 "l"。
+**题目描述**：请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符 `go` 时，第一个只出现一次的字符是 `g`。当从该字符流中读出前六个字符 `google` 时，第一个只出现一次的字符是 `l`。
+
+**解题思路**：使用字符数组记录每个字符出现的次数，每次插入时将字符放进队列中，并将重复的字符推出队列。
 
 ```java
-private int[] cnts = new int[256];
-private Queue<Character> queue = new LinkedList<>();
-public void Insert(char ch) {
+int[] cnts = new int[256];
+Queue<Character> queue = new LinkedList<>();
+public void insert(char ch) {
     cnts[ch]++;
     queue.offer(ch);
     while (!queue.isEmpty() && cnts[queue.peek()] > 1) {
         queue.poll();
     }
 }
-public char FirstAppearingOnce() {
+public char firstAppearingOnce() {
     return queue.isEmpty() ? '#' : queue.peek();
 }
 ```
 
 ## 42. 连续子数组的最大和
 
-[Online Programming Link](https://www.nowcoder.com/practice/459bd355da1549fa8a49e350bf3df484?tpId=13&tqId=11183&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof/)
 
-题目描述：{6, -3, -2, 7, -15, 1, 2, 2}，连续子数组的最大和为 8（从第 0 个开始，到第 3 个为止）。
+题目描述：输入一个整型数组，数组里有正数也有负数。数组中的一个或连续多个整数组成一个子数组。求所有子数组的和的最大值。
 
-解题思路：贪心，舍弃负数。
+```
+输入: nums = [-2,1,-3,4,-1,2,1,-5,4]
+输出: 6
+解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。
+```
+
+解题思路：动态规划。定义状态 `dp[i]` 代表以元素 `nums[i]` 为结尾的连续子数组最大和；若 `dp[i - 1] <= 0` 说明 `dp[i - 1]` 对 `dp[i]` 产生负贡献，即 `dp[i - 1] + nums[i]` 还不如 `nums[i]` 本身大。
 
 ```java
-public int FindGreatestSumOfSubArray(int[] nums) {
-    if (nums == null || nums.length == 0)
-        return 0;
-    int max = Integer.MIN_VALUE;
-    int sum = 0;
-    for (int num : nums) {
-        sum = sum <= 0 ? num : sum + num;
-        max = Math.max(max, sum);
+public int maxSubArray(int[] nums) {
+    if (nums == null || nums.length == 0) return 0;
+    int res = nums[0];
+    for (int i = 1; i < nums.length; i++) {
+        nums[i] += Math.max(nums[i - 1], 0);
+        res = Math.max(res, nums[i]);
     }
-    return max;
+    return res;
 }
 ```
 
 ## 43. 从 1 到 n 整数中 1 出现的次数
 
-[Online Programming Link](https://www.nowcoder.com/practice/bd7f978302044eee894445e244c7eee6?tpId=13&tqId=11184&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/number-of-digit-one/)
 
-解题思路：找规律，从最高位计算到最低位。
+**解题思路**：找规律，从最高位计算到最低位。分类的思想，先求所有数中个位是 `1` 的个数，再求十位是 `1` 的个数，再求百位是 `1` 的个数...
+
+假设 `n = xyzdabc`，此时求千位是 `1` 的个数，也就是 `d` 所在的位置，有以下三种情况：
+
+- `d == 0`，那么千位上 `1` 的个数就是 `xyz * 1000`，前面有 `xyz` 中可能，后面 `abc` 有 `0 ~ 999` 1000 种可能；
+- `d == 1`，那么千位上 `1` 的个数就是 `xyz * 1000 + abc + 1`，`abc` 的取值是 `0 ~ abc`，所以要 `+1`；
+- `d > 1`，那么千位上 `1` 的个数就是 `xyz * 1000 + 1000`；
 
 ```java
-public int NumberOf1Between1AndN_Solution(int n) {
-    int cnt = 0;
-    for (int m = 1; m <= n; m *= 10) {
-        int a = n / m, b = n % m;
-        cnt += (a + 8) / 10 * m + (a % 10 == 1 ? b + 1 : 0);
+public int countDigitOne(int n) {
+    int count = 0;
+    //依次考虑个位、十位、百位...是 1
+    for (long k = 1; k <= n; k *= 10) { 
+        // xyzdabc
+        long abc = n % k;
+        long xyzd = n / k;
+        long d = xyzd % 10;
+        long xyz = xyzd / 10;
+        count += xyz * k;
+        if (d > 1) {
+            count += k;
+        }
+        if (d == 1) {
+            count += abc + 1;
+        }
     }
-    return cnt;
+    return count;
 }
 ```
 
