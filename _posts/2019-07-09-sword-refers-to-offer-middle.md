@@ -679,6 +679,42 @@ public int countDigitOne(int n) {
 }
 ```
 
+## 44. 数字序列中某一位的数字
+
+[Code It Now!!!](https://leetcode-cn.com/problems/shu-zi-xu-lie-zhong-mou-yi-wei-de-shu-zi-lcof/)
+
+**题目描述**：数字以 `0123456789101112131415…` 的格式序列化到一个字符序列中。在这个序列中，第 `5` 位（从下标 `0` 开始计数）是 `5`，第 `13` 位是 `1`，第 `19` 位是`4`，等等。请写一个函数，求任意第 `n` 位对应的数字。
+
+```
+输入：n = 11
+输出：0
+```
+
+**解题思路**：找规律。对于第 n 位对应的数字，令这个数字对应的数为 `target`，然后分三步进行：
+
+- 首先找到这个数字对应的数是几位数，用 digits 表示；
+- 然后确定这个对应的数的数值 target；
+- 最后确定返回值是 target 中的哪个数字。
+
+<div align="center"> <img src="https://s1.ax1x.com/2020/04/17/JETaDJ.png" width="80%"/> </div>
+
+
+```java
+public int findNthDigit(int n) {
+    // 先判断 target 是几位数，用 digits 表示
+    int digits = 1;
+    while (n > digits * Math.pow(10, digits - 1) * 9) {
+        n -= digits * Math.pow(10, digits - 1) * 9;
+        digits++;
+    }
+    // 所在位置的数字
+    int target = (int)(Math.pow(10, digits - 1) + (n - 1) / digits);
+    // 数字中的第几位
+    return String.valueOf(target).charAt((n - 1) % digits) - '0';
+}
+```
+
+
 ## 45. 把数组排成最小
 
 [Online Programming Link](https://www.nowcoder.com/practice/8fecd3f8ba334add803bf2a06af1b993?tpId=13&tqId=11185&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
