@@ -10,6 +10,36 @@ toc: true
 show_subscribe: false
 ---
 
+## 48. 最长不含重复字符的子字符串
+
+[Code It Now!!!](https://leetcode-cn.com/problems/zui-chang-bu-han-zhong-fu-zi-fu-de-zi-zi-fu-chuan-lcof/)
+
+**题目描述**：请从字符串中找出一个最长的不包含重复字符的子字符串，计算该最长子字符串的长度。
+
+```
+输入: "abcabcbb"
+输出: 3 
+解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+```
+
+**解题思路**：滑动窗口，Map 记录字符出现的位置，判断是否重复。
+
+```java
+public int lengthOfLongestSubstring(String s) {
+    int n = s.length(), ans = 0;
+    Map<Character, Integer> map = new HashMap<>();
+    for (int end = 0, start = 0; end < n; end++) {
+        char alpha = s.charAt(end);
+        if (map.containsKey(alpha)) {
+            start = Math.max(map.get(alpha), start);
+        }
+        ans = Math.max(ans, end - start + 1);
+        map.put(s.charAt(end), end + 1);
+    }
+    return ans;
+}
+```
+
 ## 49. 丑数
 
 [Online Programming Link](https://www.nowcoder.com/practice/6aa9e04fc3794f68acf8778237ba065b?tpId=13&tqId=11186&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
