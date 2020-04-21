@@ -97,25 +97,35 @@ public char firstUniqChar(String s) {
 
 ## 51. 数组中的逆序对
 
-[Online Programming Link](https://www.nowcoder.com/practice/96bd6684e04a44eb80e6a68efc0ec6c5?tpId=13&tqId=11188&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/shu-zu-zhong-de-ni-xu-dui-lcof/)
 
-题目描述：在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。
+**题目描述**：在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组，求出这个数组中的逆序对的总数。
+
+```
+输入: [7,5,6,4]
+输出: 5
+```
+
+**解题思路**：归并排序。
+
+- 归并排序先将数组不断二分成左右两边各 1 个元素，判断这两个元素是否构成逆序对，并将这两个元素合并成一个有序的数组，归并后的数组因为是递增排序的，所以不再包含逆序对
+- 之后比较长度为 2 的两个数组，这两个数组内部没有逆序对了，所以只有在合并两个数组的过程中包含逆序对
 
 ```java
-private long cnt;
-private int[] tmp;
-public int InversePairs(int[] nums) {
+int cnt = 0;
+int[] tmp;
+public int reversePairs(int[] nums) {
     tmp = new int[nums.length];
     mergeSort(nums, 0, nums.length - 1);
-    return (int)(cnt % 1000000007);
+    return cnt;
 }
 
 public void mergeSort(int[] nums, int l, int h) {
     if (h <= l) return;
-    int m = l + (h - l) / 2;
-    mergeSort(nums, l, m);
-    mergeSort(nums, m + 1, h);
-    merge(nums, l, m, h);
+    int mid = l + (h - l) / 2;
+    mergeSort(nums, l, mid);
+    mergeSort(nums, mid + 1, h);
+    merge(nums, l, mid, h);
 }
 
 public void merge(int[] nums, int l, int m, int h) {
@@ -132,31 +142,38 @@ public void merge(int[] nums, int l, int m, int h) {
             cnt += m - i + 1;
         }
     }
-    for (k = l; k <= h; k++)
+    for (k = l; k <= h; k++) {
         nums[k] = tmp[k];
+    }
 }
 ```
 
 ## 52. 两个链表的第一个公共结点
 
-[Online Programming Link](https://www.nowcoder.com/practice/6ab1d9a29e88450685099d45c9e31e46?tpId=13&tqId=11189&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/)
 
-解题思路：设 A 的长度为 a + c，B 的长度为 b + c，其中 c 为尾部公共部分长度，可知 a + c + b = b + c + a。
+**题目描述**：输入两个链表，找出它们的第一个公共节点。
+
+**解题思路**：设 `A` 的长度为 `a + c`，`B` 的长度为 `b + c`，其中 `c` 为尾部公共部分长度，可知 `a + c + b = b + c + a`。
+
+使用两个指针 `p1`、`p2` 分别指向两个链表 `headA`、`headB` 的头结点，然后同时分别逐结点遍历，当 `p1` 到达链表 `headA` 的末尾时，重新定位到链表 `headB` 的头结点；当 `p2` 到达链表 `headB` 的末尾时，重新定位到链表 `headA` 的头结点。
+
+这样，当它们相遇时，所指向的结点就是第一个公共结点。
 
 ```java
-public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
-    ListNode p1 = pHead1, p2 = pHead2;
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    ListNode p1 = headA, p2 = headB;
     while (p1 != p2) {
-        p1 = p1 == null ? pHead2 : p1.next;
-        p2 = p2 == null ? pHead1 : p2.next;
+        p1 = p1 == null ? headB : p1.next;
+        p2 = p2 == null ? headA : p2.next; 
     }
     return p1;
 }
 ```
 
-## 53. 数字在排序数组中出现的次数
+## 53.1 数字在排序数组中出现的次数
 
-[Online Programming Link](https://www.nowcoder.com/practice/70610bf967994b22bb1c26f9ae901fa2?tpId=13&tqId=11190&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://www.nowcoder.com/practice/70610bf967994b22bb1c26f9ae901fa2?tpId=13&tqId=11190&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 ```java
 public int GetNumberOfK(int [] nums , int k) {
