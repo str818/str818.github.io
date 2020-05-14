@@ -231,25 +231,38 @@ public int missingNumber(int[] nums) {
 }
 ```
 
-## 54. 二叉查找树的第 K 个结点
+## 54. 二叉查找树的第 K 大节点
 
-[Online Programming Link](https://www.nowcoder.com/practice/ef068f602dde4d28aab2b210e859150a?tpId=13&tqId=11215&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/)
+
+**题目描述：**给定一棵二叉搜索树，请找出其中第 `k` 大的节点。
+
+```
+输入: root = [3,1,4,null,2], k = 1
+   3
+  / \
+ 1   4
+  \
+   2
+输出: 4
+```
+
+**解题思路：**二叉树中序遍历，注意是第 K 大的节点，先去遍历右面的节点。
 
 ```java
-private TreeNode res;
-private int cnt = 0;
-public TreeNode KthNode(TreeNode pRoot, int k) {
-    inOrder(pRoot, k);
+int res, k;
+public int kthLargest(TreeNode root, int k) {
+    this.k = k;
+    helper(root);
     return res;
 }
-private void inOrder (TreeNode root, int k) {
-    if (root == null || cnt >= k)
-        return;
-    inOrder(root.left, k);
-    cnt++;
-    if (cnt == k)
-        res = root;
-    inOrder(root.right, k);
+
+public void helper(TreeNode root) {
+    if (root == null) return;
+    helper(root.right);
+    if (k == 0) return;
+    if (--k == 0) res = root.val;
+    helper(root.left);
 }
 ```
 
