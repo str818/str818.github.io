@@ -171,27 +171,35 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 }
 ```
 
-## 53.1 数字在排序数组中出现的次数
+## 53.1 在排序数组中查找数字
 
-[Code It Now!!!](https://www.nowcoder.com/practice/70610bf967994b22bb1c26f9ae901fa2?tpId=13&tqId=11190&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/)
+
+**题目描述：**统计一个数字在排序数组中出现的次数。
+
+```
+输入: nums = [5,7,7,8,8,10], target = 8
+输出: 2
+```
+
+**解题思路：**二分查找，分别找到第一个 `target` 和最后一个 `target` 右面的位置，两个位置相减即为 `target` 出现的次数。
 
 ```java
-public int GetNumberOfK(int [] nums , int k) {
-    int first = binarySearch(nums, k);
-    int second = binarySearch(nums, k + 1);
-    return (first == nums.length || nums[first] != k) ? 0 : second - first;
+public int search(int[] nums, int target) {
+    return helper(nums, target) - helper(nums, target - 1);
 }
-private int binarySearch(int[] nums, int k) {
-    int l = 0, h = nums.length - 1;
-    while (l <= h) {
-        int m = l + (h - l) / 2;
-        if (nums[m] >= k) {
-            h = m - 1;
+
+public int helper(int[] nums, int target) {
+    int left = 0, right = nums.length - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (target >= nums[mid]) {
+            left = mid + 1;
         } else {
-            l = m + 1;
+            right = mid - 1;
         }
     }
-    return l;
+    return left;
 }
 ```
 
