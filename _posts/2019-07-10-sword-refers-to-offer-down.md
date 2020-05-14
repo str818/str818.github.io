@@ -231,7 +231,7 @@ public int missingNumber(int[] nums) {
 }
 ```
 
-## 54. 二叉查找树的第 K 大节点
+## 54. 二叉搜索树的第 K 大节点
 
 [Code It Now!!!](https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/)
 
