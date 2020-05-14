@@ -268,34 +268,49 @@ public void helper(TreeNode root) {
 
 ## 55.1 二叉树的深度
 
-[Online Programming Link](https://www.nowcoder.com/practice/435fb86331474282a3499955f0a41e8b?tpId=13&tqId=11191&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/er-cha-shu-de-shen-du-lcof/)
+
+**题目描述：**输入一棵二叉树的根节点，求该树的深度。
 
 ```java
-public int TreeDepth(TreeNode root) {
-    return root == null ? 0 : 1 + Math.max(TreeDepth(root.left), TreeDepth(root.right));
+public int maxDepth(TreeNode root) {
+    return root == null ? 0 : 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
 }
 ```
 
 ## 55.2 平衡二叉树
 
-[Online Programming Link](https://www.nowcoder.com/practice/8b3b95850edb4115918ecebdf1b4d222?tpId=13&tqId=11192&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/ping-heng-er-cha-shu-lcof/)
 
-题目描述：判断是否是平衡二叉树，高度差小于一。
+**题目描述：**判断是否是平衡二叉树，高度差小于一。
+
+```
+给定二叉树：
+			 1
+      / \
+     2   2
+    / \
+   3   3
+  / \
+ 4   4
+返回 false
+```
+
+**解题思路：**后序遍历 + 剪枝。
 
 ```java
-private boolean isBalance = true;
-public boolean IsBalanced_Solution(TreeNode root) {
-    height(root);
-    return isBalance;
+public boolean isBalanced(TreeNode root) {
+    if(root == null) return true;
+    return recur(root) != -1;
 }
-private int height(TreeNode root) {
-    if (root == null || !isBalance)
-        return 0;
-    int left = height(root.left);
-    int right = height(root.right);
-    if (Math.abs(right - left) > 1)
-        isBalance = false;
-    return 1 + Math.max(left, right);
+
+int recur(TreeNode root){
+    if(root == null) return 0;
+    int left = recur(root.left);
+    if(left == -1) return -1;
+    int right = recur(root.right);
+    if(right == -1) return -1;
+    return Math.abs(left - right) <= 1 ? Math.max(left, right) + 1 : -1;
 }
 ```
 
