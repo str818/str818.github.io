@@ -203,6 +203,34 @@ public int helper(int[] nums, int target) {
 }
 ```
 
+## 53.2 0～n-1中缺失的数字
+
+[Code It Now!!!](https://leetcode-cn.com/problems/que-shi-de-shu-zi-lcof/)
+
+**题目描述：**一个长度为 `n-1` 的递增排序数组中的所有数字都是唯一的，并且每个数字都在范围 `0～n-1` 之内。在范围 `0～n-1` 内的 `n` 个数字中有且只有一个数字不在该数组中，请找出这个数字。
+
+```
+输入: [0,1,2,3,4,5,6,7,9]
+输出: 8
+```
+
+**解题思路：**二分查找，可以将数组划分为两部分，左半部分 `nums[i] = i` ，右半部分 `nums[i] != i` ，那么分隔点的下标即为缺失的数字。
+
+```java
+public int missingNumber(int[] nums) {
+    int l = 0, r = nums.length - 1;
+    while (l <= r) {
+        int mid = l + (r - l) / 2;
+        if (nums[mid] == mid) {
+            l = mid + 1;
+        } else {
+            r = mid - 1;
+        }
+    }
+    return l;
+}
+```
+
 ## 54. 二叉查找树的第 K 个结点
 
 [Online Programming Link](https://www.nowcoder.com/practice/ef068f602dde4d28aab2b210e859150a?tpId=13&tqId=11215&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
