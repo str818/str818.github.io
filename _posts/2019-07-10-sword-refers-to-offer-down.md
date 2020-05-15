@@ -314,26 +314,30 @@ int recur(TreeNode root){
 }
 ```
 
-## 56 数组中只出现一次的数字
+## 56.1 数组中数字出现的次数
 
-[Online Programming Link](https://www.nowcoder.com/practice/e02fdb54d7524710a7d664d082bb7811?tpId=13&tqId=11193&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/)
 
-题目描述：一个整型数组里除了两个数字之外，其他的数字都出现了两次。请写程序找出这两个只出现一次的数字。
+**题目描述：**一个整型数组里除了两个数字之外，其他的数字都出现了两次。请写程序找出这两个只出现一次的数字。
 
-解题思路：用异或元素抵消掉所有出现两次的数字，得到只出现一次的两个数字的异或结果，通过 `diff ^= -diff` 取出从右数第一个不为 0 的位置，按照这个位置是 0 还是 1 划分成两个不同的部分，两个部分分别异或可求出最终结果。
+**解题思路：**用异或元素抵消掉所有出现两次的数字，得到只出现一次的两个数字的异或结果，通过 `diff ^= -diff` 取出从右数第一个不为 0 的位置，按照这个位置是 0 还是 1 划分成两个不同的部分，两个部分分别异或可求出最终结果。
 
 ```java
-public void FindNumsAppearOnce(int [] nums, int num1[], int num2[]) {
+public int[] singleNumbers(int[] nums) {
     int diff = 0;
-    for (int num : nums)
-        diff ^= num;
-    diff &= -diff;
     for (int num : nums) {
-        if ((num & diff) == 0)
-            num1[0] ^= num;
-        else
-            num2[0] ^= num;
+        diff ^= num;
     }
+    diff &= -diff;
+    int[] res = new int[2];
+    for (int num : nums) {
+        if ((num & diff) == 0) {
+            res[0] ^= num;
+        } else {
+            res[1] ^= num;
+        }
+    }
+    return res;
 }
 ```
 
