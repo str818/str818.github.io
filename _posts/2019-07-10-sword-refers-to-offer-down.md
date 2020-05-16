@@ -369,23 +369,20 @@ public int singleNumber(int[] nums) {
 
 ## 57.1 和为 S 的两个数字
 
-[Online Programming Link](https://www.nowcoder.com/practice/390da4f7a00f44bea7c2f3d19491311b?tpId=13&tqId=11195&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/he-wei-sde-liang-ge-shu-zi-lcof/)
 
-题目描述：输入一个递增排序的数组和一个数字 S，在数组中查找两个数，使得他们的和正好是 S。如果有多对数字的和等于 S，输出两个数的乘积最小的。
+**题目描述：**输入一个递增排序的数组和一个数字 S，在数组中查找两个数，使得他们的和正好是 S。如果有多对数字的和等于 S，输出两个数的乘积最小的。
 
 ```java
-public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
-    int i = 0, j = array.length - 1;
-    while (i < j) {
-        int cur = array[i] + array[j];
-        if (cur == sum)
-            return new ArrayList<>(Arrays.asList(array[i], array[j]));
-        if (cur < sum)
-            i++;
-        else
-            j--;
+public int[] twoSum(int[] nums, int target) {
+    int i = 0, j = nums.length - 1;
+    while(i < j) {
+        int s = nums[i] + nums[j];
+        if(s < target) i++;
+        else if(s > target) j--;
+        else return new int[] { nums[i], nums[j] };
     }
-    return new ArrayList<>();
+    return new int[0];
 }
 ```
 
