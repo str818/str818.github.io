@@ -16,6 +16,8 @@ show_subscribe: false
 
 工作区中有一个隐藏的目录 `.git` ，是 Git 的版本库，里面存放了一个 **暂存区（stage）**，`git add` 是将文件修改添加到暂存区，`git commit` 是将暂存区的所有内容提交到当前分支。
 
+<div align="center"> <img src="https://s1.ax1x.com/2020/05/16/Y69OJJ.png" width="90%"/> </div> 
+
 `HEAD` 表示当前版本，`HEAD^` 表示上一个版本，`HEAD^^` 表示上上一个版本，往上第 100 个版本表示为 `HEAD~100`。
 
 Git 跟踪并管理的是修改而非文件。
@@ -39,16 +41,18 @@ Git 跟踪并管理的是修改而非文件。
 1. 显示所有变更的文件：`git status`
 2. 显示当前分支的历史版本：`git log`
 3. 查看暂存区和工作区的差异：`git diff`
-4. 查看当前分支的最近几次提交：`git relog`
+4. 查看当前分支的最近几次提交：`git relog`，能查看所有操作记录，包括 reset 和已经删除的分支
+5. 查看文件的修改人：`git blame -L 160,+10 <file>`
 
 ## 撤销
 
 1. 回退版本，重置当前分支的 HEAD 为指定的 commit，同时重置暂存区和工作区，与指定 commit 一致：`git reset --hard <commit>`
-2. 将文件在工作区的修改全部撤销，一键还原，回到最近一次 `git commit` 或 `git add` 时的状态：`git checkout -- <file>`
-3. 将暂存区的修改回退到工作区：`git reset HEAD <file>`
-4. 当手头工作没有完成时，先把工作现场 `git stash` 一下，然后去修复 bug，修复后，再 `git stash pop`，回到工作现场
-5. 清空工作区修改过的文件：`git checkout .`
-6. 清空工作区新建的文件和文件夹：`git clean -d`
+2. 回退版本，不重置暂存区，`git reset --soft <commit>`
+3. 将文件在工作区的修改全部撤销，一键还原，回到最近一次 `git commit` 或 `git add` 时的状态：`git checkout -- <file>`
+4. 将暂存区的修改回退到工作区：`git reset HEAD <file>`
+5. 当手头工作没有完成时，先把工作现场 `git stash` 一下，然后去修复 bug，修复后，再 `git stash pop`，回到工作现场
+6. 清空工作区修改过的文件：`git checkout .`
+7. 清空工作区新建的文件和文件夹：`git clean -d`
 
 ## 分支
 
@@ -85,10 +89,8 @@ Git 跟踪并管理的是修改而非文件。
 
 ## 多人协作工作模式
 
-1. 首先，可以试图用 `git push origin <branch-name>` 推送自己的修改
-2. 如果推送失败，则因为远程分支比你的本地更新，需要先用 `git pull` 试图合并
-3. 如果合并有冲突，则解决冲突，并在本地提交
-4. 没有冲突或者解决掉冲突后，再用 `git push origin <branch-name>` 推送就能成功
+1. 先拉取一下最新的远程代码 `git pull origin <branch-name> --rebase`
+2. 有冲突就在本地解决冲突，解决好之后再 `git push origin <branch-name>` 推送自己的修改
 
 ## 标签
 
@@ -121,7 +123,7 @@ Git 跟踪并管理的是修改而非文件。
 1. 添加工作区内容到缓存区：`git add .`
 2. 提交 commit 到分支：`git commit -m 'xx'`
 3. 获取远端最新版本到本地：`git fetch`
-4. 合并远端最新版本：`git rebase origin/xx`
+4. 合并远端最新版本：`git rebase origin/xx`，或者直接将 3.4 合并成 `git pull origin/xx --rebase`
 5. 如果出现冲突，修改冲突，然后 `git add` 更新内容索引，之后继续执行 `git rebase --continue`
 6. 提交 review：`git push origin HEAD:refs/for/master%r=reviewer, r=reviewer`
 7. 二次提交 review：`git add .`
@@ -136,6 +138,10 @@ Gerrit 实际上是一个 Git 服务器，它为在其服务器上托管的 Git 
 Gerrit 相对 Git 提供了一个特有的命名空间 `refs/for/<branch-name>` 用来定义我们的提交上传到哪个 branch，且可以用来区分 commit 是提交到 Gerrit 进行审核还是直接提交到 Git 仓库。
 
 `git push origin HEAD:refs/for/master`
+
+## GitLab
+
+GitLab 是一个数据库支持的 web 应用，所以相比于其他 Git 服务器，它的安装过程涉及到更多的东西，比如自带的 CI 等等。
 
 ## 参考
 
