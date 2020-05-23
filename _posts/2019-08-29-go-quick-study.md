@@ -233,7 +233,7 @@ float64（+- 5 * 1e-324 -> 107 * 1e308）
 
 float32 精确到小数点后 7 位，float64 精确到小数点后 15 位。
 
-带有 ++ 和 -- 的只能作为语句，而非表达式，因此 n = i++ 这种写法是无效的，其它像 f(i++) 或者 a[i]=b[i++] 这些可以用于 C、C++ 和 Java 中的写法在 Go 中也是不允许的。
+带有 ++ 和 -- 的只能作为语句，而非表达式，因此 `n = i++` 这种写法是无效的，其它像 `f(i++)` 或者 `a[i]=b[i++]` 这些可以用于 C、C++ 和 Java 中的写法在 Go 中也是不允许的。
 
 #### 格式化说明符
 
@@ -523,6 +523,8 @@ func myFunc(a, b, arg ...int) {}
 
 关键字 defer 的用法类似于面向对象编程语言 Java 和 C# 的 finally 语句块，它一般用于释放某些已分配的资源。
 
+当有多个 defer 行为被注册时，它们会以逆序执行（类似栈，即后进先出）。
+
 #### 将函数作为参数
 
 ```go
@@ -551,9 +553,9 @@ func callback(y int, f func(int, int)) {
 func MakeAddSuffix(suffix string) func(string) string {
     return func(name string) string {
         if !strings.HasSuffix(name, suffix) {
-          return name + suffix
+        		return name + suffix
         }
-        eturn name
+        return name
     }
 }
 addBmp := MakeAddSuffix(".bmp")
@@ -589,12 +591,12 @@ arr2 := *arr1
 ```go
 // 普通 for 循环
 for i:=0; i < len(arr1); i++｛
-  arr1[i] = ...
+    arr1[i] = ...
 }
 
 // for-range 生成方式
 for i,_:= range arr1 {
-...
+    ...
 }
 ```
 
@@ -607,3 +609,147 @@ var arrAge = [10]int{18, 20, 15, 22, 16}          // 前 5 个元素被赋值，
 var arrLazy = [...]int{5, 6, 7, 8, 22}            // ...可以忽略
 var arrKeyValue = [5]string{3: "Chris", 4: "Ron"} // key-value 语法，索引 3 和 4 位置被赋值
 ```
+
+### 2. 切片
+
+切片（slice）是对数组一个连续片段的引用，所以切片是一个引用类型。这个片段可以是整个数组，或者是由起始和终止索引标识的一些项的子集。
+
+切片是一个 **长度可变的数组**。
+
+#### 声明
+
+一个切片在未初始化之前默认为 nil，长度为 0。
+
+```go
+var identifier []type                   // 不需要说明长度
+```
+
+#### 初始化
+
+```go
+var slice1 []type = arr1[start:end]     // 从 start 到 end - 1 索引之间的元素构成的子集：
+s2 := s[:]                              // 用切片组成的切片，拥有相同的元素
+```
+
+#### 将切片传递给函数
+
+```go
+func sum(a []int) int {
+    s := 0
+    for i := 0; i < len(a); i++ {
+        s += a[i]
+    }
+    return s
+}
+
+func main() {
+    var arr = [5]int{0, 1, 2, 3, 4}
+    sum(arr[:])
+}
+```
+
+#### 用 make() 创建切片
+
+默认 len 是数组的长度也是 slice 的初始长度。
+
+```go
+// func make([]T, len, cap)
+var slice1 []type = make([]type, len)
+```
+
+#### new() 和 make() 的区别
+
+- new(T) 为每个新的类型 T 分配一片内存，初始化为 0 并且返回类型为 *T 的内存地址：这种方法 **返回一个指向类型为 T，值为 0 的地址的指针**，它适用于值类型如数组和结构体，相当于 `&T{}`。
+- make(T) capacity 个类型为 T 的初始值**，它只适用于 3 中内建的引用类型：切片、map 和 channel。
+
+## 六、Map
+
+### 1. 概念
+
+map 是引用类型，可以使用如下声明：
+
+```go
+var map1 map[string]int
+```
+
+在声明的时候不需要知道 map 的长度，map 是可以动态增长的，未初始化的 map 的值的 nil。
+
+内存用 make 方法来分配：
+
+```go
+map1 := make(map[string]float32)
+map2 := map[string]float32{}
+```
+
+### 2. 判断键值对是否存在
+
+```go
+if _, ok := map1[key1]; ok {
+	// ...
+}
+```
+
+### 3. 删除 key
+
+```go
+delete(map1, key1)
+```
+
+## 七、并发
+
+### 1. 互斥锁
+
+Go 语言中的锁机制是通过 sync 包中的 Mutex 实现的，线程将有序的对同一变量进行访问。当执行了 `mutex.Lock()` 操作后，如果有另外一个 goroutine 又执行了上锁操作，那么该操作被阻塞，直到该互斥锁恢复到解锁状态。
+
+```go
+func main() {
+    var mutex sync.Mutex
+    count := 0
+
+    for r := 0; r < 50; r++ {
+    go func() {
+            mutex.Lock()
+            count += 1
+            mutex.Unlock()
+        }()
+    }
+
+    time.Sleep(time.Second)
+    fmt.Println("the count is : ", count)
+}
+```
+
+### 2. 读写锁
+
+读写锁是对读写操作进行加锁，多个读操作之间不存在互斥关系，这样能提高对共享资源的访问效率。
+
+- Lock()：写锁定
+- Unlock()：写解锁
+- RLock()：读锁定
+- RUnlock()：读解锁
+
+## 八、结构体
+
+结构体定义方式如下：
+
+```go
+type identifier struct {
+    field1 type1
+    field2 type2
+    ...
+}
+```
+
+结构体里的字段都有名字，像 field1、field2 等，如果字段在代码中从来也不会被用到，那么可以命名它为 _。
+
+### 1. new
+
+使用 new 函数给一个新的结构体变量分配内存，它返回指向已分配内存的指针：
+
+```go
+var t *T = new(T)
+```
+
+### 2. 内存分布
+
+Go 语言中，结构体和它所包含的数据在内存中是以连续块的形式存在的，即使结构体中嵌套有其他的结构体，这在性能上带来了很大的优势。不像 Java 中的引用类型，一个对象和它里面包含的队形可能会在不同的内存空间中，这点和 Go 语言中的指针很像。
