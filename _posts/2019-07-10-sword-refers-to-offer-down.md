@@ -388,78 +388,68 @@ public int[] twoSum(int[] nums, int target) {
 
 ## 57.2 和为 S 的连续正数序列
 
-[Online Programming Link](https://www.nowcoder.com/practice/c451a3fd84b64cb19485dad758a55ebe?tpId=13&tqId=11194&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof/)
 
-题目描述：输出所有和为 S 的连续正数序列。
+**题目描述：**输入一个正整数 target ，输出所有和为 target 的连续正整数序列（至少含有两个数）。序列内的数字由小到大排列，不同序列按照首个数字从小到大排列。
+
+```
+输入：target = 15
+输出：[[1,2,3,4,5],[4,5,6],[7,8]]
+```
+
+**解题思路：**双指针、滑动窗口。
+
 
 ```java
-public ArrayList<ArrayList<Integer> > FindContinuousSequence(int sum) {
-    ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
-    int start = 1, end = 2;
-    int curSum = 3;
-    while (end < sum) {
-        if (curSum > sum) {
-            curSum -= start;
-            start++;
-        } else if (curSum < sum) {
-            end++;
-            curSum += end;
+public int[][] findContinuousSequence(int target) {
+    int l = 1, r = 1, sum = 0;
+    List<int[]> res = new ArrayList<>();
+    while (l <= target / 2) {
+        if (sum < target) {
+            sum += r;
+            r++;
+        } else if (sum > target) {
+            sum -= l;
+            l++;
         } else {
-            ArrayList<Integer> list = new ArrayList<>();
-            for (int i = start; i <= end; i++)
-                list.add(i);
-            ret.add(list);
-            curSum -= start;
-            start++;
-            end++;
-            curSum += end;
+            int[] nums = new int[r - l];
+            for (int i = l; i < r; i++) {
+                nums[i - l] = i;
+            }
+            res.add(nums);
+            sum -= l;
+            l++;
         }
     }
-    return ret;
+    return res.toArray(new int[res.size()][]);
 }
 ```
 
-## 58.1 翻转单词顺序列
+## 58.1 翻转单词顺序
 
-[Online Programming Link](https://www.nowcoder.com/practice/3194a4f4cf814f63919d0790578d51f3?tpId=13&tqId=11197&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[Code It Now!!!](https://leetcode-cn.com/problems/fan-zhuan-dan-ci-shun-xu-lcof/)
 
-题目描述：
+**题目描述：**输入一个英文句子，翻转句子中单词的顺序，但单词内字符的顺序不变。
 
 ```
-Input:
-"I am a student."
-
-Output:
-"student. a am I"
+输入: "the sky is blue"
+输出: "blue is sky the"
 ```
 
-解题思路：先旋转每个单词，再旋转整个字符串。
+**解题思路：**先旋转每个单词，再旋转整个字符串。
 
 ```java
-public String ReverseSentence(String str) {
-    int n = str.length();
-    char[] chars = str.toCharArray();
-    int i = 0, j = 0;
-    while (j <= n) {
-        if (j == n || chars[j] == ' ') {
-            reverse(chars, i, j - 1);
-            i = j + 1;
-        }
-        j++;
+public String reverseWords(String s) {
+    s = s.trim();
+    StringBuilder res = new StringBuilder();
+    int r = s.length() - 1, l = r;
+    while (l >= 0) {
+        while (l >= 0 && s.charAt(l) != ' ') l--;
+        res.append(s.substring(l + 1, r + 1) + " ");
+        while (l >= 0 && s.charAt(l) == ' ') l--;
+        r = l;
     }
-    reverse(chars, 0, n - 1);
-    return new String(chars);
-}
-
-private void reverse(char[] c, int i, int j) {
-    while (i < j)
-        swap(c, i++, j--);
-}
-
-private void swap(char[] c, int i, int j) {
-    char t = c[i];
-    c[i] = c[j];
-    c[j] = t;
+    return res.toString().trim();
 }
 ```
 
