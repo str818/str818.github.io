@@ -14,7 +14,7 @@ show_subscribe: false
 
 CAP 理论是指：一个分布式系统最多只能同时满足一致性（Consistency）、可用性（Availability）和分区容错性（Partition tolerance）这三项中的两项。
 
-<div align="center">  <img src="https://s1.ax1x.com/2020/05/25/tpGDh9.png" width="60%"/> </div><br>
+<div align="center">  <img src="https://s1.ax1x.com/2020/06/01/t3X4UO.png" width="60%"/> </div><br>
 
 ## 二、性质
 
@@ -57,6 +57,8 @@ CAP 不可能三角，对于上述三个指标不可能兼得，只能在 3 个�
 
 ## 参考
 
-[分布式系统的 CAP 理论](https://www.hollischuang.com/archives/666)
+- [分布式系统的 CAP 理论](https://www.hollischuang.com/archives/666)
 
-[CyC2018 - 分布式](https://github.com/CyC2018/CS-Notes/blob/master/notes/分布式.md)
+- [CyC2018 - 分布式](https://github.com/CyC2018/CS-Notes/blob/master/notes/分布式.md)
+
+- [分布式协议与算法实战](https://time.geekbang.org/column/intro/100046101)
