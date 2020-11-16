@@ -27,7 +27,10 @@ show_subscribe: false
 
 利用数组中的数字都在 `0 ~ n-1` 的范围内这一条件，如果数组中没有重复的数字，那么当数组排序后数字 `i` 都将会出现在下标为 `i` 的位置。如果有重复数字，就出现不止一个数字 `i` 出现在下标为 `i` 的位置，利用这一原理可以求解。
 
-<div align="center"> <img src="https://s3.ax1x.com/2020/11/16/DADnM9.gif" width="50%"/> </div>
+<div align="center"> <img src="https://s3.ax1x.com/2020/11/16/DADnM9.gif" width="60%"/> </div>
+
+
+**Java**
 
 ```java
 public static int findRepeatNumber(int[] nums) {
@@ -49,6 +52,23 @@ public static void swap(int[] nums, int i, int j) {
     int temp = nums[i];
     nums[i] = nums[j];
     nums[j] = temp;
+}
+```
+
+**Go**
+
+```go
+func findRepeatNumber(nums []int) int {
+    for idx, val := range nums{
+        if idx == val{
+            continue
+        }
+        if nums[val] == val{
+            return val
+        }
+        nums[val], nums[idx] = nums[idx], nums[val]
+    }
+    return 0
 }
 ```
 
