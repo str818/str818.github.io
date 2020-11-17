@@ -27,7 +27,7 @@ show_subscribe: false
 
 利用数组中的数字都在 `0 ~ n-1` 的范围内这一条件，如果数组中没有重复的数字，那么当数组排序后数字 `i` 都将会出现在下标为 `i` 的位置。如果有重复数字，就出现不止一个数字 `i` 出现在下标为 `i` 的位置，利用这一原理可以求解。
 
-<div align="center"> <img src="https://s3.ax1x.com/2020/11/16/DEiVYj.gif" width="60%"/> </div>
+<div align="center"> <img src="https://s3.ax1x.com/2020/11/17/DZXUNn.gif" width="60%"/> </div>
 
 
 **Java**
@@ -76,7 +76,7 @@ func findRepeatNumber(nums []int) int {
 
 [Code It Now!!!](https://leetcode-cn.com/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/)
 
-**题目描述**：一个二维数组的每一行从左到右递增，每一列从上到下递增，判断数组中是否包含一个整数。
+**题目描述**：在一个 `n * m` 的二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个高效的函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
 
 ```
 [
@@ -86,14 +86,27 @@ func findRepeatNumber(nums []int) int {
   [10, 13, 14, 17, 24],
   [18, 21, 23, 26, 30]
 ]
-给定 target = 5，返回 true
+给定 target = 5，返回 true。
+给定 target = 20，返回 false。
 ```
 
-**解题思路**：从右上角开始找，利用「从上到下递增、从左到右递增」的特点。
+**解题思路**：从题目中可知，二维数组从左到右是递增的，从上到下也是递增的，那么如果我们从右上角作为起点，向左下方去找的话，就构成了一种二分结构，从图中可以看出，从右向左是递减的，从上到下是递增的，由此可得出三种情况：
+
+1. 目标值 > 当前值：接着向下找；
+2. 目标值 < 当前值：接着向左找；
+3. 目标值 = 当前值：数组中包含该整数，直接返回。 
+
+<div align="center"> <img src="https://s3.ax1x.com/2020/11/17/DeAia6.png" width="50%"/> </div>
+
+<div align="center"> <img src="https://s3.ax1x.com/2020/11/17/DeV1gg.gif" width="70%"/> </div>
+
+**Java**
 
 ```java
 public boolean findNumberIn2DArray(int[][] matrix, int target) {
-    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return false;
+    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+        return false;
+    }
     int i = 0, j = matrix[0].length - 1;
     while (i < matrix.length && j >= 0) {
         if (matrix[i][j] == target) {
@@ -108,6 +121,29 @@ public boolean findNumberIn2DArray(int[][] matrix, int target) {
     return false;
 }
 ```
+
+**Go**
+
+```go
+func findNumberIn2DArray(matrix [][]int, target int) bool {
+    if len(matrix) == 0 {
+        return false
+    }
+    rows := 0
+    cols := len(matrix[0])-1
+    for rows < len(matrix) && cols >=0 {
+        if matrix[rows][cols] < target {
+            rows++
+        } else if  matrix[rows][cols]  > target{
+            cols--
+        } else {
+            return true
+        }
+    }
+    return false
+}
+```
+
 
 ## 5. 替换空格
 
