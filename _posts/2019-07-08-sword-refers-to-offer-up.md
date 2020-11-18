@@ -156,11 +156,17 @@ func findNumberIn2DArray(matrix [][]int, target int) bool {
 输出："We%20are%20happy."
 ```
 
-**解题思路**：如果从前向后替换的话，需要不断将后面的字符后移，所以可以先遍历字符串将需要添加的字符数量扩充到字符串的后面，从后向前依次替换。
+**解题思路**：有两种比较好的解决方法，第一种是直接开辟一个新的数组，然后从前向后遍历，依次将原字符串中的字符添加进数组中，如果遇到空格，则添加 `%20` 三个字符，这种方法的时间复杂度为 $O(n)$，因为开辟了新的空间，额外空间复杂度也为 $O(n)$。
+
+另外一种，空间复杂度为 $O(1)$，就是在字符串原有的基础上进行修改，首先遍历一遍字符串中的字符，统计出空格的数量，对应的将字符串的长度向后延长，预留出 `%20` 增加的位置。之后，使用双指针的方式从后向前遍历，指针 `p1` 的初始位置为字符串扩充前最后的位置， 指针 `p2` 的初始位置为扩充后最后的位置，两个指针同时向前滑动，如果 `p1` 指向的不是空格，则将改值赋到 `p2` 指向的位置；如果是空格，则将 `p2` 指向的位置以及前面两位分别赋上 `%20` 三个字符。直到指针 `p2` 到字符串的首位字符时结束遍历。
+
+<div align="center"> <img src="https://s3.ax1x.com/2020/11/19/Dnb34I.gif" width="100%"/> </div>
+
+
+**Java**
 
 ```java
 public String replaceSpace(String s) {
-
     StringBuilder sb = new StringBuilder(s);
     int p1 = sb.length() - 1;
     for (int i = 0; i <= p1; i++) {
@@ -168,7 +174,6 @@ public String replaceSpace(String s) {
             sb.append("  ");
         }
     }
-
     int p2 = sb.length() - 1;
     while (p1 >= 0 && p2 > p1) {
         char c = sb.charAt(p1--);
@@ -180,8 +185,25 @@ public String replaceSpace(String s) {
             sb.setCharAt(p2--, c);
         }
     }
-
     return sb.toString();
+}
+```
+
+**Go**
+
+```go
+func replaceSpace(s string) string {
+    var str string
+    start := 0
+    for key,value := range s {
+        if value == ' '{
+            str += s[start:key]
+            str += "%20"
+            start = key+1
+        }
+    }
+    str += s[start:]
+    return str
 }
 ```
 
